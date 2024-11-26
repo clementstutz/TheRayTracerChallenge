@@ -1,0 +1,35 @@
+# Visual Studio
+.vs/
+*.sln
+*.sln.docstates
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+/out
+bin/
+
+# Build directories
+/build/
+x64/
+Debug/
+Release/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+CMakeSettings.json
+*.ninja
+
+# Packages
+packages/
+external/googletest/build/
+
+# Compiler generated files
+*.pdb
+*.idb
+*.ilk
+*.exe
+*.obj
+*.lib
+*.log
+*.tmp
