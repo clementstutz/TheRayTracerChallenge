@@ -1,9 +1,17 @@
 #include "pch.h"
 #include "Tuple.h"
 
-TEST(TupleTests, constructors) {
-	Tuple t1;
-	EXPECT_FLOAT_EQ(t1.getX(), 0.0f);
+TEST(TupleTests, constructor_default) {
+	Tuple t;
+	EXPECT_FLOAT_EQ(t.getX(), 0.0f);
+	EXPECT_FLOAT_EQ(t.getY(), 0.0f);
+	EXPECT_FLOAT_EQ(t.getZ(), 0.0f);
+	EXPECT_FLOAT_EQ(t.getW(), 0.0f);
+}
+
+TEST(TupleTests, constructor_surcharged) {
+	Tuple t1(1.0f);
+	EXPECT_FLOAT_EQ(t1.getX(), 1.0f);
 	EXPECT_FLOAT_EQ(t1.getY(), 0.0f);
 	EXPECT_FLOAT_EQ(t1.getZ(), 0.0f);
 	EXPECT_FLOAT_EQ(t1.getW(), 0.0f);
@@ -14,23 +22,44 @@ TEST(TupleTests, constructors) {
 	EXPECT_FLOAT_EQ(t2.getZ(), 0.0f);
 	EXPECT_FLOAT_EQ(t2.getW(), 0.0f);
 
-	Tuple t3(1.0f, 2.0f, 3.0f, 4.0f);
+	Tuple t3(1.0f, 2.0f, 3.0f);
 	EXPECT_FLOAT_EQ(t3.getX(), 1.0f);
 	EXPECT_FLOAT_EQ(t3.getY(), 2.0f);
 	EXPECT_FLOAT_EQ(t3.getZ(), 3.0f);
-	EXPECT_FLOAT_EQ(t3.getW(), 4.0f);
+	EXPECT_FLOAT_EQ(t3.getW(), 0.0f);
 
-	Tuple t4(t3);
+	Tuple t4(1.0f, 2.0f, 3.0f, 4.0f);
 	EXPECT_FLOAT_EQ(t4.getX(), 1.0f);
 	EXPECT_FLOAT_EQ(t4.getY(), 2.0f);
 	EXPECT_FLOAT_EQ(t4.getZ(), 3.0f);
 	EXPECT_FLOAT_EQ(t4.getW(), 4.0f);
+}
 
-	Tuple t5 = t3;
-	EXPECT_FLOAT_EQ(t5.getX(), 1.0f);
-	EXPECT_FLOAT_EQ(t5.getY(), 2.0f);
-	EXPECT_FLOAT_EQ(t5.getZ(), 3.0f);
-	EXPECT_FLOAT_EQ(t5.getW(), 4.0f);
+TEST(TupleTests, constructor_copy) {
+	Tuple t1(1.0f, 2.0f, 3.0f, 4.0f);
+	Tuple t2(t1);
+	EXPECT_FLOAT_EQ(t2.getX(), 1.0f);
+	EXPECT_FLOAT_EQ(t2.getY(), 2.0f);
+	EXPECT_FLOAT_EQ(t2.getZ(), 3.0f);
+	EXPECT_FLOAT_EQ(t2.getW(), 4.0f);
+}
+
+TEST(TupleTests, constructor_moving) {
+	Tuple t1;
+	t1 = Tuple(1.0f, 2.0f, 3.0f, 4.0f);
+	EXPECT_FLOAT_EQ(t1.getX(), 1.0f);
+	EXPECT_FLOAT_EQ(t1.getY(), 2.0f);
+	EXPECT_FLOAT_EQ(t1.getZ(), 3.0f);
+	EXPECT_FLOAT_EQ(t1.getW(), 4.0f);
+}
+
+TEST(TupleTests, assignment) {
+	Tuple t1(1.0f, 2.0f, 3.0f, 4.0f);
+	Tuple t2 = t1;
+	EXPECT_FLOAT_EQ(t2.getX(), 1.0f);
+	EXPECT_FLOAT_EQ(t2.getY(), 2.0f);
+	EXPECT_FLOAT_EQ(t2.getZ(), 3.0f);
+	EXPECT_FLOAT_EQ(t2.getW(), 4.0f);
 }
 
 TEST(TupleTests, equality) {
