@@ -7,7 +7,6 @@ add_library(TheRayTracerChallenge
 	Color.cpp
 	Canvas.cpp
 	Save.cpp
-	Mat2.cpp
 	Mat4.cpp
 	Camera.cpp
 	Computations.cpp
