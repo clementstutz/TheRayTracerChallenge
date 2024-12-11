@@ -1,6 +1,6 @@
 #pragma once
-#include "Color.h"
 #include <vector>
+#include "Color.h"
 
 class Canvas
 {
@@ -27,6 +27,8 @@ public:
 	Color getPixel(int x, int y) const;
 
 	void fillCanvas(Color color);
+
+	void drawCircle(int cx, int cy, int radius, Color color);
 
 	//opérateurs
 	friend std::ostream& operator<<(std::ostream& flux, Canvas const& canvas);

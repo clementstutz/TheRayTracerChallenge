@@ -49,6 +49,30 @@ Color Canvas::getPixel(int x, int y) const {
     return Color::black;
 }
 
+void Canvas::drawCircle(int cx, int cy, int radius, Color color) {
+    // Creat a block to iterate over.
+    int xStart = cx - radius;
+    int xEnd = cx + radius;
+    int yStart = cy - radius;
+    int yEnd = cy + radius;
+
+    // Iterate over every element of the block and test if it is within the radius.
+    for (int y = yStart; y <= yEnd; y++) // (int y = yStart; y <= yEnd; y++)
+    {
+        for (int x = xStart; x <= xEnd; x++) // (int x = xStart; x <= xEnd; x++)
+        {
+            // Calculate distance to center, use square as it is faster that root.
+            int squareRadius = radius * radius;
+            float distance = (x - cx) * (x - cx) + (y - cy) * (y - cy);
+            if (static_cast<int>(distance) < squareRadius)
+            {
+                // Draw to location, which tests to see if it is even possible.
+                setPixel(x, y, color);
+            }
+        }
+    }
+}
+
 // Fonctions membres
 void Canvas::fillCanvas(Color color) {
     for (int y = 0; y < m_height; y++) {

@@ -1,5 +1,5 @@
 #include "Color.h"
-#include "Utils.cpp"
+#include "Utils.h"
 
 // Constructeurs
 Color::Color(float r, float g, float b) : m_r(r), m_g(g), m_b(b) {}
@@ -75,7 +75,7 @@ Color& Color::operator*=(Color const& c) {
 
 // Fonctions non-membres
 bool operator!=(Color const& a, Color const& b) {
-	return not (a == b);
+	return !(a == b);
 }
 
 Color operator+(Color const& a, Color const& b) {

@@ -1,17 +1,15 @@
-#include "Utils.h"
 #include <cmath>
+#include "Utils.h"
 
-const float Utils::EPSILON = 0.00001f;
 
-bool Utils::FE(float const& a, float const& b)
-{
-	float temp = a - b;
-	if (abs(temp) < EPSILON)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+float Utils::GetEpsilon() { return Utils::EPSILON; }
+
+bool Utils::FE(float const& a, float const& b) {
+	float temp = std::abs(a - b);
+	bool c = temp <= Utils::EPSILON;
+	return c;
+}
+
+float Utils::degToRad(float degrees) {
+	return degrees * (Utils::PI / 180.0f);
 }

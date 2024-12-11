@@ -1,6 +1,8 @@
 #pragma once
 #include <ostream>
-#include "Utils.h"
+//#include "Utils.h"
+#include "Point.h"
+#include "Vector.h"
 
 class Mat4
 {
@@ -11,10 +13,10 @@ private:
 
 public:
 	// Constructeurs
-	Mat4(float m00 = 1.0f, float m01 = 0.0f, float m02 = 0.0f, float m03 = 0.0f,
-		 float m10 = 0.0f, float m11 = 1.0f, float m12 = 0.0f, float m13 = 0.0f,
-		 float m20 = 0.0f, float m21 = 0.0f, float m22 = 1.0f, float m23 = 0.0f,
-		 float m30 = 0.0f, float m31 = 0.0f, float m32 = 0.0f, float m33 = 1.0f);
+	Mat4(float m00 = 1.0, float m01 = 0.0, float m02 = 0.0, float m03 = 0.0,
+		 float m10 = 0.0, float m11 = 1.0, float m12 = 0.0, float m13 = 0.0,
+		 float m20 = 0.0, float m21 = 0.0, float m22 = 1.0, float m23 = 0.0,
+		 float m30 = 0.0, float m31 = 0.0, float m32 = 0.0, float m33 = 1.0);
 	Mat4(Mat4 const& other);
 
 	// Accesseurs
@@ -25,6 +27,10 @@ public:
 	bool operator==(Mat4 const& other) const;
 
 	Mat4& operator=(Mat4 const& other);
+
+	Mat4& operator+=(Mat4 const& other);
+
+	Mat4& operator-=(Mat4 const& other);
 
 	template <typename T>
 	Mat4& operator*=(T const& scalar) {
@@ -64,12 +70,49 @@ public:
 
 	float det();
 
-	void invert();
+	Mat4& invert();
 
 	Mat4 inverted() const;
+
+	static Mat4 TranslateMatrix(float x, float y, float z);
+	Mat4& Translate(float x, float y, float z);
+
+	static Mat4 TranslateMatrix(Point p);
+	Mat4& Translate(Point p);
+
+	static Mat4 TranslateMatrix(Vector v);
+	Mat4& Translate(Vector v);
+
+	static Mat4 ScaleMatrix(float x, float y, float z);
+	Mat4& Scale(float x, float y, float z);
+
+	static Mat4  ScaleMatrix(Point p1);
+	Mat4& Scale(Point p1);
+
+	static Mat4  ScaleMatrix(Vector v1);
+	Mat4& Scale(Vector v1);
+
+	static Mat4  RotateMatrix(float x, float y, float z);
+	Mat4& Rotate(float x, float y, float z);
+
+	static Mat4 RotateXMatrix(float x);
+	Mat4& RotateX(float x);
+
+	static Mat4 RotateYMatrix(float y);
+	Mat4& RotateY(float y);
+
+	static Mat4 RotateZMatrix(float z);
+	Mat4& RotateZ(float z);
+
+	static Mat4 ShearMatrix(float xy, float xz, float yx, float yz, float zx, float zy);
+	Mat4& Shear(float xy, float xz, float yx, float yz, float zx, float zy);
+
 };
 
 bool operator!=(const Mat4& mat_a, const Mat4& mat_b);
+
+Mat4 operator+(Mat4 const& a, Mat4 const& b);
+Mat4 operator-(Mat4 const& a, Mat4 const& b);
 
 template <typename T>
 Mat4 operator*(Mat4 const& a, T const& scalar) {
