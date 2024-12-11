@@ -1,8 +1,8 @@
 #add runner content
 add_executable(TheRayTracerChallenge_Runner
 	main.cpp
-    Environment.cpp
-    Projectile.cpp
+	Environment.cpp
+	Projectile.cpp
 )
 
 # Inclure les fichiers d'en-tête (en cas de besoin pour les dépendances)
