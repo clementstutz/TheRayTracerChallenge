@@ -10,13 +10,9 @@ Sphere::Sphere(Sphere const& other) : RayObject(other) {}
 Sphere::Sphere(Sphere&& other) noexcept : RayObject(std::move(other)) {}
 
 
-// Destructor
-Sphere::~Sphere() {}
-
-
-// Operators
+// Member functions
 Sphere& Sphere::operator=(Sphere const& other) {
-    if (this != &other) { // Vérification d'auto-affectation
+    if (this != &other) {
         RayObject::operator=(other); // Appelle l'opérateur d'affectation par copie de la classe mère
         // Copiez ici des membres spécifiques à Sphere si nécessaire
     }
@@ -36,35 +32,30 @@ std::ostream& operator<<(std::ostream& flux, Sphere const& sphere) {
     return flux;
 }
 
-
-// Member-functions
 void Sphere::afficher(std::ostream& flux) const {
     flux << "Sphere (id: " << m_id << ", Position: " << GetPosition() << ")";
 }
 
-std::vector<Intersection> Sphere::Intersect(Ray ray) {
+std::vector<Intersection> Sphere::Intersect(Ray const& ray) {
 	std::vector<Intersection> intersectionPoints;
 
 	Ray transRay = RayToObjectSpace(ray);
 
-    Vector sphereToRay = (transRay.getOrigin() - Point(m_matrix[0][3], m_matrix[1][3], m_matrix[2][3])); // pourquoi - new Point(0,0,0) ?
-    float a = transRay.getDirection().Dot(transRay.getDirection());   //Should always be 1.0 NOTE : normaliser la direction pour éviter ce calcult et les erreur d'arondie!
+    Vector sphereToRay = (transRay.getOrigin() - Point());
+    float a = transRay.getDirection().Dot(transRay.getDirection());   //Should always be 1.0 NOTE: normaliser la direction pour éviter ce calcult et les erreur d'arondie!
     float b = 2.0f * transRay.getDirection().Dot(sphereToRay);
     float c = sphereToRay.Dot(sphereToRay) - 1.0f;
     float discriminant = b * b - 4.0f * a * c;
     if (discriminant < 0)   // Miss.
-        return intersectionPoints; // pour optimiser on peut peut-être essayer de ne pas renvoyer de liste vide comme c'est le cas ici...
+        return intersectionPoints; //NOTE: pour optimiser on peut peut-être essayer de ne pas renvoyer de liste vide comme c'est le cas ici...
 
     float t1 = (-b - sqrt(discriminant)) / (2.0f * a);
     float t2 = (-b + sqrt(discriminant)) / (2.0f * a);
 
-    // pour optimiser encore on pourrait regarder le signe de t1 et t2 et ne renvoyer que les valeur positiver
+    // NOTE: pour optimiser encore on pourrait regarder le signe de t1 et t2 et ne renvoyer que les valeur positiver
     // les valeurs négatives sont des intersection qui on lieu derrière la camera (normalement...)
     intersectionPoints.push_back(Intersection(*this, t1));
     intersectionPoints.push_back(Intersection(*this, t2));
-
-    /*if (t1 < 0) {std::cout << "intersection t1 derriere la camera." << std::endl;}
-    if (t2 < 0) {std::cout << "intersection t2 derriere la camera." << std::endl;}*/
 
     return intersectionPoints;
 }

@@ -11,26 +11,26 @@ private:
 	void afficher(std::ostream& flux) const;
 
 public:
-	// Constructeurs
-	Canvas(int width, int height, Color color=Color::black);
+	// Constructors
+	Canvas(int const& width, int const& height, Color const& color=Color::black);
 	Canvas(Canvas const& other);
-	Canvas& operator=(Canvas const& other);
+	
 
-	// Destructeur
-	~Canvas();
+	// Destructor
+	~Canvas() = default;
+
 
 	// Accesseurs
 	int getWidth() const;
 	int getHeight() const;
-	std::vector<std::vector<Color>> getCanvas() const;
-	void setPixel(int x, int y, Color color);
 	Color getPixel(int x, int y) const;
+	void setPixel(int x, int y, Color const &color);
+	
 
-	void fillCanvas(Color color);
-
-	void drawCircle(int cx, int cy, int radius, Color color);
-
-	//opérateurs
+	// Member functions
+	Canvas& operator=(Canvas const& other);
 	friend std::ostream& operator<<(std::ostream& flux, Canvas const& canvas);
+	void fillCanvas(Color const& color);
+	void drawCircle(int cx, int cy, int radius, Color const& color);
 };
 

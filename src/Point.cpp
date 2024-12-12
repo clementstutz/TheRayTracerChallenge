@@ -2,17 +2,19 @@
 #include "Vector.h"
 #include "Mat4.h"
 
-// Constructeurs
+// Constructors
 Point::Point(float x, float y, float z, float w) : Tuple(x, y, z, w) {}
 
 Point::Point(Point const& other) : Tuple(other.getX(), other.getY(), other.getZ(), other.getW()) {}
 
 Point::Point(Point&& other) noexcept : Tuple(std::move(other)) {}
 
-// Destructeur
+
+// Destructor
 Point::~Point() {}
 
-// Fonctions membres
+
+// Member functions
 void Point::set(float newX, float newY, float newZ, float newW) {
     m_x = newX;
     m_y = newY;
@@ -25,7 +27,7 @@ void Point::afficher(std::ostream & flux) const {
 }
 
 Point& Point::operator=(Point const& other) {
-    if (this != &other) {//On vérifie que l'objet n'est pas le même que celui reçu en argument
+    if (this != &other) {
         m_x = other.m_x;
         m_y = other.m_y;
         m_z = other.m_z;
@@ -58,7 +60,8 @@ Point& Point::operator-=(Vector const& v) {
     return *this;
 }
 
-// Fonctions non-membres
+
+// Non-member functions
 Point operator+(Point const& p, Vector const& v) {
     Point copy(p);
     copy += v;
@@ -79,7 +82,7 @@ Point operator-(Point const& p, Vector const& v) {
 
 Point operator-(Vector const& v, Point const& p) {
     Point copy(-p);
-    copy += v; //Ca marche mais je ne sais pas pourquoi. Je n'ai pas défini l'opérateur -= entre deux points.
+    copy += v;
     return copy;
 }
 

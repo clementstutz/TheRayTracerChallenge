@@ -30,7 +30,7 @@ public:
 	RayObject(RayObject&& other) noexcept;
 
 	// Destructor
-	virtual ~RayObject();
+	virtual ~RayObject();// = default;
 
 	// Accessors
 	int static getNbInstances() ;
@@ -41,22 +41,20 @@ public:
 	Material GetMaterial() const;
 	bool CanReceiveShadows() const;
 	bool CanCastShadows() const;
-	void SetMatrix(Mat4 mat);
-	void SetPosition(Point p);
-	void SetMaterial(Material material);
+	void SetMatrix(Mat4 const&mat);
+	void SetPosition(Point const& p);
+	void SetMaterial(Material const& material);
 	
-	// Operators
+	// Member functions
 	RayObject& operator=(RayObject const& other);
 	RayObject& operator=(RayObject&& other) noexcept;
 	bool operator==(RayObject const& other) const;
 	friend std::ostream& operator<<(std::ostream& flux, RayObject const& rayObject);
-
-	// Member-functions
-	Ray RayToObjectSpace(Ray& ray) const;
-	virtual std::vector<Intersection> Intersect(Ray ray) = 0;
+	Ray RayToObjectSpace(Ray const& ray) const;
+	virtual std::vector<Intersection> Intersect(Ray const& ray) = 0;
 	virtual Vector GetNormal(Point const& worldPoint, Intersection const& i) const = 0;
 	Point WorldToObject(Point const &worldPoint) const;
 	virtual Vector CalculateLocalNormal(Point const& localPoint, Intersection const& i) const = 0;
-	Vector NormalToWorld(Vector &localNormal) const;
-	Color Lighting(Point position, Light light, Vector eye, Vector normal, bool inShadow = false) const;
+	Vector NormalToWorld(Vector const&localNormal) const;
+	Color Lighting(Point const& position, Light const& light, Vector const& eye, Vector const& normal, bool inShadow = false) const;
 };

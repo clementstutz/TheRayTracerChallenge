@@ -21,7 +21,7 @@ Tuple::Tuple(Tuple&& other) noexcept :
 	m_y(other.m_y),
 	m_z(other.m_z),
 	m_w(other.m_w) {
-	// Réinitialise l'objet source pour éviter des doublons
+	// Reset source object pour éviter des doublons
 	other.m_x = 0.0f;
 	other.m_y = 0.0f;
 	other.m_z = 0.0f;
@@ -73,7 +73,7 @@ Tuple& Tuple::operator=(Tuple&& other) noexcept {
 		m_z = other.m_z;
 		m_w = other.m_w;
 
-		// Réinitialise l'objet source
+		// Reset source object
 		other.m_x = 0.0f;
 		other.m_y = 0.0f;
 		other.m_z = 0.0f;

@@ -5,92 +5,81 @@
 
 // Constructors
 Computations::Computations() :
-    m_rayObject(nullptr),
     m_t(0.0f),
+    m_rayObjectPtr(nullptr),
     m_point(Point()),
     m_eye(Vector()),
     m_normal(Vector()),
     m_inside(false),
+    m_overPoint(Point()),
+    m_underPoint(Point()),
+    m_reflectVector(Vector()),
     m_n1(RefractiveIndex::Vacuum),
-    m_n2(RefractiveIndex::Vacuum)
-{}
-
-Computations::Computations(RayObject& rayObject, float& t, Point& point, Vector& eye, Vector& normal, bool inside) {
-    m_rayObject = &rayObject;
-    m_t = t;
-    m_point = point;
-    m_eye = eye;
-    m_normal = normal;
-    m_inside = inside;
-    m_n1 = RefractiveIndex::Vacuum;
-    m_n2 = RefractiveIndex::Vacuum;
-}
-
-// Destructor
-Computations::~Computations() {}
+    m_n2(RefractiveIndex::Vacuum) {}
 
 
 // Accessors
-float Computations::GetLength() const {return m_t;}
+const float Computations::GetLength() const { return m_t; }
 
-const RayObject* Computations::GetRayObjectPtr() const { return m_rayObject; }
+const RayObject* Computations::GetRayObjectPtr() const { return m_rayObjectPtr; }
 
 const RayObject& Computations::GetRayObject() const {
-    if (!m_rayObject) {
+    if (!m_rayObjectPtr) {
         throw std::runtime_error("m_rayObject is null. Invalid access.");
     }
-    return *m_rayObject; // Déréférencement du pointeur
+    return *m_rayObjectPtr;
 }
 
-Point Computations::GetPoint() const { return m_point; }
+const Point Computations::GetPoint() const { return m_point; }
 
-Vector Computations::GetEye() const { return m_eye; }
+const Vector Computations::GetEye() const { return m_eye; }
 
-Vector Computations::GetNormal() const { return m_normal; }
+const Vector Computations::GetNormal() const { return m_normal; }
 
-bool Computations::GetInside() const { return m_inside; }
+const bool Computations::GetInside() const { return m_inside; }
 
-Point Computations::GetOverPoint() const { return m_overPoint; }
+const Point Computations::GetOverPoint() const { return m_overPoint; }
 
-Point Computations::GetUnderPoint() const { return m_underPoint; }
+const Point Computations::GetUnderPoint() const { return m_underPoint; }
 
-Vector Computations::GetReflectVector() const { return m_reflectVector; }
+const Vector Computations::GetReflectVector() const { return m_reflectVector; }
 
-float Computations::GetN1() const { return m_n1; }
+const float Computations::GetN1() const { return m_n1; }
 
-float Computations::GetN2() const { return m_n2; }
+const float Computations::GetN2() const { return m_n2; }
 
 
-// Member-functions
-Computations Computations::Prepare(Intersection const& i, Ray const& ray, std::vector<Intersection> const* xs) {
+// Member functions
+Computations Computations::Prepare(Intersection const& hit, Ray const& ray, std::vector<Intersection> const* xs) {
     Computations c;
-    c.m_rayObject = i.getObjPtr();
-    c.m_t = i.getLength();
-    c.m_point = ray.position(i.getLength());
-    c.m_eye = -ray.getDirection().Normalized();
-    c.m_normal = i.getObj().GetNormal(c.m_point, i).Normalized();
-    c.m_n1 = RefractiveIndex::Vacuum;
-    c.m_n2 = RefractiveIndex::Vacuum;
 
+    if (hit.IsEmpty()) { return c; }
+
+    c.m_t = hit.getLength();
+    c.m_rayObjectPtr = hit.getObjPtr();
+    c.m_point = ray.position(hit.getLength());
+    c.m_eye = -ray.getDirection().Normalized();
+    c.m_normal = hit.getObj().GetNormal(c.m_point, hit).Normalized();
+    c.m_inside = false;
     if (c.m_normal.Dot(c.m_eye) < 0) {
         c.m_inside = true;
-        c.m_normal = -c.m_normal;
-    }
-    else {
-        c.m_inside = false;
-    }
+        c.m_normal = -c.m_normal; }
+    c.m_overPoint = c.m_point + c.m_normal * Utils::GetEpsilon();
+    c.m_underPoint = c.m_point - c.m_normal * Utils::GetEpsilon();
+    c.m_reflectVector = Vector::Reflect(ray.getDirection(), c.m_normal);
+    c.m_n1 = RefractiveIndex::Vacuum;
+    c.m_n2 = RefractiveIndex::Vacuum;
 
     // Transparency Intersections algorithm
     if (xs != nullptr) {
         std::vector<const RayObject*> container;
-
         for (Intersection const& intersection : *xs) {
             // Déterminer m_n1
-            if (&intersection == &i) {
+            if (&intersection == &hit) {
                 c.m_n1 = container.empty() ? RefractiveIndex::Vacuum : container.back()->GetMaterial().GetRefractiveIndex();
             }
 
-            // Mettre à jour containers
+            // Mettre à jour container
             const RayObject* obj = intersection.getObjPtr();
             auto it = std::find(container.begin(), container.end(), obj);
             if (it != container.end()) {
@@ -101,16 +90,11 @@ Computations Computations::Prepare(Intersection const& i, Ray const& ray, std::v
             }
 
             // Déterminer m_n2
-            if (&intersection == &i) {
+            if (&intersection == &hit) {
                 c.m_n2 = container.empty() ? RefractiveIndex::Vacuum : container.back()->GetMaterial().GetRefractiveIndex();
                 break;
             }
         }
     }
-    
-
-    c.m_reflectVector = Vector::Reflect(ray.getDirection(), c.m_normal);
-    c.m_overPoint = c.m_point + c.m_normal * Utils::GetEpsilon();
-    c.m_underPoint = c.m_point - c.m_normal * Utils::GetEpsilon();
     return c;
 }

@@ -12,16 +12,12 @@ public:
 
 
 	// Destructor
-	~RayObject_for_Test();
+	~RayObject_for_Test() = default;
 
-
-	// Operators
+	// Member functions
 	RayObject_for_Test& operator=(RayObject_for_Test const& other);
 	RayObject_for_Test& operator=(RayObject_for_Test&& other) noexcept;
-
-
-	// Member-functions
-	std::vector<Intersection> Intersect(Ray ray) override;
+	std::vector<Intersection> Intersect(Ray const& ray) override;
 	Vector GetNormal(Point const& worldPoint, Intersection const& i) const override;
 	Vector CalculateLocalNormal(Point const& localPoint, Intersection const& i) const override;
 };

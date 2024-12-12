@@ -21,41 +21,38 @@ private :
 public:
 	// Constructors
 	Scene();
-	Scene(std::vector<Light*> lights, std::vector<RayObject*> rayObjects);
-	Scene(Scene const& other);
-	Scene(Scene&& other) noexcept;
 
-	// Destructors
+
+	// Destructor
 	~Scene();
 
+
 	//Accessors
-	std::vector<Light*> GetLights();
-	std::vector<RayObject*> GetRayObjects();
 	static Scene* GetCurrentScene(); // Renvoie l'instance actuelle
-	static void ResetCurrentScene(); // Détruit l'ancienne instance
+	std::vector<Light*> GetLights();
+	std::vector<RayObject*> GetRayObjects();	
 
-	// Operators
+
+	// Member functions
 	friend std::ostream& operator<<(std::ostream& flux, Scene const& scene);
-
-	// Member-functions
-	//void DefaultScene();
+	void DefaultScene();
+	static void ResetCurrentScene(); // Détruit l'ancienne instance
 	void ClearLights();
 	void ClearRayObjects();
 	void Clear();
-	void RemoveLight(Light& light);
-	void RemoveRayObject(RayObject& rayObject);
+	void RemoveLight(Light const& light);
+	void RemoveRayObject(RayObject const& rayObject);
 	void AddLight(Light& light);
 	void AddRayObject(RayObject& rayObject);
-	std::vector<Intersection> Intersections(Ray ray);
-	Intersection Hit(std::vector<Intersection> intersections);
-	
-	bool IsShadowed(Point point, Light light);
-	Color ShadeHit(Computations c, int remaining = 1);
-	Color ColorAt(Ray ray, int remaining = 1);
-	Ray RayForPixel(Camera camera, int x, int y);
-	Canvas Render(Camera camera, int remaining = 1);
-	Color ReflectedColor(Computations c, int remaining = 1);
-	Color RefractedColor(Computations c, int remaining = 1);
-	float Schlick(Computations c);
+	std::vector<Intersection> Intersections(Ray const& ray);
+	Intersection Hit(std::vector<Intersection> const& intersections);
+	Ray RayForPixel(Camera const& camera, int x, int y);
+	Color ColorAt(Ray const& ray, int remaining = 1);
+	Color ShadeHit(Computations const& c, int remaining = 1);
+	bool IsShadowed(Point const& point, Light const& light);
+	Color ReflectedColor(Computations const& c, int remaining = 1);
+	Color RefractedColor(Computations const& c, int remaining = 1);
+	float Schlick(Computations const& c);
+	Canvas Render(Camera const& camera, int remaining = 1);
 };
 

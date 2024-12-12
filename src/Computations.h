@@ -10,7 +10,7 @@ class Computations
 {
 private:
 	float m_t;
-	const RayObject* m_rayObject;
+	const RayObject* m_rayObjectPtr;
 	Point m_point;
 	Vector m_eye;
 	Vector m_normal;
@@ -24,26 +24,28 @@ private:
 public:
 	// Constructors
 	Computations();
-	Computations(RayObject &rayObject, float &t, Point &point, Vector &eye, Vector &normal, bool inside);
+
 
 	// Destructor
-	~Computations();
+	~Computations() = default;
+
 
 	// Accessors
-	float GetLength() const;
+	const float GetLength() const;
 	const RayObject* GetRayObjectPtr() const;
 	const RayObject& GetRayObject() const;
-	Point GetPoint() const;
-	Vector GetEye() const;
-	Vector GetNormal() const;
-	bool GetInside() const;
-	Point GetOverPoint() const;
-	Point GetUnderPoint() const;
-	Vector GetReflectVector() const;
-	float GetN1() const;
-	float GetN2() const;
+	const Point GetPoint() const;
+	const Vector GetEye() const;
+	const Vector GetNormal() const;
+	const bool GetInside() const;
+	const Point GetOverPoint() const;
+	const Point GetUnderPoint() const;
+	const Vector GetReflectVector() const;
+	const float GetN1() const;
+	const float GetN2() const;
 
-	// Member-functions
-	static Computations Prepare(Intersection const& i, Ray const& ray, std::vector<Intersection> const* xs);//NOTE : Comment mettre une valeur pas défaut à 0 pour xs ?
+
+	// Member functions
+	static Computations Prepare(Intersection const& hit, Ray const& ray, std::vector<Intersection> const* xs = nullptr);
 };
 

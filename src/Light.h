@@ -19,21 +19,23 @@ public:
 	Light(Light const& other);
 	Light(Light&& other) noexcept;
 	
+
 	// Destructor
-	~Light();
+	~Light();// = default;
+
 
 	// Accessors
 	int static GetNbInstances();
 	int GetId() const;
 	Color GetIntensity() const;
 	Point GetPosition() const;
-	void SetIntensity(Color color);
-	void SetPosition(Point position);
+	void SetIntensity(Color const& color);
+	void SetPosition(Point const& position);
 
-	// Operators
+
+	// Member functions
 	Light& operator=(Light const& other);
 	Light& operator=(Light&& other) noexcept;
 	bool operator==(Light const& other) const;
 	friend std::ostream& operator<<(std::ostream& flux, Light const& light);
 };
-

@@ -1,44 +1,33 @@
 #include <algorithm> // Pour std::max
+
 #include "Material.h"
 
 // Constructors
 Material::Material() :
     m_color(Color::white),
-    m_ambient(0.1),            // [0; 1] normalement
-    m_diffuse(0.9),            // [0; 1] normalement
-    m_specular(0.9),           // [0; 1] normalement
-    m_shininess(200),          // [10; 200] normalement
-    m_reflectivity(0.0),       // [0; 1] normalement
-    m_refractiveIndex(1.0f),   // RefractiveIndex.Air;
-    m_transparency(0.0)       // [0; 1] normalement
-    //m_pattern(null),
+    m_ambient(0.1f),            // [0; 1] normalement
+    m_diffuse(0.9f),            // [0; 1] normalement
+    m_specular(0.9f),           // [0; 1] normalement
+    m_shininess(200.0f),        // [10; 200] normalement
+    m_reflectivity(0.0f),       // [0; 1] normalement
+    m_refractiveIndex(1.0f),    // RefractiveIndex.Air;
+    m_transparency(0.0f)        // [0; 1] normalement
+    //m_pattern(null)
 {}
 
-Material::Material(Color color, float ambient, float diffuse, float specular, float shininess, float reflectivity, float refractiveIndex, float transparency) :
+Material::Material(Color const& color, float ambient, float diffuse, float specular, float shininess, float reflectivity, float refractiveIndex, float transparency) :
     m_color(color),
-    m_ambient(ambient),            // [0; 1] normalement
-    m_diffuse(diffuse),            // [0; 1] normalement
-    m_specular(specular),           // [0; 1] normalement
-    m_shininess(shininess),          // [10; 200] normalement
-    m_reflectivity(reflectivity),       // [0; 1] normalement
-    m_refractiveIndex(refractiveIndex),   // RefractiveIndex.Air;
-    m_transparency(transparency)       // [0; 1] normalement
-    //m_pattern(null),
+    m_ambient(ambient),
+    m_diffuse(diffuse),
+    m_specular(specular),
+    m_shininess(shininess),
+    m_reflectivity(reflectivity),
+    m_refractiveIndex(refractiveIndex),
+    m_transparency(transparency)
+    //m_pattern(null)
 {}
 
-Material::Material(Material const& other) {
-    m_color = other.m_color;
-    m_ambient = other.m_ambient;
-    m_diffuse = other.m_diffuse;
-    m_specular = other.m_specular;
-    m_shininess = other.m_shininess;
-    m_reflectivity = other.m_reflectivity;
-    m_refractiveIndex = other.m_refractiveIndex;
-    m_transparency = other.m_transparency;
-    //m_pattern = other.m_pattern;
-}
-
-Material::Material(Material&& other) noexcept :
+Material::Material(Material const& other) :
     m_color(other.m_color),
     m_ambient(other.m_ambient),
     m_diffuse(other.m_diffuse),
@@ -47,23 +36,31 @@ Material::Material(Material&& other) noexcept :
     m_reflectivity(other.m_reflectivity),
     m_refractiveIndex(other.m_refractiveIndex),
     m_transparency(other.m_transparency)
-    //m_pattern(other.m_pattern) 
+    //m_pattern = other.m_pattern
+{}
+
+Material::Material(Material&& other) noexcept :
+    m_color(std::move(other.m_color)),
+    m_ambient(std::move(other.m_ambient)),
+    m_diffuse(std::move(other.m_diffuse)),
+    m_specular(std::move(other.m_specular)),
+    m_shininess(std::move(other.m_shininess)),
+    m_reflectivity(std::move(other.m_reflectivity)),
+    m_refractiveIndex(std::move(other.m_refractiveIndex)),
+    m_transparency(std::move(other.m_transparency))
+    //m_pattern(std::move(other.m_pattern)) 
     {
-    // Réinitialise l'objet source pour éviter des doublons
+    // Reset source object pour éviter des doublons
     other.m_color = Color();
-    other.m_ambient = 0.1;
-    other.m_diffuse = 0.9;
-    other.m_specular = 0.9;
-    other.m_shininess = 200;
-    other.m_reflectivity = 0.0;
-    other.m_refractiveIndex = 1.0;
-    other.m_transparency = 0.0;
-    //other.m_pattern = null;
+    other.m_ambient = 0.0f;
+    other.m_diffuse = 0.0f;
+    other.m_specular = 0.0f;
+    other.m_shininess = 0.0f;
+    other.m_reflectivity = 0.0f;
+    other.m_refractiveIndex = 0.0f;
+    other.m_transparency = 0.0f;
+    //other.m_pattern = nullptr;
 }
-
-
-// Destructors
-Material::~Material() {}
 
 
 // Accessors
@@ -77,14 +74,25 @@ float Material::GetRefractiveIndex() const {return m_refractiveIndex;}
 float Material::GetTransparency() const {return m_transparency;}
 //Pattern Material::GetPattern() const {return m_pattern;}
 
+void Material::SetColor(Color const& color) {m_color = color;}
 
-void Material::SetColor(Color color) {m_color = color;}
+void Material::SetAmbient(float ambient) {
+    if (ambient < 0.0f) { m_ambient = 0.0f; }
+    else if (ambient > 1.0f) { m_ambient = 1.0f; }
+    else { m_ambient = ambient; }
+}
 
-void Material::SetAmbient(float ambient) {m_ambient = std::max(ambient, 0.0f);}
+void Material::SetDiffuse(float diffuse) {
+    if (diffuse < 0.0f) { m_diffuse = 0.0f; }
+    else if (diffuse > 1.0f) { m_diffuse = 1.0f; }
+    else { m_diffuse = diffuse; }
+}
 
-void Material::SetDiffuse(float diffuse) {m_diffuse = std::max(diffuse, 0.0f);}
-
-void Material::SetSpecular(float specular) {m_specular = std::max(specular, 0.0f);}
+void Material::SetSpecular(float specular) {
+    if (specular < 0.0f) { m_specular = 0.0f; }
+    else if (specular > 1.0f) { m_specular = 1.0f; }
+    else { m_specular = specular; }
+}
 
 void Material::SetShininess(float shininess) {
     if (shininess < 10.0f) {m_shininess = 10.0f;}
@@ -107,7 +115,7 @@ void Material::SetTransparency(float transparency) {
 }
 
 
-// Operators
+// Member functions
 Material& Material::operator=(Material const& other) {
     if (this != &other) {//On vérifie que l'objet n'est pas le même que celui reçu en argument
         m_color = other.m_color;
@@ -134,15 +142,15 @@ Material& Material::operator=(Material&& other) noexcept {
         m_refractiveIndex = other.m_refractiveIndex;
         m_transparency = other.m_transparency;
         //m_pattern = other.m_pattern;
-        // Réinitialise l'objet source
+        // Reset source object
         other.m_color = Color();
-        other.m_ambient = 0.1;
-        other.m_diffuse = 0.9;
-        other.m_specular = 0.9;
-        other.m_shininess = 200;
-        other.m_reflectivity = 0.0;
-        other.m_refractiveIndex = 1.0;
-        other.m_transparency = 0.0;
+        other.m_ambient = 0.0f;
+        other.m_diffuse = 0.0f;
+        other.m_specular = 0.0f;
+        other.m_shininess = 0.0f;
+        other.m_reflectivity = 0.0f;
+        other.m_refractiveIndex = 0.0f;
+        other.m_transparency = 0.0f;
         //other.m_pattern = null;
     }
     return *this;
@@ -165,8 +173,6 @@ std::ostream& operator<<(std::ostream& flux, Material const& material) {
     return flux;
 }
 
-
-// Member-functions
 void Material::afficher(std::ostream& flux) const {
     flux << "Material -> Color : " << m_color <<
         ", Ambient: " << m_ambient <<

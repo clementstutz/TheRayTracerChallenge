@@ -14,19 +14,24 @@ public:
 	// Constructors
 	Ray(Point origin, Vector direction);
 	Ray(Ray const& other);
+	Ray(Ray&& other) noexcept;
+
 
 	// Destructor
-	~Ray();
+	~Ray() = default;
 
-	// Accesseurs
+
+	// Accessors
 	Point getOrigin() const;
 	Vector getDirection() const;
 
-	// Operators
-	friend std::ostream& operator<<(std::ostream& flux, Ray const& ray);
-	bool operator==(Ray const& other) const;
-	Ray& operator*=(Mat4 const& mat);
 
+	// Member functions
+	bool operator==(Ray const& other) const;
+	Ray& operator=(Ray const& other);
+	Ray& operator=(Ray&& other) noexcept;
+	Ray& operator*=(Mat4 const& mat);
+	friend std::ostream& operator<<(std::ostream& flux, Ray const& ray);
 	Point position(float t) const;
 };
 

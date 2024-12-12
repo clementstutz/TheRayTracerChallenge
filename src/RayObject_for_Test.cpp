@@ -5,33 +5,29 @@
 // Constructors
 RayObject_for_Test::RayObject_for_Test() : RayObject() {}
 
-RayObject_for_Test::RayObject_for_Test(RayObject_for_Test const& other) : RayObject(other) {}
+RayObject_for_Test::RayObject_for_Test(RayObject_for_Test const& other) :
+    RayObject(other) {}
 
-RayObject_for_Test::RayObject_for_Test(RayObject_for_Test&& other) noexcept : RayObject(std::move(other)) {}
-
-
-// Destructor
-RayObject_for_Test::~RayObject_for_Test() {}
+RayObject_for_Test::RayObject_for_Test(RayObject_for_Test&& other) noexcept :
+    RayObject(std::move(other)) {}
 
 
-// Operators
+// Member functions
 RayObject_for_Test& RayObject_for_Test::operator=(RayObject_for_Test const& other) {
-    if (this != &other) { // Vérification d'auto-affectation
+    if (this != &other) {
         RayObject::operator=(other); // Appelle l'opérateur d'affectation par copie de la classe mère
     }
     return *this;
 }
 
 RayObject_for_Test& RayObject_for_Test::operator=(RayObject_for_Test&& other) noexcept {
-    if (this != &other) { // Vérification d'auto-affectation
+    if (this != &other) {
         RayObject::operator=(std::move(other)); // Appelle l'opérateur d'affectation par déplacement de la classe mère
     }
     return *this;
 }
 
-
-// Member-functions
-std::vector<Intersection> RayObject_for_Test::Intersect(Ray ray) {
+std::vector<Intersection> RayObject_for_Test::Intersect(Ray const& ray) {
     std::vector<Intersection> intersectionPoints;
     intersectionPoints.push_back(Intersection(*this, 1.0f));
     return intersectionPoints;

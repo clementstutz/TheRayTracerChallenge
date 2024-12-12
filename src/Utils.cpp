@@ -4,10 +4,10 @@
 
 float Utils::GetEpsilon() { return Utils::EPSILON; }
 
+float Utils::GetPI() { return Utils::PI; }
+
 bool Utils::FE(float const& a, float const& b) {
-	float temp = std::abs(a - b);
-	bool c = temp <= Utils::EPSILON;
-	return c;
+	return std::abs(a - b) <= Utils::EPSILON;
 }
 
 float Utils::degToRad(float degrees) {

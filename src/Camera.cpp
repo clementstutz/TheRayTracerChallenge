@@ -1,5 +1,6 @@
 #include "Camera.h"
 
+// Constructors
 Camera::Camera(int hSize, int vSize, float fieldOfView) : 
     m_hSize(hSize),
     m_vSize(vSize),
@@ -8,20 +9,18 @@ Camera::Camera(int hSize, int vSize, float fieldOfView) :
     CalculatePixelSize();
 }
 
-int Camera::GetHSize() const {return m_hSize;}
 
-int Camera::GetVSize() const{return m_vSize;}
+// Accessors
+const int Camera::GetHSize() const { return m_hSize; }
+const int Camera::GetVSize() const{ return m_vSize; }
+const float Camera::GetFov() const{ return m_fov; }
+const Mat4 Camera::GetTransform() const { return m_transform; }
+const float Camera::GetPixelSize() const{ return m_pixelSize; }
+const float Camera::GetHalfWidth() const{ return m_halfWidth; }
+const float Camera::GetHalfHeight() const { return m_halfHeight; }
 
-float Camera::GetFov() const{return m_fov;}
 
-Mat4 Camera::GetTransform() const {return m_transform;}
-
-float Camera::GetPixelSize() const{return m_pixelSize;}
-
-float Camera::GetHalfWidth() const{return m_halfWidth;}
-
-float Camera::GetHalfHeight() const { return m_halfHeight; }
-
+// Member functions
 void Camera::CalculatePixelSize() {
     float halfView = std::tan(m_fov / 2.0);
     float aspect = static_cast<float>(m_hSize) / static_cast<float>(m_vSize);
@@ -34,7 +33,7 @@ void Camera::CalculatePixelSize() {
         m_halfWidth = halfView * aspect;
         m_halfHeight = halfView;
     }
-    m_pixelSize = (m_halfWidth * 2.0) / m_hSize;
+    m_pixelSize = (m_halfWidth * 2.0f) / m_hSize;
 }
 
 Mat4 Camera::ViewTransform(Point from, Point to, Vector up) {

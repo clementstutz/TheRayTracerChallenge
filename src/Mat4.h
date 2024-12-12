@@ -1,6 +1,5 @@
 #pragma once
 #include <ostream>
-//#include "Utils.h"
 #include "Point.h"
 #include "Vector.h"
 
@@ -12,27 +11,36 @@ private:
 	void afficher(std::ostream& flux) const;
 
 public:
-	// Constructeurs
-	Mat4(float m00 = 1.0, float m01 = 0.0, float m02 = 0.0, float m03 = 0.0,
-		 float m10 = 0.0, float m11 = 1.0, float m12 = 0.0, float m13 = 0.0,
-		 float m20 = 0.0, float m21 = 0.0, float m22 = 1.0, float m23 = 0.0,
-		 float m30 = 0.0, float m31 = 0.0, float m32 = 0.0, float m33 = 1.0);
+	// Constructors
+	Mat4(float m00 = 1.0f, float m01 = 0.0f, float m02 = 0.0f, float m03 = 0.0f,
+		 float m10 = 0.0f, float m11 = 1.0f, float m12 = 0.0f, float m13 = 0.0f,
+		 float m20 = 0.0f, float m21 = 0.0f, float m22 = 1.0f, float m23 = 0.0f,
+		 float m30 = 0.0f, float m31 = 0.0f, float m32 = 0.0f, float m33 = 1.0f);
 	Mat4(Mat4 const& other);
+	Mat4(Mat4&& other) noexcept;
 
-	// Accesseurs
-	float(&operator[](int row))[4];			//setter
+
+	// Destructor
+	~Mat4() = default;
+
+
+	// Accessors
+	float(&operator[](int row))[4];				//setter
 	const float(&operator[](int row) const)[4];	//getter
 
-	// Opérateurs
+
+	// Member functions
 	bool operator==(Mat4 const& other) const;
 
 	Mat4& operator=(Mat4 const& other);
+
+	Mat4& operator=(Mat4&& other) noexcept;
 
 	Mat4& operator+=(Mat4 const& other);
 
 	Mat4& operator-=(Mat4 const& other);
 
-	template <typename T>
+	template <typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
 	Mat4& operator*=(T const& scalar) {
 		float f_scalar = static_cast<float>(scalar);
 		m_mat[0][0] *= f_scalar;
@@ -59,12 +67,9 @@ public:
 
 	Mat4& operator*=(Mat4 const& other);
 
-	//Mat4 operator*(const Mat4& other) const;
-
 	friend std::ostream& operator<<(std::ostream& os, const Mat4& mat);
 
-	// fonctions-membres
-	void transpose();
+	Mat4& transpose();
 
 	Mat4 transposed() const;
 
@@ -106,19 +111,21 @@ public:
 
 	static Mat4 ShearMatrix(float xy, float xz, float yx, float yz, float zx, float zy);
 	Mat4& Shear(float xy, float xz, float yx, float yz, float zx, float zy);
-
 };
 
 bool operator!=(const Mat4& mat_a, const Mat4& mat_b);
-
 Mat4 operator+(Mat4 const& a, Mat4 const& b);
 Mat4 operator-(Mat4 const& a, Mat4 const& b);
-
-template <typename T>
+Mat4 operator*(Mat4 const& a, Mat4 const& b);
+template <typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
 Mat4 operator*(Mat4 const& a, T const& scalar) {
 	Mat4 copy(a);
 	copy.Mat4::operator*=(scalar);
 	return copy;
 }
-
-Mat4 operator*(Mat4 const& a, Mat4 const& b);
+template <typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
+Mat4 operator*(T const& scalar, Mat4 const& a) {
+	Mat4 copy(a);
+	copy.Mat4::operator*=(scalar);
+	return copy;
+}

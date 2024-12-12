@@ -2,11 +2,11 @@
 #include "Color.h"
 
 namespace RefractiveIndex {
-    constexpr float Vacuum = 1.0;
-    constexpr float Air = 1.000293;
-    constexpr float Water = 1.333;
-    constexpr float Glass = 1.52;
-    constexpr float Diamond = 2.417;
+    constexpr float Vacuum = 1.0f;
+    constexpr float Air = 1.000293f;
+    constexpr float Water = 1.333f;
+    constexpr float Glass = 1.52f;
+    constexpr float Diamond = 2.417f;
 }
 
 class Material
@@ -27,12 +27,13 @@ private:
 public:
 	// Constructors
 	Material();
-    Material(Color color, float ambient=0.1f, float diffuse=0.9f, float specular = 0.9f, float shininess = 200.0f, float reflectivity = 0.0f, float refractiveIndex = 1.0f, float transparency = 0.0f);//, Pattern pattern);
+    Material(Color const& color, float ambient=0.1f, float diffuse=0.9f, float specular = 0.9f, float shininess = 200.0f, float reflectivity = 0.0f, float refractiveIndex = 1.0f, float transparency = 0.0f);//, Pattern pattern);
     Material(Material const& other);
 	Material(Material&& other) noexcept;
 
+
 	// Destructor
-	~Material();
+	~Material() = default;
 
 
     // Accessors
@@ -45,7 +46,7 @@ public:
     float GetRefractiveIndex() const;
     float GetTransparency() const;
     //Pattern GetPattern() const;
-    void SetColor(Color color);
+    void SetColor(Color const& color);
     void SetAmbient(float ambient);
     void SetDiffuse(float diffuse);
     void SetSpecular(float specular);
@@ -55,10 +56,9 @@ public:
     void SetTransparency(float transparency);
     //void SetPattern(Pattern pattern);
 
-    // Operators
+    // Member functions
     Material& operator=(Material const& other);
     Material& operator=(Material&& other) noexcept;
     bool operator==(Material const& other) const;
     friend std::ostream& operator<<(std::ostream& flux, Material const& material);
 };
-

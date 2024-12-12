@@ -1,12 +1,13 @@
 #include <iostream>
+
 #include "Save.h"
 
-void Save::saveCanvas(Canvas const& canvas, std::string const& filename) {
+void Save::saveCanvas(Canvas const& canvas, std::string filename) {
 	createPPM(canvas, filename);
 	//ffmpeg -y -loglevel 0 -i filename + '.ppm' filename + '.png';
 }
 
-void Save::createPPM(Canvas const& canvas, std::string filename) {
+void Save::createPPM(Canvas const& canvas, std::string& filename) {
 	filename += ".ppm";
 	std::ofstream file(filename, std::ios::out | std::ios::trunc);  //On essaye d'ouvrir le fichier
 
@@ -41,7 +42,7 @@ void Save::writePPMBody(Canvas const& canvas, int maxValue, std::ofstream& flux)
 	const int maxLineLength = 70; // Limitation des lignes à 70 caractères
 	std::string currentLine;      // Accumule les pixels pour la ligne actuelle
 
-	for (int y = 0; y < height; ++y) {
+	for (int y = 0; y < height; ++y) {  // 1: (int y = 0; y < height; ++y) -or-  2 :(int y = height-1; y >= 0; --y)
 		for (int x = 0; x < width; ++x) {
 			const Color& pixel = canvas.getPixel(x, y);
 

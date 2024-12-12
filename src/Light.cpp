@@ -4,91 +4,65 @@
 int Light::m_currentId = 0;
 
 // Constructors
-Light::Light() {
-    /*if (Scene.current != null) {
-        Scene.current.AddLight(this);
-    }*/
-    m_id = ++m_currentId;
-    m_intensity = Color(1, 1, 1);
-    m_position = Point(0, 0, 0);
-    
-    Scene* currentScene = Scene::GetCurrentScene();
-    if (currentScene != nullptr) {
-        //this.SetParent(Scene::current.root);
-        currentScene->AddLight(*this);
+Light::Light() :
+    m_id(++m_currentId),
+    m_intensity(Color(1, 1, 1)),
+    m_position(Point(0, 0, 0)) {
+    if (Scene::GetCurrentScene() != nullptr) {
+        Scene::GetCurrentScene()->AddLight(*this);
     }
 }
 
-Light::Light(Point position, Color intensity) {
-    /*if (Scene.current != null)
-    {
-        Scene.current.AddLight(this);
-    }*/
-    m_id = m_currentId++;
-    m_intensity = intensity;
-    m_position = position;
-
-    Scene* currentScene = Scene::GetCurrentScene();
-    if (currentScene != nullptr) {
-        //this.SetParent(Scene::current.root);
-        currentScene->AddLight(*this);
+Light::Light(Point position, Color intensity) :
+    m_id(++m_currentId),
+    m_intensity(intensity),
+    m_position(position) {
+    if (Scene::GetCurrentScene() != nullptr) {
+        Scene::GetCurrentScene()->AddLight(*this);
     }
 }
 
-Light::Light(Light const& other) {
-    m_id = ++m_currentId;
-    m_intensity = other.m_intensity;
-    m_position = other.m_position;
-
-    Scene* currentScene = Scene::GetCurrentScene();
-    if (currentScene != nullptr) {
-        //this.SetParent(Scene::current.root);
-        currentScene->AddLight(*this);
+Light::Light(Light const& other) :
+    m_id(++m_currentId),
+    m_intensity(other.m_intensity),
+    m_position(other.m_position) {
+    if (Scene::GetCurrentScene() != nullptr) {
+        Scene::GetCurrentScene()->AddLight(*this);
     }
 }
 
 Light::Light(Light&& other) noexcept :
-    m_id(other.m_id),
-    m_intensity(other.m_intensity),
-    m_position(other.m_position) {
-    // Réinitialise l'objet source pour éviter des doublons
-    other.m_id = 0; // Réinitialise l'ID de l'objet source
+    m_id(std::move(other.m_id)),
+    m_intensity(std::move(other.m_intensity)),
+    m_position(std::move(other.m_position)) {
+    // Reset source object pour éviter des doublons
+    other.m_id = 0;
     other.m_intensity = Color();
     other.m_position = Point();
-
-    Scene* currentScene = Scene::GetCurrentScene();
-    if (currentScene != nullptr) {
-        //this.SetParent(Scene::current.root);
-        currentScene->AddLight(*this);
+    if (Scene::GetCurrentScene() != nullptr) {
+        Scene::GetCurrentScene()->AddLight(*this);
     }
 }
 
 
 // Destructor
 Light::~Light() {
-    Scene* currentScene = Scene::GetCurrentScene();
-    if (currentScene != nullptr) {
-        //this.SetParent(Scene::current.root);
-        currentScene->RemoveLight(*this);
+    if (Scene::GetCurrentScene() != nullptr) {
+        Scene::GetCurrentScene()->RemoveLight(*this);
     }
 }
 
 
 // Accessors
 int Light::GetNbInstances() { return m_currentId; };
-
 int Light::GetId() const { return m_id; }
-
 Color Light::GetIntensity() const { return m_intensity; }
-
 Point Light::GetPosition() const { return m_position; }
-
-void Light::SetIntensity(Color color) { m_intensity = color; }
-
-void Light::SetPosition(Point position) { m_position = position; }
+void Light::SetIntensity(Color const& color) { m_intensity = color; }
+void Light::SetPosition(Point const& position) { m_position = position; }
 
 
-// Operators
+// Member functions
 Light& Light::operator=(Light const& other) {
     if (this != &other) {//On vérifie que l'objet n'est pas le même que celui reçu en argument
         m_intensity = other.m_intensity;
@@ -99,10 +73,9 @@ Light& Light::operator=(Light const& other) {
 
 Light& Light::operator=(Light&& other) noexcept {
     if (this != &other) {
-        m_intensity = other.m_intensity;
-        m_position = other.m_position;
-        // Réinitialise l'objet source
-        other.m_id = 0;
+        m_intensity = std::move(other.m_intensity);
+        m_position = std::move(other.m_position);
+        // Reset source object
         other.m_intensity = Color();
         other.m_position = Point();
     }
@@ -120,8 +93,6 @@ std::ostream& operator<<(std::ostream& flux, Light const& light) {
     return flux;
 }
 
-
-// Member-functions
 void Light::afficher(std::ostream& flux) const {
     flux << "Light (id: " << m_id << ", position: " << m_position << ", intensity: " << m_intensity << ")";
 }

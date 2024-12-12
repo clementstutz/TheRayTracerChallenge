@@ -1,10 +1,11 @@
-#include<cmath>
+#include <cmath>
 #include <iomanip> // Pour std::fixed et std::setprecision
+
 #include "Mat4.h"
 #include "Utils.h"
 #include "Mat2.h"
 
-// Constructeurs
+// Constructors
 Mat4::Mat4(float m00, float m01, float m02, float m03,
 		   float m10, float m11, float m12, float m13,
 		   float m20, float m21, float m22, float m23,
@@ -52,8 +53,58 @@ Mat4::Mat4(Mat4 const& other) {
 	m_mat[3][3] = other.m_mat[3][3];
 }
 
+Mat4::Mat4(Mat4&& other) noexcept {
+	m_mat[0][0] = std::move(other.m_mat[0][0]);
+	m_mat[0][1] = std::move(other.m_mat[0][1]);
+	m_mat[0][2] = std::move(other.m_mat[0][2]);
+	m_mat[0][3] = std::move(other.m_mat[0][3]);
+
+	m_mat[1][0] = std::move(other.m_mat[1][0]);
+	m_mat[1][1] = std::move(other.m_mat[1][1]);
+	m_mat[1][2] = std::move(other.m_mat[1][2]);
+	m_mat[1][3] = std::move(other.m_mat[1][3]);
+
+	m_mat[2][0] = std::move(other.m_mat[2][0]);
+	m_mat[2][1] = std::move(other.m_mat[2][1]);
+	m_mat[2][2] = std::move(other.m_mat[2][2]);
+	m_mat[2][3] = std::move(other.m_mat[2][3]);
+
+	m_mat[3][0] = std::move(other.m_mat[3][0]);
+	m_mat[3][1] = std::move(other.m_mat[3][1]);
+	m_mat[3][2] = std::move(other.m_mat[3][2]);
+	m_mat[3][3] = std::move(other.m_mat[3][3]);
+
+	// Reset source object pour éviter des doublons
+	other = Mat4();
+}
+
+
+// Accessors
+float(&Mat4::operator[](int row))[4]{
+	if (row < 0 || row >= 4) {
+		throw std::out_of_range("Index hors limites pour Mat4.");
+	}
+	return m_mat[row];
+}
+
+const float(&Mat4::operator[](int row) const)[4]{
+	if (row < 0 || row >= 4) {
+		throw std::out_of_range("Index hors limites pour Mat4.");
+	}
+	return m_mat[row];
+}
+
+
+// Member functions
+bool Mat4::operator==(Mat4 const& other) const {
+	return Utils::FE(m_mat[0][0], other.m_mat[0][0]) && Utils::FE(m_mat[0][1], other.m_mat[0][1]) && Utils::FE(m_mat[0][2], other.m_mat[0][2]) && Utils::FE(m_mat[0][3], other.m_mat[0][3]) &&
+		   Utils::FE(m_mat[1][0], other.m_mat[1][0]) && Utils::FE(m_mat[1][1], other.m_mat[1][1]) && Utils::FE(m_mat[1][2], other.m_mat[1][2]) && Utils::FE(m_mat[1][3], other.m_mat[1][3])&&
+		   Utils::FE(m_mat[2][0], other.m_mat[2][0]) && Utils::FE(m_mat[2][1], other.m_mat[2][1]) && Utils::FE(m_mat[2][2], other.m_mat[2][2]) && Utils::FE(m_mat[2][3], other.m_mat[2][3])&&
+		   Utils::FE(m_mat[3][0], other.m_mat[3][0]) && Utils::FE(m_mat[3][1], other.m_mat[3][1]) && Utils::FE(m_mat[3][2], other.m_mat[3][2]) && Utils::FE(m_mat[3][3], other.m_mat[3][3]);
+}
+
 Mat4& Mat4::operator=(Mat4 const& other) {
-	if (this != &other) {	//On vérifie que l'objet n'est pas le même que celui reçu en argument
+	if (this != &other) {
 		m_mat[0][0] = other.m_mat[0][0];
 		m_mat[0][1] = other.m_mat[0][1];
 		m_mat[0][2] = other.m_mat[0][2];
@@ -73,6 +124,52 @@ Mat4& Mat4::operator=(Mat4 const& other) {
 		m_mat[3][1] = other.m_mat[3][1];
 		m_mat[3][2] = other.m_mat[3][2];
 		m_mat[3][3] = other.m_mat[3][3];
+	}
+	return *this;
+}
+
+Mat4& Mat4::operator=(Mat4&& other) noexcept {
+	if (this != &other) {
+		m_mat[0][0] = std::move(other.m_mat[0][0]);
+		m_mat[0][1] = std::move(other.m_mat[0][1]);
+		m_mat[0][2] = std::move(other.m_mat[0][2]);
+		m_mat[0][3] = std::move(other.m_mat[0][3]);
+
+		m_mat[1][0] = std::move(other.m_mat[1][0]);
+		m_mat[1][1] = std::move(other.m_mat[1][1]);
+		m_mat[1][2] = std::move(other.m_mat[1][2]);
+		m_mat[1][3] = std::move(other.m_mat[1][3]);
+
+		m_mat[2][0] = std::move(other.m_mat[2][0]);
+		m_mat[2][1] = std::move(other.m_mat[2][1]);
+		m_mat[2][2] = std::move(other.m_mat[2][2]);
+		m_mat[2][3] = std::move(other.m_mat[2][3]);
+
+		m_mat[3][0] = std::move(other.m_mat[3][0]);
+		m_mat[3][1] = std::move(other.m_mat[3][1]);
+		m_mat[3][2] = std::move(other.m_mat[3][2]);
+		m_mat[3][3] = std::move(other.m_mat[3][3]);
+
+		// Reset source object
+		other.m_mat[0][0] = 0.0;
+		other.m_mat[0][1] = 0.0;
+		other.m_mat[0][2] = 0.0;
+		other.m_mat[0][3] = 0.0;
+
+		other.m_mat[1][0] = 0.0;
+		other.m_mat[1][1] = 0.0;
+		other.m_mat[1][2] = 0.0;
+		other.m_mat[1][3] = 0.0;
+
+		other.m_mat[2][0] = 0.0;
+		other.m_mat[2][1] = 0.0;
+		other.m_mat[2][2] = 0.0;
+		other.m_mat[2][3] = 0.0;
+
+		other.m_mat[3][0] = 0.0;
+		other.m_mat[3][1] = 0.0;
+		other.m_mat[3][2] = 0.0;
+		other.m_mat[3][3] = 0.0;
 	}
 	return *this;
 }
@@ -123,29 +220,6 @@ Mat4& Mat4::operator-=(Mat4 const& other) {
 	m_mat[3][3] = m_mat[3][3] - other.m_mat[3][3];
 
 	return *this;
-}
-
-// Accesseurs
-float(&Mat4::operator[](int row))[4]{
-	if (row < 0 || row >= 4) {
-		throw std::out_of_range("Index hors limites pour Mat4.");
-	}
-	return m_mat[row];
-}
-
-const float(&Mat4::operator[](int row) const)[4]{
-	if (row < 0 || row >= 4) {
-		throw std::out_of_range("Index hors limites pour Mat4.");
-	}
-	return m_mat[row];
-}
-
-// Opérateurs
-bool Mat4::operator==(Mat4 const& other) const {
-	return Utils::FE(m_mat[0][0], other.m_mat[0][0]) && Utils::FE(m_mat[0][1], other.m_mat[0][1]) && Utils::FE(m_mat[0][2], other.m_mat[0][2]) && Utils::FE(m_mat[0][3], other.m_mat[0][3]) &&
-		   Utils::FE(m_mat[1][0], other.m_mat[1][0]) && Utils::FE(m_mat[1][1], other.m_mat[1][1]) && Utils::FE(m_mat[1][2], other.m_mat[1][2]) && Utils::FE(m_mat[1][3], other.m_mat[1][3])&&
-		   Utils::FE(m_mat[2][0], other.m_mat[2][0]) && Utils::FE(m_mat[2][1], other.m_mat[2][1]) && Utils::FE(m_mat[2][2], other.m_mat[2][2]) && Utils::FE(m_mat[2][3], other.m_mat[2][3])&&
-		   Utils::FE(m_mat[3][0], other.m_mat[3][0]) && Utils::FE(m_mat[3][1], other.m_mat[3][1]) && Utils::FE(m_mat[3][2], other.m_mat[3][2]) && Utils::FE(m_mat[3][3], other.m_mat[3][3]);
 }
 
 Mat4& Mat4::operator*=(Mat4 const& other) {
@@ -255,7 +329,6 @@ std::ostream& operator<<(std::ostream& flux, const Mat4& mat) {
 	return flux;
 }
 
-// fonctions-membres
 void Mat4::afficher(std::ostream& flux) const {
 	//flux << std::fixed << std::setprecision(2); // Fixer l'affichage des floats avec 2 chiffres après la virgule
 	flux << "[[" << m_mat[0][0] << ", " << m_mat[0][1] << ", " << m_mat[0][2] << ", " << m_mat[0][3] << "], "
@@ -265,13 +338,14 @@ void Mat4::afficher(std::ostream& flux) const {
 	//flux << std::defaultfloat; // Restaurer le formatage par défaut après l'affichage
 }
 
-void Mat4::transpose() {
+Mat4& Mat4::transpose() {
 	std::swap(m_mat[0][1], m_mat[1][0]);
 	std::swap(m_mat[0][2], m_mat[2][0]);
 	std::swap(m_mat[0][3], m_mat[3][0]);
 	std::swap(m_mat[1][2], m_mat[2][1]);
 	std::swap(m_mat[1][3], m_mat[3][1]);
 	std::swap(m_mat[2][3], m_mat[3][2]);
+	return *this;
 }
 
 Mat4 Mat4::transposed() const {
@@ -300,7 +374,7 @@ float Mat4::det() {
 
 Mat4& Mat4::invert() {
 	float det = this->det();
-	if (det == 0.0f){// (Utils::FE(det, 0.0f)) {
+	if (Utils::FE(det, 0.0f)){
 		throw std::runtime_error("La matrice n'est pas inversible.");
 	}
 	float invDet = 1.0f;
@@ -525,7 +599,7 @@ Mat4& Mat4::Shear(float xy, float xz, float yx, float yz, float zx, float zy) {
 }
 
 
-//fonctions non-membres
+// Non-member functions
 bool operator!=(const Mat4& mat_a, const Mat4& mat_b) {
 	return !(mat_a == mat_b);
 }

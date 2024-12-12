@@ -2,17 +2,19 @@
 #include "Point.h"
 #include "Mat4.h"
 
-// Constructeurs
+// Constructors
 Vector::Vector(float x, float y, float z, float w) : Tuple(x, y, z, w) {}
 
 Vector::Vector(Vector const& other) : Tuple(other.getX(), other.getY(), other.getZ(), other.getW()) {}
 
 Vector::Vector(Vector&& other) noexcept : Tuple(std::move(other)) {}
 
-// Destructeurs
+
+// Destructor
 Vector::~Vector() {}
 
-// Fonctions membres
+
+// Member functions
 void Vector::set(float newX, float newY, float newZ, float newW) {
     m_x = newX;
     m_y = newY;
@@ -87,12 +89,13 @@ Vector Vector::Cross(Vector const& b) {
     return temp;
 }
 
-Vector Vector::Reflect(Vector const& incoming, Vector& normal) {
+Vector Vector::Reflect(Vector const& incoming, Vector const& normal) {
     return incoming - (2.0 * incoming.Dot(normal) * normal);
     //formule : r - i = - 2 * (i dot n) * n -> r = i - 2 * (i dot n) * n
 }
 
-// Fonctions non-membres
+
+// Non-member functions
 Vector operator+(Point const& a, Point const& b) {
     return Vector(a.getX() + b.getX(), a.getY() + b.getY(), a.getZ() + b.getZ());
 }
@@ -102,20 +105,20 @@ Vector operator-(Point const& a, Point const& b) {
 }
 
 Vector operator+(Vector const& a, Vector const& b) {
-	Vector copie(a);
-	copie += b;
-	return copie;
+	Vector copy(a);
+	copy += b;
+	return copy;
 }
 
 Vector operator-(Vector const& a, Vector const& b) {
-    Vector copie(a);
-    copie -= b;
-    return copie;
+    Vector copy(a);
+    copy -= b;
+    return copy;
 }
 
 Vector operator-(Vector const& v) {
-    Vector copie(-v.getX(), -v.getY(), -v.getZ());
-    return copie;
+    Vector copy(-v.getX(), -v.getY(), -v.getZ());
+    return copy;
 }
 
 Vector operator*(Mat4 const& m, Vector const& v) {
@@ -123,6 +126,5 @@ Vector operator*(Mat4 const& m, Vector const& v) {
     float y = m[1][0] * v.getX() + m[1][1] * v.getY() + m[1][2] * v.getZ() + m[1][3] * v.getW();
     float z = m[2][0] * v.getX() + m[2][1] * v.getY() + m[2][2] * v.getZ() + m[2][3] * v.getW();
     float w = m[3][0] * v.getX() + m[3][1] * v.getY() + m[3][2] * v.getZ() + m[3][3] * v.getW();
-    Vector temp(x, y, z, w);
-    return temp;
+    return Vector(x, y, z, w);
 }

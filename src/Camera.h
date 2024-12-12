@@ -13,21 +13,27 @@ private:
     float m_halfWidth;
     float m_halfHeight;
 
+    void CalculatePixelSize();
+
 public:
     // Constructors
-    Camera(int hSize = 160, int vSize = 120, float fieldOfView = Utils::PI / 2.0);
+    Camera(int hSize = 160, int vSize = 120, float fieldOfView = Utils::GetPI() / 2.0f);
+
+
+    // Destructor
+    ~Camera() = default;
+
 
     // Accessors
-    int GetHSize() const;
-    int GetVSize() const;
-    float GetFov() const;
-    Mat4 GetTransform() const;
-    float GetPixelSize() const;
-    float GetHalfWidth() const;
-    float GetHalfHeight() const;
+    const int GetHSize() const;
+    const int GetVSize() const;
+    const float GetFov() const;
+    const Mat4 GetTransform() const;
+    const float GetPixelSize() const;
+    const float GetHalfWidth() const;
+    const float GetHalfHeight() const;
 
-    void CalculatePixelSize();
+
+    // Member functions
     Mat4 ViewTransform(Point from, Point to, Vector up);
-
 };
-
