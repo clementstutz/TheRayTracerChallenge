@@ -55,7 +55,7 @@ void static runSimulation() {
     cout << "--Simulation Results--" << endl;
     cout << projectile.m_position;
     cout << projectile.m_velocity << endl;
-    Save::saveCanvas(canvas);
+    Save::saveCanvas(canvas, "free_fall");
 }
 
 void static Chapter4TransformChallenge() {//drawCircle
@@ -75,7 +75,7 @@ void static Chapter4TransformChallenge() {//drawCircle
     int maxIterations = 12;
     for (int r = 0; r < maxIterations; r++)
     {
-        currentLocation = Mat4::RotateZMatrix(2.0 * Utils::PI * (1.0 / maxIterations)) * currentLocation;
+        currentLocation = Mat4::RotateZMatrix(2.0 * Utils::GetPI() * (1.0 / maxIterations)) * currentLocation;
 
         // Offset current location so that it is centered in the image by 1/2 width and height through translation.
         Point screenSpaceLocation = Mat4::TranslateMatrix(canvas.getWidth() * 0.5, canvas.getHeight() * 0.5, 0.0) * currentLocation;
@@ -94,10 +94,11 @@ void static Chapter5Challenge() {
     cout << "Chapter 5 Challeng" << endl;
     Scene scene;
     Mat4 transmatrix;
+    transmatrix = Mat4::TranslateMatrix(0, 1, 0);
     //transmatrix = Mat4::ScaleMatrix(0.5, 1, 1);
     //transmatrix = Mat4::ScaleMatrix(1, 0.5, 1);
     //transmatrix = Mat4::ScaleMatrix(1, 1, 0.5);
-    //transmatrix = Mat4::RotateMatrix(0.0, 0.0, Utils::PI * 0.25) * Mat4::ScaleMatrix(1, 0.5, 1);
+    //transmatrix = Mat4::RotateMatrix(0.0, 0.0, Utils::GetPI() * 0.25) * Mat4::ScaleMatrix(1, 0.5, 1);
     //transmatrix = Mat4::ShearMatrix(1, 0, 0, 0, 0, 0) * Mat4::ScaleMatrix(1, 0.5, 1);
 
     int resolution = 100;
@@ -133,20 +134,20 @@ void static Chapter6Challenge() {
     cout << "Chapter 6 Challeng" << endl;
     Scene scene;
     Mat4 transmatrix;
+    transmatrix = Mat4::TranslateMatrix(0, 1, 0);
+    //transmatrix = Mat4::ScaleMatrix(2, 2, 2);
     //transmatrix = Mat4::ScaleMatrix(0.5, 1, 1);
     //transmatrix = Mat4::ScaleMatrix(1, 0.5, 1);
     //transmatrix = Mat4::ScaleMatrix(1, 1, 0.5);
-    //transmatrix = Mat4::RotateMatrix(0.0, 0.0, Utils::PI * 0.25) * Mat4::ScaleMatrix(1, 0.5, 1);
+    //transmatrix = Mat4::RotateMatrix(0.0, 0.0, Utils::GetPI() * 0.25) * Mat4::ScaleMatrix(1, 0.5, 1);
     //transmatrix = Mat4::ShearMatrix(1, 0, 0, 0, 0, 0) * Mat4::ScaleMatrix(0.5, 1, 1);
 
     int resolution = 100;
     Canvas canvas(resolution, resolution);
-    canvas.fillCanvas(Color::black);
 
     Light light(Point(-10, 10, -10), Color::white);
 
     Sphere sphere;
-    scene.AddRayObject(sphere);
     Color color(1, 0.2, 1);
     Material material(color, 0.1, 0.9, 0.9);
     sphere.SetMaterial(material);
@@ -157,11 +158,11 @@ void static Chapter6Challenge() {
     Point wall(0, 0, 10);
     float wallSize = 10.0;
 
-    for (int y = 0; y < resolution; y++) {
+    for (int y = 0; y < resolution; y++) {  // 1: (int y = 0; y < resolution; y++) -or- 2:int y = resolution-1; y >=0; y--
         for (int x = 0; x < resolution; x++) {
             float increment = wallSize / resolution;
-            Vector temp = wall - Point((wallSize * 0.5) - x * increment,
-                                       (wallSize * 0.5) - y * increment,
+            Vector temp = wall - Point((wallSize * 0.5f) - x * increment,
+                                       (wallSize * 0.5f) - y * increment,
                                        wall.getZ());
             Point currentWallPixel(temp.getX(), temp.getY(), temp.getZ());
             
@@ -175,8 +176,7 @@ void static Chapter6Challenge() {
                 Color lighting = sphere.Lighting(hitPosition,
                                                  light,
                                                  -ray.getDirection(),
-                                                 sphere.GetNormal(hitPosition,
-                                                 hit));
+                                                 sphere.GetNormal(hitPosition, hit));
                 canvas.setPixel(x, y, lighting);
             }
         }
@@ -188,25 +188,24 @@ void static Chapter6Challenge() {
 void static Chapter7Challenge() {
     Scene scene;
 
+    Light light(Point(-10, 10, -10), Color::white);
+
     Sphere floor;
     floor.SetMatrix(Mat4::ScaleMatrix(10, 0.01, 10));
     floor.SetMaterial(Material(Color(1, 0.9, 0.9), 0.1, 0.9, 0.0));
 
     Sphere leftWall;
     leftWall.SetMatrix(Mat4::TranslateMatrix(0, 0, 5) *
-        Mat4::RotateYMatrix(Utils::PI / -4.0) *
-        Mat4::RotateXMatrix(Utils::PI / 2.0) *
-        Mat4::ScaleMatrix(10, 0.01, 10));
+        Mat4::RotateYMatrix(Utils::GetPI() / -4.0) *
+        Mat4::RotateXMatrix(Utils::GetPI() / 2.0) *
+        Mat4::ScaleMatrix(10, 0.01f, 10));
     leftWall.SetMaterial(Material(Color(1, 0.9, 0.9), 0.1, 0.9, 0.0));
-    //leftWall.material.color = new Color(0, 1, 0);
 
     Sphere rightWall;
     rightWall.SetMatrix(Mat4::TranslateMatrix(0, 0, 5) *
-        Mat4::RotateYMatrix(Utils::PI / 4.0) *
-        Mat4::RotateXMatrix(Utils::PI / 2.0) *
+        Mat4::RotateYMatrix(Utils::GetPI() / 4.0) *
+        Mat4::RotateXMatrix(Utils::GetPI() / 2.0) *
         Mat4::ScaleMatrix(10, 0.01, 10));
-    rightWall.SetMaterial(Material(Color(1, 0.9, 0.9), 0.1, 0.9, 0.0));
-    //rightWall.material.color = new Color(0, 0, 1);
 
     Sphere middle;
     middle.SetMatrix(Mat4::TranslateMatrix(-0.5, 1, 0.5));
@@ -214,18 +213,14 @@ void static Chapter7Challenge() {
 
     Sphere right;
     right.SetMatrix(Mat4::TranslateMatrix(1.5, 0.5, -0.5) * Mat4::ScaleMatrix(0.5, 0.5, 0.5));
-    right.SetMatrix(Mat4::ScaleMatrix(0.5, 0.5, 0.5));
-    right.SetMatrix(Mat4::TranslateMatrix(1.5, 0.5, -0.5));
     right.SetMaterial(Material(Color(0.5, 1.0, 0.1), 0.1, 0.7, 0.3));
 
     Sphere left;
     left.SetMatrix(Mat4::TranslateMatrix(-1.5, 0.33, -0.75) *
-        Mat4::ScaleMatrix(0.5, 0.4, 0.5));
+        Mat4::ScaleMatrix(0.33, 0.33, 0.33));
     left.SetMaterial(Material(Color(1, 0.8, 0.1), 0.1, 0.7, 0.3));
 
-    Light light(Point(-10, 10, -10), Color::white);
-
-    Camera camera(100, 75, Utils::PI / 18.0);
+    Camera camera(400, 300, Utils::GetPI() / 3.0);
 
     camera.ViewTransform(Point(0, 1.5, -5.0), Point(0, 1, 0), Vector(0, 1, 0));
 
@@ -236,25 +231,25 @@ void static Chapter7Challenge() {
 }
 
 int main() {
-    //runSimulation();
+    runSimulation();
 
     Chapter4TransformChallenge();
 
-    auto debut_5 = std::chrono::high_resolution_clock::now(); // Début du timer
+    auto debut_5 = std::chrono::high_resolution_clock::now();
     Chapter5Challenge();
-    auto fin_5 = std::chrono::high_resolution_clock::now(); // Fin du timer
+    auto fin_5 = std::chrono::high_resolution_clock::now();
     auto duree_5 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_5 - debut_5);
     std::cout << "Durée d'exécution : " << duree_5.count() << " ms" << std::endl;
 
-    auto debut_6 = std::chrono::high_resolution_clock::now(); // Début du timer
+    auto debut_6 = std::chrono::high_resolution_clock::now();
     Chapter6Challenge();
-    auto fin_6 = std::chrono::high_resolution_clock::now(); // Fin du timer
+    auto fin_6 = std::chrono::high_resolution_clock::now();
     auto duree_6 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_6 - debut_6);
     std::cout << "Durée d'exécution : " << duree_6.count() << " ms" << std::endl;
 
-    auto debut_7 = std::chrono::high_resolution_clock::now(); // Début du timer
+    auto debut_7 = std::chrono::high_resolution_clock::now();
     Chapter7Challenge();
-    auto fin_7 = std::chrono::high_resolution_clock::now(); // Fin du timer
+    auto fin_7 = std::chrono::high_resolution_clock::now();
     auto duree_7 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_7 - debut_7);
     std::cout << "Durée d'exécution : " << duree_7.count() << " ms" << std::endl;
 
