@@ -55,7 +55,7 @@ TEST(RayTests, transform_ScaleMatrix) {
 
 TEST(RayTests, transform_RotateMatrix) {
     Ray ray(Point(1, 2, 3), Vector(0, 1, 0));
-    Mat4 transMat = Mat4::RotateMatrix(Utils::PI/2.0f, Utils::PI / 2.0f, Utils::PI / 2.0f);
+    Mat4 transMat = Mat4::RotateMatrix(Utils::GetPI()/2.0f, Utils::GetPI() / 2.0f, Utils::GetPI() / 2.0f);
     Ray result = transMat * ray;
 
     EXPECT_EQ(result.getOrigin(), Point(3, 2, -1));

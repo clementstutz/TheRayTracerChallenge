@@ -400,17 +400,17 @@ TEST(Mat4Tests, scale_matrix) {
 }
 
 TEST(Mat4Tests, rotate_X_matrix) {
-    Mat4 halfQuarter = Mat4::RotateXMatrix(Utils::PI / 4.0f);
-    EXPECT_FLOAT_EQ(halfQuarter[1][1], cos(Utils::PI / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[1][2], -sin(Utils::PI / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[2][1], sin(Utils::PI / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[2][2], cos(Utils::PI / 4.0f));
+    Mat4 halfQuarter = Mat4::RotateXMatrix(Utils::GetPI() / 4.0f);
+    EXPECT_FLOAT_EQ(halfQuarter[1][1], cos(Utils::GetPI() / 4.0f));
+    EXPECT_FLOAT_EQ(halfQuarter[1][2], -sin(Utils::GetPI() / 4.0f));
+    EXPECT_FLOAT_EQ(halfQuarter[2][1], sin(Utils::GetPI() / 4.0f));
+    EXPECT_FLOAT_EQ(halfQuarter[2][2], cos(Utils::GetPI() / 4.0f));
 
-    Mat4 fullQuarter = Mat4::RotateXMatrix(Utils::PI / 2.0f);
-    EXPECT_FLOAT_EQ(fullQuarter[1][1], cos(Utils::PI / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[1][2], -sin(Utils::PI / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[2][1], sin(Utils::PI / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[2][2], cos(Utils::PI / 2.0f));
+    Mat4 fullQuarter = Mat4::RotateXMatrix(Utils::GetPI() / 2.0f);
+    EXPECT_FLOAT_EQ(fullQuarter[1][1], cos(Utils::GetPI() / 2.0f));
+    EXPECT_FLOAT_EQ(fullQuarter[1][2], -sin(Utils::GetPI() / 2.0f));
+    EXPECT_FLOAT_EQ(fullQuarter[2][1], sin(Utils::GetPI() / 2.0f));
+    EXPECT_FLOAT_EQ(fullQuarter[2][2], cos(Utils::GetPI() / 2.0f));
     
     // Points
     // Rotate a point by pi/4
@@ -428,7 +428,7 @@ TEST(Mat4Tests, rotate_X_matrix) {
     Point ref2(0, 0, 1);
     EXPECT_EQ(pRotateX_full, ref2);
     EXPECT_FLOAT_EQ(pRotateX_full.getX(), ref2.getX());
-    EXPECT_NEAR(pRotateX_full.getY(), ref2.getY(), Utils::EPSILON);
+    EXPECT_NEAR(pRotateX_full.getY(), ref2.getY(), Utils::GetEpsilon());
     EXPECT_FLOAT_EQ(pRotateX_full.getZ(), ref2.getZ());
     EXPECT_FLOAT_EQ(pRotateX_full.getW(), ref2.getW());
 
@@ -454,7 +454,7 @@ TEST(Mat4Tests, rotate_X_matrix) {
     Vector ref4(0, 0, 1);
     EXPECT_EQ(vRotateX_full, ref4);
     EXPECT_FLOAT_EQ(vRotateX_full.getX(), ref4.getX());
-    EXPECT_NEAR(vRotateX_full.getY(), ref4.getY(), Utils::EPSILON);
+    EXPECT_NEAR(vRotateX_full.getY(), ref4.getY(), Utils::GetEpsilon());
     EXPECT_FLOAT_EQ(vRotateX_full.getZ(), ref4.getZ());
     EXPECT_FLOAT_EQ(vRotateX_full.getW(), ref4.getW());
 
@@ -464,17 +464,17 @@ TEST(Mat4Tests, rotate_X_matrix) {
 }
 
 TEST(Mat4Tests, rotate_Y_matrix) {
-    Mat4 halfQuarter = Mat4::RotateYMatrix(Utils::PI / 4.0f);
-    EXPECT_FLOAT_EQ(halfQuarter[0][0], cos(Utils::PI / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[0][2], sin(Utils::PI / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[2][0], -sin(Utils::PI / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[2][2], cos(Utils::PI / 4.0f));
+    Mat4 halfQuarter = Mat4::RotateYMatrix(Utils::GetPI() / 4.0f);
+    EXPECT_FLOAT_EQ(halfQuarter[0][0], cos(Utils::GetPI() / 4.0f));
+    EXPECT_FLOAT_EQ(halfQuarter[0][2], sin(Utils::GetPI() / 4.0f));
+    EXPECT_FLOAT_EQ(halfQuarter[2][0], -sin(Utils::GetPI() / 4.0f));
+    EXPECT_FLOAT_EQ(halfQuarter[2][2], cos(Utils::GetPI() / 4.0f));
 
-    Mat4 fullQuarter = Mat4::RotateYMatrix(Utils::PI / 2.0f);
-    EXPECT_FLOAT_EQ(fullQuarter[0][0], cos(Utils::PI / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[0][2], sin(Utils::PI / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[2][0], -sin(Utils::PI / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[2][2], cos(Utils::PI / 2.0f));
+    Mat4 fullQuarter = Mat4::RotateYMatrix(Utils::GetPI() / 2.0f);
+    EXPECT_FLOAT_EQ(fullQuarter[0][0], cos(Utils::GetPI() / 2.0f));
+    EXPECT_FLOAT_EQ(fullQuarter[0][2], sin(Utils::GetPI() / 2.0f));
+    EXPECT_FLOAT_EQ(fullQuarter[2][0], -sin(Utils::GetPI() / 2.0f));
+    EXPECT_FLOAT_EQ(fullQuarter[2][2], cos(Utils::GetPI() / 2.0f));
 
     // Points
     // Rotate a point by pi/4
@@ -493,7 +493,7 @@ TEST(Mat4Tests, rotate_Y_matrix) {
     EXPECT_EQ(pRotateY_full, ref2);
     EXPECT_FLOAT_EQ(pRotateY_full.getX(), ref2.getX());
     EXPECT_FLOAT_EQ(pRotateY_full.getY(), ref2.getY());
-    EXPECT_NEAR(pRotateY_full.getZ(), ref2.getZ(), Utils::EPSILON);
+    EXPECT_NEAR(pRotateY_full.getZ(), ref2.getZ(), Utils::GetEpsilon());
     EXPECT_FLOAT_EQ(pRotateY_full.getW(), ref2.getW());
 
     // Invert the rotation of a point
@@ -519,7 +519,7 @@ TEST(Mat4Tests, rotate_Y_matrix) {
     EXPECT_EQ(vRotateY_full, ref4);
     EXPECT_FLOAT_EQ(vRotateY_full.getX(), ref4.getX());
     EXPECT_FLOAT_EQ(vRotateY_full.getY(), ref4.getY());
-    EXPECT_NEAR(vRotateY_full.getZ(), ref4.getZ(), Utils::EPSILON);
+    EXPECT_NEAR(vRotateY_full.getZ(), ref4.getZ(), Utils::GetEpsilon());
     EXPECT_FLOAT_EQ(vRotateY_full.getW(), ref4.getW());
 
     // Invert the rotation of a vector
@@ -528,17 +528,17 @@ TEST(Mat4Tests, rotate_Y_matrix) {
 }
 
 TEST(Mat4Tests, rotate_Z_matrix) {
-    Mat4 halfQuarter = Mat4::RotateZMatrix(Utils::PI / 4.0f);
-    EXPECT_FLOAT_EQ(halfQuarter[0][0], cos(Utils::PI / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[0][1], -sin(Utils::PI / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[1][0], sin(Utils::PI / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[1][1], cos(Utils::PI / 4.0f));
+    Mat4 halfQuarter = Mat4::RotateZMatrix(Utils::GetPI() / 4.0f);
+    EXPECT_FLOAT_EQ(halfQuarter[0][0], cos(Utils::GetPI() / 4.0f));
+    EXPECT_FLOAT_EQ(halfQuarter[0][1], -sin(Utils::GetPI() / 4.0f));
+    EXPECT_FLOAT_EQ(halfQuarter[1][0], sin(Utils::GetPI() / 4.0f));
+    EXPECT_FLOAT_EQ(halfQuarter[1][1], cos(Utils::GetPI() / 4.0f));
 
-    Mat4 fullQuarter = Mat4::RotateZMatrix(Utils::PI / 2.0f);
-    EXPECT_FLOAT_EQ(fullQuarter[0][0], cos(Utils::PI / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[0][1], -sin(Utils::PI / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[1][0], sin(Utils::PI / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[1][1], cos(Utils::PI / 2.0f));
+    Mat4 fullQuarter = Mat4::RotateZMatrix(Utils::GetPI() / 2.0f);
+    EXPECT_FLOAT_EQ(fullQuarter[0][0], cos(Utils::GetPI() / 2.0f));
+    EXPECT_FLOAT_EQ(fullQuarter[0][1], -sin(Utils::GetPI() / 2.0f));
+    EXPECT_FLOAT_EQ(fullQuarter[1][0], sin(Utils::GetPI() / 2.0f));
+    EXPECT_FLOAT_EQ(fullQuarter[1][1], cos(Utils::GetPI() / 2.0f));
 
     // Points
     // Rotate a point by pi/4
@@ -555,7 +555,7 @@ TEST(Mat4Tests, rotate_Z_matrix) {
     Point pRotateZ_full = fullQuarter * pOrigine;
     Point ref2(0, 1, 0);
     EXPECT_EQ(pRotateZ_full, ref2);
-    EXPECT_NEAR(pRotateZ_full.getX(), ref2.getX(), Utils::EPSILON);
+    EXPECT_NEAR(pRotateZ_full.getX(), ref2.getX(), Utils::GetEpsilon());
     EXPECT_FLOAT_EQ(pRotateZ_full.getY(), ref2.getY());
     EXPECT_FLOAT_EQ(pRotateZ_full.getZ(), ref2.getZ());
     EXPECT_FLOAT_EQ(pRotateZ_full.getW(), ref2.getW());
@@ -581,7 +581,7 @@ TEST(Mat4Tests, rotate_Z_matrix) {
     Vector vRotateZ_full = fullQuarter * vOrigine;
     Vector ref4(0, 1, 0);
     EXPECT_EQ(vRotateZ_full, ref4);
-    EXPECT_NEAR(vRotateZ_full.getX(), ref4.getX(), Utils::EPSILON);
+    EXPECT_NEAR(vRotateZ_full.getX(), ref4.getX(), Utils::GetEpsilon());
     EXPECT_FLOAT_EQ(vRotateZ_full.getY(), ref4.getY());
     EXPECT_FLOAT_EQ(vRotateZ_full.getZ(), ref4.getZ());
     EXPECT_FLOAT_EQ(vRotateZ_full.getW(), ref4.getW());
@@ -702,7 +702,7 @@ TEST(Mat4Tests, shearing_matrix) {
 
 TEST(Mat4Tests, chaining_transforms_1) {
     Point p(1, 0, 1);
-    Mat4 rot = Mat4::RotateXMatrix(Utils::PI / 2.0);
+    Mat4 rot = Mat4::RotateXMatrix(Utils::GetPI() / 2.0);
     Mat4 sca = Mat4::ScaleMatrix(5, 5, 5);
     Mat4 tra = Mat4::TranslateMatrix(10, 5, 7);
 

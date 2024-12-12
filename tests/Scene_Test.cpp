@@ -29,29 +29,6 @@ TEST(SceneTests, constructor_default) {
     EXPECT_EQ(scene.GetRayObjects(), r);
 }
 
-TEST(SceneTests, constructor_values) {
-    Light light(Point(10, 10, -10), Color::red);
-    std::vector<Light*> l = { &light };
-
-    Sphere sphere;
-    std::vector<RayObject*> r = { &sphere };
-
-    Scene scene(l, r);
-
-    EXPECT_EQ(scene.GetLights(), l);
-    EXPECT_EQ(scene.GetRayObjects(), r);
-}
-
-//TEST(SceneTests, constructor_copy) {
-//    Scene scene;
-//    EXPECT_EQ(1, 2);
-//}
-
-//TEST(SceneTests, constructor_move) {
-//    Scene scene;
-//    EXPECT_EQ(1, 2);
-//}
-
 TEST(SceneTests, accessors) {    
     Scene scene;
     Sphere sphere;
@@ -66,33 +43,35 @@ TEST(SceneTests, accessors) {
 TEST(SceneTests, Intersections) {
     Scene scene;
 
-    Sphere sphere_1;
+    /*Sphere sphere_1;
     sphere_1.SetMaterial(Material(Color(0.8, 1.0, 0.6), 0.1, 0.7, 0.2));
     Sphere sphere_2;
-    sphere_2.SetMatrix(Mat4::ScaleMatrix(0.5, 0.5, 0.5));
+    sphere_2.SetMatrix(Mat4::ScaleMatrix(0.5, 0.5, 0.5));*/
+    scene.DefaultScene();
     
     Ray ray(Point(0, 0, -5), Vector(0, 0, 1));
 
     std::vector<Intersection> intersections = scene.Intersections(ray);
 
     EXPECT_EQ(intersections.size(), 4);
-    EXPECT_EQ(intersections[0].getObj(), sphere_1);
+    EXPECT_EQ(intersections[0].getObj(), *scene.GetRayObjects()[0]);
     EXPECT_FLOAT_EQ(intersections[0].getLength(), 4.0f);
-    EXPECT_EQ(intersections[1].getObj(), sphere_2);
+    EXPECT_EQ(intersections[1].getObj(), *scene.GetRayObjects()[1]);
     EXPECT_FLOAT_EQ(intersections[1].getLength(), 4.5f);
-    EXPECT_EQ(intersections[2].getObj(), sphere_2);
+    EXPECT_EQ(intersections[2].getObj(), *scene.GetRayObjects()[1]);
     EXPECT_FLOAT_EQ(intersections[2].getLength(), 5.5f);
-    EXPECT_EQ(intersections[3].getObj(), sphere_1);
+    EXPECT_EQ(intersections[3].getObj(), *scene.GetRayObjects()[0]);
     EXPECT_FLOAT_EQ(intersections[3].getLength(), 6.0f);
 }
 
 TEST(SceneTests, hit) {
     Scene scene;
 
-    Sphere sphere_1;
+    /*Sphere sphere_1;
     sphere_1.SetMaterial(Material(Color(0.8, 1.0, 0.6), 0.1, 0.7, 0.2));
     Sphere sphere_2;
-    sphere_2.SetMatrix(Mat4::ScaleMatrix(0.5, 0.5, 0.5));
+    sphere_2.SetMatrix(Mat4::ScaleMatrix(0.5, 0.5, 0.5));*/
+    scene.DefaultScene();
 
     Ray ray(Point(0, 0, -5), Vector(0, 0, 1));
 
@@ -100,25 +79,26 @@ TEST(SceneTests, hit) {
 
     Intersection hit = scene.Hit(intersections);
 
-    EXPECT_EQ(hit.getObj(), sphere_1);
+    EXPECT_EQ(hit.getObj(), *scene.GetRayObjects()[0]);
     EXPECT_FLOAT_EQ(hit.getLength(), 4.0f);
 }
 
 TEST(SceneTests, ShadingIntersectionsOutside) {
     Scene scene;
 
-    Sphere sphere_1;
+    /*Sphere sphere_1;
     sphere_1.SetMaterial(Material(Color(0.8, 1.0, 0.6), 0.1, 0.7, 0.2));
     Sphere sphere_2;
     sphere_2.SetMatrix(Mat4::ScaleMatrix(0.5, 0.5, 0.5));
 
-    Light light(Point(-10, 10, -10), Color(1, 1, 1));
+    Light light(Point(-10, 10, -10), Color(1, 1, 1));*/
+    scene.DefaultScene();
 
     Ray ray(Point(0, 0, -5), Vector(0, 0, 1));
 
     std::vector<Intersection> intersections = scene.Intersections(ray);
     Intersection hit = scene.Hit(intersections);
-    Computations c = Computations::Prepare(hit, ray, nullptr);
+    Computations c = Computations::Prepare(hit, ray);
 
     Color finalColor = scene.ShadeHit(c);
     EXPECT_EQ(Color(0.38066, 0.47583, 0.2855), finalColor);
@@ -127,18 +107,20 @@ TEST(SceneTests, ShadingIntersectionsOutside) {
 TEST(SceneTests, ShadingIntersectionsIntside) {
     Scene scene;
 
-    Sphere sphere_1;
+    /*Sphere sphere_1;
     sphere_1.SetMaterial(Material(Color(0.8, 1.0, 0.6), 0.1, 0.7, 0.2));
     Sphere sphere_2;
     sphere_2.SetMatrix(Mat4::ScaleMatrix(0.5, 0.5, 0.5));
 
-    Light light(Point(0, 0.25, 0), Color(1, 1, 1));
+    Light light(Point(0, 0.25, 0), Color(1, 1, 1));*/
+    scene.DefaultScene();
+    scene.GetLights()[0]->SetPosition(Point(0, 0.25, 0));
 
     Ray ray(Point(0, 0, 0), Vector(0, 0, 1));
 
     std::vector<Intersection> intersections = scene.Intersections(ray);
     Intersection hit = scene.Hit(intersections);
-    Computations c = Computations::Prepare(hit, ray, nullptr);
+    Computations c = Computations::Prepare(hit, ray);
 
     Color finalColor = scene.ShadeHit(c);
     EXPECT_EQ(Color(0.90498, 0.90498, 0.90498), finalColor);
@@ -147,12 +129,13 @@ TEST(SceneTests, ShadingIntersectionsIntside) {
 TEST(SceneTests, RayMissColor) {
     Scene scene;
 
-    Sphere sphere_1;
+    /*Sphere sphere_1;
     sphere_1.SetMaterial(Material(Color(0.8, 1.0, 0.6), 0.1, 0.7, 0.2));
     Sphere sphere_2;
     sphere_2.SetMatrix(Mat4::ScaleMatrix(0.5, 0.5, 0.5));
 
-    Light light(Point(-10, 10, -10), Color(1, 1, 1));
+    Light light(Point(-10, 10, -10), Color(1, 1, 1));*/
+    scene.DefaultScene();
 
     Ray ray(Point(0, 0, -5), Vector(0, 1, 0));
 
@@ -163,12 +146,13 @@ TEST(SceneTests, RayMissColor) {
 TEST(SceneTests, RayHitColor) {
     Scene scene;
 
-    Sphere sphere_1;
+    /*Sphere sphere_1;
     sphere_1.SetMaterial(Material(Color(0.8, 1.0, 0.6), 0.1, 0.7, 0.2));
     Sphere sphere_2;
     sphere_2.SetMatrix(Mat4::ScaleMatrix(0.5, 0.5, 0.5));
 
-    Light light(Point(-10, 10, -10), Color(1, 1, 1));
+    Light light(Point(-10, 10, -10), Color(1, 1, 1));*/
+    scene.DefaultScene();
 
     Ray ray(Point(0, 0, -5), Vector(0, 0, 1));
 
@@ -179,13 +163,15 @@ TEST(SceneTests, RayHitColor) {
 TEST(SceneTests, RayIntersectionBehindColor) {  //NOTE : je n'ai pas compris ce test
     Scene scene;
 
-    Sphere sphere_1;
+    /*Sphere sphere_1;
     sphere_1.SetMaterial(Material(Color(0.8, 1.0, 0.6), 1, 0.7, 0.2));
     Sphere sphere_2;
     sphere_2.SetMaterial(Material(Color::white, 1));
     sphere_2.SetMatrix(Mat4::ScaleMatrix(0.5, 0.5, 0.5));
 
-    Light light(Point(-10, 10, -10), Color(1, 1, 1));
+    Light light(Point(-10, 10, -10), Color(1, 1, 1));*/
+    scene.DefaultScene();
+    scene.GetRayObjects()[1]->SetMaterial(Material(Color::white, 1));
 
     Ray ray(Point(0, 0, 0.75), Vector(0, 0, -1));
 
@@ -195,7 +181,7 @@ TEST(SceneTests, RayIntersectionBehindColor) {  //NOTE : je n'ai pas compris ce 
 }
 
 TEST(SceneTests, RayThroughCenter) {
-    Camera camera(201, 101, Utils::PI / 2);
+    Camera camera(201, 101, Utils::GetPI() / 2);
     Scene scene;
 
     Ray ray = scene.RayForPixel(camera, 100, 50);
@@ -204,7 +190,7 @@ TEST(SceneTests, RayThroughCenter) {
 }
 
 TEST(SceneTests, RayThroughCorner) {
-    Camera camera(201, 101, Utils::PI / 2);
+    Camera camera(201, 101, Utils::GetPI() / 2);
     Scene scene;
 
     Ray ray = scene.RayForPixel(camera, 0, 0);
@@ -213,15 +199,15 @@ TEST(SceneTests, RayThroughCorner) {
 }
 
 TEST(SceneTests, RayThroughTransformed) {
-    Camera camera(201, 101, Utils::PI / 2);
+    Camera camera(201, 101, Utils::GetPI() / 2);
     Scene scene;
 
     std::cout << "camera.GetTransform() = " << camera.GetTransform() << std::endl;
 
-    Mat4* transformed = &camera.GetTransform();
-    *transformed = Mat4::RotateYMatrix(Utils::PI / 4.0) * Mat4::TranslateMatrix(0, -2, 5);
+    //Mat4* transformed = &camera.GetTransform();
+    //*transformed = Mat4::RotateYMatrix(Utils::GetPI() / 4.0) * Mat4::TranslateMatrix(0, -2, 5);
     std::cout << "camera.GetTransform() = " << camera.GetTransform() << std::endl;
-    std::cout << "*transformed = " << *transformed << std::endl;
+    //std::cout << "*transformed = " << *transformed << std::endl;
     Ray ray = scene.RayForPixel(camera, 100, 50);
 
     std::cout << "camera.GetTransform() = " << camera.GetTransform() << std::endl;
@@ -231,17 +217,19 @@ TEST(SceneTests, RayThroughTransformed) {
 
     std::cout << ray.getDirection() << std::endl;
     EXPECT_EQ(Vector(std::sqrt(2.0)/2.0, 0, -std::sqrt(2.0) / 2.0), ray.getDirection());
+    EXPECT_EQ(1, 2);
 }
 
 TEST(SceneTests, RenderWorldWithCamera) {
-    Camera camera(11, 11, Utils::PI / 2);
+    Camera camera(11, 11, Utils::GetPI() / 2);
     Scene scene;
 
-    Sphere sphere_1;
+    /*Sphere sphere_1;
     sphere_1.SetMaterial(Material(Color(0.8, 1.0, 0.6), 0.1, 0.7, 0.2));
     Sphere sphere_2;
     sphere_2.SetMatrix(Mat4::ScaleMatrix(0.5, 0.5, 0.5));
-    Light light(Point(-10, 10, -10), Color(1, 1, 1));
+    Light light(Point(-10, 10, -10), Color(1, 1, 1));*/
+    scene.DefaultScene();
 
     camera.ViewTransform(Point(0, 0, -5), Point(0, 0, 0), Vector(0, 1, 0));
     Canvas canvas = scene.Render(camera);

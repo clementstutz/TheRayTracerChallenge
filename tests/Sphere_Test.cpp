@@ -171,7 +171,7 @@ TEST(SphereTests, get_normal) {
     EXPECT_EQ(normal, ref);
 
     Sphere sphere_2;
-    sphere_2.SetMatrix(Mat4::ScaleMatrix(1, 0.5, 1) * Mat4::RotateZMatrix(Utils::PI / 5.0f));
+    sphere_2.SetMatrix(Mat4::ScaleMatrix(1, 0.5, 1) * Mat4::RotateZMatrix(Utils::GetPI() / 5.0f));
     worldPoint = Point(0.0f, sqrt(2) / 2.0f, -sqrt(2) / 2.0f);
     normal = sphere_2.GetNormal(worldPoint, intersections[0]);
     EXPECT_EQ(normal, Vector(0, 0.9701425, -0.2425356));

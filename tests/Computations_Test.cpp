@@ -19,7 +19,7 @@ TEST(ComputationsTests, Precomputations) {
     std::vector<Intersection> intersections = scene.Intersections(ray);
     Intersection hit = scene.Hit(intersections);
 
-    Computations c = Computations::Prepare(hit, ray, nullptr);
+    Computations c = Computations::Prepare(hit, ray);
 
     EXPECT_EQ(4, c.GetLength());
     EXPECT_EQ(hit.getObj(), c.GetRayObject());
@@ -40,7 +40,7 @@ TEST(ComputationsTests, Precomputations) {
     intersections = scene.Intersections(ray);
     hit = scene.Hit(intersections);
 
-    c = Computations::Prepare(hit, ray, nullptr);
+    c = Computations::Prepare(hit, ray);
 
     EXPECT_EQ(0.5, c.GetLength());
     EXPECT_EQ(hit.getObj(), c.GetRayObject());

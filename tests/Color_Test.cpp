@@ -8,7 +8,7 @@ TEST(ColorTests, constructor_default) {
 	EXPECT_FLOAT_EQ(c1.getB(), 0.0f);
 }
 
-TEST(ColorTests, constructor_surcharged) {
+TEST(ColorTests, constructor_values) {
 	Color c1(1.0f);
 	EXPECT_FLOAT_EQ(c1.getR(), 1.0f);
 	EXPECT_FLOAT_EQ(c1.getG(), 0.0f);
@@ -25,7 +25,7 @@ TEST(ColorTests, constructor_surcharged) {
 	EXPECT_FLOAT_EQ(c3.getB(), 3.0f);
 }
 
-TEST(ColorTests, constructor_copie) {
+TEST(ColorTests, constructor_copy) {
 	Color c1(1.0f, 2.0f, 3.0f);
 	Color c2(c1);
 	EXPECT_FLOAT_EQ(c2.getR(), 1.0f);
@@ -33,9 +33,26 @@ TEST(ColorTests, constructor_copie) {
 	EXPECT_FLOAT_EQ(c2.getB(), 3.0f);
 }
 
-TEST(ColorTests, constructor_affectation) {
+TEST(ColorTests, constructor_move) {
+	Color c2(Color(1.0f, 2.0f, 3.0f));
+	EXPECT_FLOAT_EQ(c2.getR(), 1.0f);
+	EXPECT_FLOAT_EQ(c2.getG(), 2.0f);
+	EXPECT_FLOAT_EQ(c2.getB(), 3.0f);
+}
+
+TEST(ColorTests, affectation_copy) {
 	Color c1(1.0f, 2.0f, 3.0f);
-	Color c2 = c1;
+	Color c2;
+	c2 = c1;
+	EXPECT_FLOAT_EQ(c2.getR(), 1.0f);
+	EXPECT_FLOAT_EQ(c2.getG(), 2.0f);
+	EXPECT_FLOAT_EQ(c2.getB(), 3.0f);
+}
+
+TEST(ColorTests, affectation_move) {
+	Color c1(1.0f, 2.0f, 3.0f);
+	Color c2;
+	c2 = std::move(c1);
 	EXPECT_FLOAT_EQ(c2.getR(), 1.0f);
 	EXPECT_FLOAT_EQ(c2.getG(), 2.0f);
 	EXPECT_FLOAT_EQ(c2.getB(), 3.0f);
@@ -130,6 +147,12 @@ TEST(ColorTests, multiply_two_colors) {
 	EXPECT_FLOAT_EQ(c3.getR(), ref1.getR());
 	EXPECT_FLOAT_EQ(c3.getG(), ref1.getG());
 	EXPECT_FLOAT_EQ(c3.getB(), ref1.getB());
+
+	c1 *= c2;
+	EXPECT_TRUE(c3 == c1);
+	EXPECT_FLOAT_EQ(c3.getR(), c1.getR());
+	EXPECT_FLOAT_EQ(c3.getG(), c1.getG());
+	EXPECT_FLOAT_EQ(c3.getB(), c1.getB());
 }
 
 TEST(ColorTests, static_colors) {

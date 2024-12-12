@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Canvas.h"
 
-TEST(CanvasTests, constructor_surcharged) {
+TEST(CanvasTests, constructor_values) {
 	Canvas c1(10, 20);
 	EXPECT_EQ(c1.getWidth(), 10);
 	EXPECT_EQ(c1.getHeight(), 20);
@@ -9,17 +9,6 @@ TEST(CanvasTests, constructor_surcharged) {
     for (int y = 0; y < c1.getHeight(); y++) {
         for (int x = 0; x < c1.getWidth(); x++) {
             EXPECT_EQ(Color::black, c1.getPixel(x, y));
-        }
-    }
-}
-
-TEST(CanvasTests, fillCanvas) {
-    Canvas c1(10, 20);
-    c1.fillCanvas(Color::green);
-
-    for (int y = 0; y < c1.getHeight(); y++) {
-        for (int x = 0; x < c1.getWidth(); x++) {
-            EXPECT_EQ(Color::green, c1.getPixel(x, y));
         }
     }
 }
@@ -34,6 +23,17 @@ TEST(CanvasTests, constructor_copy) {
     for (int y = 0; y < c2.getHeight(); y++) {
         for (int x = 0; x < c2.getWidth(); x++) {
             EXPECT_EQ(Color::green, c2.getPixel(x, y));
+        }
+    }
+}
+
+TEST(CanvasTests, fillCanvas) {
+    Canvas c1(10, 20);
+    c1.fillCanvas(Color::green);
+
+    for (int y = 0; y < c1.getHeight(); y++) {
+        for (int x = 0; x < c1.getWidth(); x++) {
+            EXPECT_EQ(Color::green, c1.getPixel(x, y));
         }
     }
 }
