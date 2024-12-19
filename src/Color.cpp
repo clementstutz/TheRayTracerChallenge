@@ -2,19 +2,19 @@
 #include "Utils.h"
 
 // Définition des couleurs statiques
-const Color Color::red = Color(1.0f, 0.0f, 0.0f);
-const Color Color::green = Color(0.0f, 1.0f, 0.0f);
-const Color Color::blue = Color(0.0f, 0.0f, 1.0f);
-const Color Color::cyan = Color(0.0f, 1.0f, 1.0f);
-const Color Color::magenta = Color(1.0f, 0.0f, 1.0f);
-const Color Color::yellow = Color(1.0f, 1.0f, 0.0f);
-const Color Color::white = Color(1.0f, 1.0f, 1.0f);
-const Color Color::grey = Color(0.5f, 0.5f, 0.5f);
-const Color Color::black = Color(0.0f, 0.0f, 0.0f);
+const Color Color::red = Color(1.0, 0.0, 0.0);
+const Color Color::green = Color(0.0, 1.0, 0.0);
+const Color Color::blue = Color(0.0, 0.0, 1.0);
+const Color Color::cyan = Color(0.0, 1.0, 1.0);
+const Color Color::magenta = Color(1.0, 0.0, 1.0);
+const Color Color::yellow = Color(1.0, 1.0, 0.0);
+const Color Color::white = Color(1.0, 1.0, 1.0);
+const Color Color::grey = Color(0.5, 0.5, 0.5);
+const Color Color::black = Color(0.0, 0.0, 0.0);
 
 
 // Constructors
-Color::Color(float r, float g, float b) : m_r(r), m_g(g), m_b(b) {}
+Color::Color(double r, double g, double b) : m_r(r), m_g(g), m_b(b) {}
 
 Color::Color(Color const& other) :
 	m_r(other.m_r),
@@ -34,9 +34,9 @@ Color::Color(Color&& other) noexcept {
 
 
 // Accesseurs
-float Color::getR() const { return m_r; }
-float Color::getG() const { return m_g; }
-float Color::getB() const { return m_b; }
+double Color::getR() const { return m_r; }
+double Color::getG() const { return m_g; }
+double Color::getB() const { return m_b; }
 
 
 // Member functions

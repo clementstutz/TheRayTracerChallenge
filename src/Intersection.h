@@ -8,14 +8,14 @@ class Intersection
 {
 protected:
 	const RayObject* m_rayObject;
-	float m_length;
+	double m_length;
 
 	void afficher(std::ostream& flux) const;
 
 public:
 	// Constructors
 	Intersection();
-	Intersection(const RayObject& obj, float const& length);
+	Intersection(const RayObject& obj, double const& length);
 	Intersection(Intersection const& other);
 	Intersection(Intersection&& other) noexcept;
 
@@ -27,7 +27,7 @@ public:
 	// Accessors
 	const RayObject* getObjPtr() const;
 	const RayObject& getObj() const;
-	float getLength() const;
+	double getLength() const;
 
 
 	// Member functions

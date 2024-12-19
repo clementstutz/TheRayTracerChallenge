@@ -5,17 +5,17 @@
 // Constructors
 Material::Material() :
     m_color(Color::white),
-    m_ambient(0.1f),            // [0; 1] normalement
-    m_diffuse(0.9f),            // [0; 1] normalement
-    m_specular(0.9f),           // [0; 1] normalement
-    m_shininess(200.0f),        // [10; 200] normalement
-    m_reflectivity(0.0f),       // [0; 1] normalement
-    m_refractiveIndex(1.0f),    // RefractiveIndex.Air;
-    m_transparency(0.0f)        // [0; 1] normalement
+    m_ambient(0.1),            // [0; 1] normalement
+    m_diffuse(0.9),            // [0; 1] normalement
+    m_specular(0.9),           // [0; 1] normalement
+    m_shininess(200.0),        // [10; 200] normalement
+    m_reflectivity(0.0),       // [0; 1] normalement
+    m_refractiveIndex(1.0),    // RefractiveIndex.Air;
+    m_transparency(0.0)        // [0; 1] normalement
     //m_pattern(null)
 {}
 
-Material::Material(Color const& color, float ambient, float diffuse, float specular, float shininess, float reflectivity, float refractiveIndex, float transparency) :
+Material::Material(Color const& color, double ambient, double diffuse, double specular, double shininess, double reflectivity, double refractiveIndex, double transparency) :
     m_color(color),
     m_ambient(ambient),
     m_diffuse(diffuse),
@@ -52,65 +52,65 @@ Material::Material(Material&& other) noexcept :
     {
     // Reset source object pour éviter des doublons
     other.m_color = Color();
-    other.m_ambient = 0.0f;
-    other.m_diffuse = 0.0f;
-    other.m_specular = 0.0f;
-    other.m_shininess = 0.0f;
-    other.m_reflectivity = 0.0f;
-    other.m_refractiveIndex = 0.0f;
-    other.m_transparency = 0.0f;
+    other.m_ambient = 0.0;
+    other.m_diffuse = 0.0;
+    other.m_specular = 0.0;
+    other.m_shininess = 0.0;
+    other.m_reflectivity = 0.0;
+    other.m_refractiveIndex = 0.0;
+    other.m_transparency = 0.0;
     //other.m_pattern = nullptr;
 }
 
 
 // Accessors
 Color Material::GetColor() const {return m_color;}
-float Material::GetAmbient() const {return m_ambient;}
-float Material::GetDiffuse() const {return m_diffuse;}
-float Material::GetSpecular() const {return m_specular;}
-float Material::GetShininess() const {return m_shininess;}
-float Material::GetReflectivity() const {return m_reflectivity;}
-float Material::GetRefractiveIndex() const {return m_refractiveIndex;}
-float Material::GetTransparency() const {return m_transparency;}
+double Material::GetAmbient() const {return m_ambient;}
+double Material::GetDiffuse() const {return m_diffuse;}
+double Material::GetSpecular() const {return m_specular;}
+double Material::GetShininess() const {return m_shininess;}
+double Material::GetReflectivity() const {return m_reflectivity;}
+double Material::GetRefractiveIndex() const {return m_refractiveIndex;}
+double Material::GetTransparency() const {return m_transparency;}
 //Pattern Material::GetPattern() const {return m_pattern;}
 
 void Material::SetColor(Color const& color) {m_color = color;}
 
-void Material::SetAmbient(float ambient) {
-    if (ambient < 0.0f) { m_ambient = 0.0f; }
-    else if (ambient > 1.0f) { m_ambient = 1.0f; }
+void Material::SetAmbient(double ambient) {
+    if (ambient < 0.0) { m_ambient = 0.0; }
+    else if (ambient > 1.0) { m_ambient = 1.0; }
     else { m_ambient = ambient; }
 }
 
-void Material::SetDiffuse(float diffuse) {
-    if (diffuse < 0.0f) { m_diffuse = 0.0f; }
-    else if (diffuse > 1.0f) { m_diffuse = 1.0f; }
+void Material::SetDiffuse(double diffuse) {
+    if (diffuse < 0.0) { m_diffuse = 0.0; }
+    else if (diffuse > 1.0) { m_diffuse = 1.0; }
     else { m_diffuse = diffuse; }
 }
 
-void Material::SetSpecular(float specular) {
-    if (specular < 0.0f) { m_specular = 0.0f; }
-    else if (specular > 1.0f) { m_specular = 1.0f; }
+void Material::SetSpecular(double specular) {
+    if (specular < 0.0) { m_specular = 0.0; }
+    else if (specular > 1.0) { m_specular = 1.0; }
     else { m_specular = specular; }
 }
 
-void Material::SetShininess(float shininess) {
-    if (shininess < 10.0f) {m_shininess = 10.0f;}
-    else if (shininess > 200.0f) {m_shininess = 200.0f;}
+void Material::SetShininess(double shininess) {
+    if (shininess < 10.0) {m_shininess = 10.0;}
+    else if (shininess > 200.0) {m_shininess = 200.0;}
     else {m_shininess = shininess;}
 }
 
-void Material::SetReflectivity(float reflectivity) {
-    if (reflectivity < 0.0f) { m_reflectivity = 0.0f; }
-    else if (reflectivity > 1.0f) { m_reflectivity = 1.0f; }
+void Material::SetReflectivity(double reflectivity) {
+    if (reflectivity < 0.0) { m_reflectivity = 0.0; }
+    else if (reflectivity > 1.0) { m_reflectivity = 1.0; }
     else { m_reflectivity = reflectivity; }
 }
 
-void Material::SetRefractiveIndex(float refractiveIndex) {m_specular = refractiveIndex;}
+void Material::SetRefractiveIndex(double refractiveIndex) {m_specular = refractiveIndex;}
 
-void Material::SetTransparency(float transparency) {
-    if (transparency < 0.0f) { m_transparency = 0.0f; }
-    else if (transparency > 1.0f) { m_transparency = 1.0f; }
+void Material::SetTransparency(double transparency) {
+    if (transparency < 0.0) { m_transparency = 0.0; }
+    else if (transparency > 1.0) { m_transparency = 1.0; }
     else { m_transparency = transparency; }
 }
 
@@ -144,13 +144,13 @@ Material& Material::operator=(Material&& other) noexcept {
         //m_pattern = other.m_pattern;
         // Reset source object
         other.m_color = Color();
-        other.m_ambient = 0.0f;
-        other.m_diffuse = 0.0f;
-        other.m_specular = 0.0f;
-        other.m_shininess = 0.0f;
-        other.m_reflectivity = 0.0f;
-        other.m_refractiveIndex = 0.0f;
-        other.m_transparency = 0.0f;
+        other.m_ambient = 0.0;
+        other.m_diffuse = 0.0;
+        other.m_specular = 0.0;
+        other.m_shininess = 0.0;
+        other.m_reflectivity = 0.0;
+        other.m_refractiveIndex = 0.0;
+        other.m_transparency = 0.0;
         //other.m_pattern = null;
     }
     return *this;

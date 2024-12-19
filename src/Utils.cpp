@@ -2,14 +2,14 @@
 #include "Utils.h"
 
 
-float Utils::GetEpsilon() { return Utils::EPSILON; }
+double Utils::GetEpsilon() { return Utils::EPSILON; }
 
-float Utils::GetPI() { return Utils::PI; }
+double Utils::GetPI() { return Utils::PI; }
 
-bool Utils::FE(float const& a, float const& b) {
+bool Utils::FE(double const& a, double const& b) {
 	return std::abs(a - b) <= Utils::EPSILON;
 }
 
-float Utils::degToRad(float degrees) {
-	return degrees * (Utils::PI / 180.0f);
+double Utils::degToRad(double degrees) {
+	return degrees * (Utils::PI / 180.0);
 }

@@ -4,7 +4,7 @@
 class Color
 {
 protected:
-	float m_r, m_g, m_b;
+	double m_r, m_g, m_b;
 
 	void afficher(std::ostream& flux) const;
 
@@ -22,7 +22,7 @@ public:
 
 
 	// Constructors
-	Color(float r = 0.0f, float g = 0.0f, float b = 0.0f);
+	Color(double r = 0.0, double g = 0.0, double b = 0.0);
 	Color(Color const& other);
 	Color(Color&& other) noexcept;
 
@@ -32,9 +32,9 @@ public:
 
 
 	// Accessors
-	float getR() const;
-	float getG() const;
-	float getB() const;
+	double getR() const;
+	double getG() const;
+	double getB() const;
 
 
 	// Member functions
@@ -47,7 +47,7 @@ public:
 	friend std::ostream& operator<<(std::ostream& flux, Color const& color);
 	template <typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
 	Color& operator*=(T const& scalar) {
-		float f_scalar = static_cast<float>(scalar);
+		double f_scalar = static_cast<double>(scalar);
 		m_r *= f_scalar;
 		m_g *= f_scalar;
 		m_b *= f_scalar;

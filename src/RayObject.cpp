@@ -91,6 +91,10 @@ void RayObject::SetPosition(Point const& p) {
 
 void RayObject::SetMaterial(Material const& material) {m_material = material;}
 
+void RayObject::SetCanReceiveShadows(bool const& canReceiveShadows) { m_canReceiveShadows = canReceiveShadows; }
+
+void RayObject::SetCanCastShadows(bool const& canCastShadows) { m_canCastShadows = canCastShadows; }
+
 
 // Member functions
 RayObject& RayObject::operator=(RayObject const& other) {
@@ -178,7 +182,7 @@ Color RayObject::Lighting(Point const&position, Light const& light, Vector const
 	if (inShadow)
 		return ambientColor;
 
-	float lDotN = lightVec.Dot(normal);
+	double lDotN = lightVec.Dot(normal);
 	if (lDotN <= 0) {
 		diffuseColor = Color::black;
 		specularColor = Color::black;
@@ -186,12 +190,12 @@ Color RayObject::Lighting(Point const&position, Light const& light, Vector const
 	else {
 		diffuseColor = effectiveColor * m_material.GetDiffuse() * lDotN;
 		Vector reflect = Vector::Reflect(-lightVec, normal);
-		float rDotE = reflect.Dot(eye);
+		double rDotE = reflect.Dot(eye);
 
 		if (rDotE <= 0)
 			specularColor = Color::black;
 		else {
-			float factor = std::pow(rDotE, m_material.GetShininess());
+			double factor = std::pow(rDotE, m_material.GetShininess());
 			specularColor = light.GetIntensity() * m_material.GetSpecular() * factor;
 		}
 	}

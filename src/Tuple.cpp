@@ -4,7 +4,7 @@
 #include "Utils.h"
 
 // Constructors
-Tuple::Tuple(float x, float y, float z, float w) :
+Tuple::Tuple(double x, double y, double z, double w) :
 	m_x(x),
 	m_y(y),
 	m_z(z),
@@ -22,10 +22,10 @@ Tuple::Tuple(Tuple&& other) noexcept :
 	m_z(other.m_z),
 	m_w(other.m_w) {
 	// Reset source object pour éviter des doublons
-	other.m_x = 0.0f;
-	other.m_y = 0.0f;
-	other.m_z = 0.0f;
-	other.m_w = 0.0f;
+	other.m_x = 0.0;
+	other.m_y = 0.0;
+	other.m_z = 0.0;
+	other.m_w = 0.0;
 }
 
 
@@ -34,15 +34,15 @@ Tuple::~Tuple() {}
 
 
 // Accessors
-float Tuple::getX() const {return m_x;}
+double Tuple::getX() const {return m_x;}
 
-float Tuple::getY() const {return m_y;}
+double Tuple::getY() const {return m_y;}
 
-float Tuple::getZ() const {return m_z;}
+double Tuple::getZ() const {return m_z;}
 
-float Tuple::getW() const {return m_w;}
+double Tuple::getW() const {return m_w;}
 
-void Tuple::set(float newX, float newY, float newZ, float newW) {
+void Tuple::set(double newX, double newY, double newZ, double newW) {
 	m_x = newX;
 	m_y = newY;
 	m_z = newZ;
@@ -74,10 +74,10 @@ Tuple& Tuple::operator=(Tuple&& other) noexcept {
 		m_w = other.m_w;
 
 		// Reset source object
-		other.m_x = 0.0f;
-		other.m_y = 0.0f;
-		other.m_z = 0.0f;
-		other.m_w = 0.0f;
+		other.m_x = 0.0;
+		other.m_y = 0.0;
+		other.m_z = 0.0;
+		other.m_w = 0.0;
 	}
 	return *this;
 }
@@ -93,11 +93,11 @@ void Tuple::afficher(std::ostream& flux) const {
 	flux << "Tuple (" << m_x << ", " << m_y << ", " << m_z << ", " << m_w << ")";
 }
 
-float Tuple::Magnitude() const {
+double Tuple::Magnitude() const {
 	return std::sqrt(m_x * m_x + m_y * m_y + m_z * m_z);
 }
 
-float Tuple::SqrtMagnitude() const{
+double Tuple::SqrtMagnitude() const{
 	return m_x * m_x + m_y * m_y + m_z * m_z;
 }
 

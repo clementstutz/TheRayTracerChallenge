@@ -3,12 +3,12 @@
 class Utils
 {
 private :
-	static constexpr float EPSILON = 0.00001f; //1.e10-7;
-	static constexpr float PI = 3.14159265358979323846f;
+	static constexpr double EPSILON = 0.001; //1.e10-7;
+	static constexpr double PI = 3.14159265358979323846;
 
 public:
-	static float GetEpsilon();
-	static float GetPI();
-	static bool FE(float const &a, float const& b);
-	static float degToRad(float degrees);
+	static double GetEpsilon();
+	static double GetPI();
+	static bool FE(double const &a, double const& b);
+	static double degToRad(double degrees);
 };

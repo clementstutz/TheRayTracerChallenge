@@ -29,7 +29,7 @@ RayObject_for_Test& RayObject_for_Test::operator=(RayObject_for_Test&& other) no
 
 std::vector<Intersection> RayObject_for_Test::Intersect(Ray const& ray) {
     std::vector<Intersection> intersectionPoints;
-    intersectionPoints.push_back(Intersection(*this, 1.0f));
+    intersectionPoints.push_back(Intersection(*this, 1.0));
     return intersectionPoints;
 }
 

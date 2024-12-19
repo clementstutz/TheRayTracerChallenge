@@ -32,7 +32,7 @@ public:
 	Ray& operator=(Ray&& other) noexcept;
 	Ray& operator*=(Mat4 const& mat);
 	friend std::ostream& operator<<(std::ostream& flux, Ray const& ray);
-	Point position(float t) const;
+	Point position(double t) const;
 };
 
 Ray operator*(Mat4 const& mat, Ray const& ray);

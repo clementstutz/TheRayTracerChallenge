@@ -44,6 +44,8 @@ public:
 	void SetMatrix(Mat4 const&mat);
 	void SetPosition(Point const& p);
 	void SetMaterial(Material const& material);
+	void SetCanReceiveShadows(bool const& canReceiveShadows);
+	void SetCanCastShadows(bool const& canCastShadows);
 	
 	// Member functions
 	RayObject& operator=(RayObject const& other);

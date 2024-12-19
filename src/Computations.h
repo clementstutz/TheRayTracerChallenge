@@ -9,7 +9,7 @@ class RayObject;
 class Computations
 {
 private:
-	float m_t;
+	double m_t;
 	const RayObject* m_rayObjectPtr;
 	Point m_point;
 	Vector m_eye;
@@ -18,8 +18,8 @@ private:
 	Point m_overPoint;
 	Point m_underPoint;
 	Vector m_reflectVector;
-	float m_n1;
-	float m_n2;
+	double m_n1;
+	double m_n2;
 
 public:
 	// Constructors
@@ -31,7 +31,7 @@ public:
 
 
 	// Accessors
-	const float GetLength() const;
+	const double GetLength() const;
 	const RayObject* GetRayObjectPtr() const;
 	const RayObject& GetRayObject() const;
 	const Point GetPoint() const;
@@ -41,8 +41,8 @@ public:
 	const Point GetOverPoint() const;
 	const Point GetUnderPoint() const;
 	const Vector GetReflectVector() const;
-	const float GetN1() const;
-	const float GetN2() const;
+	const double GetN1() const;
+	const double GetN2() const;
 
 
 	// Member functions

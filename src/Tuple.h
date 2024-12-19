@@ -4,13 +4,13 @@
 class Tuple
 {
 protected:
-	float m_x, m_y, m_z, m_w;
+	double m_x, m_y, m_z, m_w;
 
 	virtual void afficher(std::ostream& flux) const;
 
 public:
 	// Constructors
-	Tuple(float x = 0.0f, float y = 0.0f, float z = 0.0f, float w = 0.0f);
+	Tuple(double x = 0.0, double y = 0.0, double z = 0.0, double w = 0.0);
 	Tuple(Tuple const& other);
 	Tuple(Tuple&& other) noexcept;
 
@@ -20,11 +20,11 @@ public:
 
 
 	// Accessors
-	float getX() const;
-	float getY() const;
-	float getZ() const;
-	float getW() const;
-	void set(float newX, float newY, float newZ, float newW);
+	double getX() const;
+	double getY() const;
+	double getZ() const;
+	double getW() const;
+	void set(double newX, double newY, double newZ, double newW);
 
 
 	// Member functions
@@ -39,7 +39,7 @@ public:
 	template <typename T>
 	typename std::enable_if<std::is_arithmetic<T>::value, Tuple&>::type
 	operator*=(T const& scalar) {
-		float f_scalar = static_cast<float>(scalar);
+		double f_scalar = static_cast<double>(scalar);
 		m_x *= f_scalar;
 		m_y *= f_scalar;
 		m_z *= f_scalar;
@@ -47,9 +47,9 @@ public:
 		return *this;
 	};
 
-	float Magnitude() const;
+	double Magnitude() const;
 
-	float SqrtMagnitude() const;
+	double SqrtMagnitude() const;
 };
 
 bool operator!=(Tuple const& a, Tuple const& b);

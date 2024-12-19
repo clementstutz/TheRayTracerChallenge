@@ -5,7 +5,7 @@
 
 // Constructors
 Computations::Computations() :
-    m_t(0.0f),
+    m_t(0.0),
     m_rayObjectPtr(nullptr),
     m_point(Point()),
     m_eye(Vector()),
@@ -19,7 +19,7 @@ Computations::Computations() :
 
 
 // Accessors
-const float Computations::GetLength() const { return m_t; }
+const double Computations::GetLength() const { return m_t; }
 
 const RayObject* Computations::GetRayObjectPtr() const { return m_rayObjectPtr; }
 
@@ -44,9 +44,9 @@ const Point Computations::GetUnderPoint() const { return m_underPoint; }
 
 const Vector Computations::GetReflectVector() const { return m_reflectVector; }
 
-const float Computations::GetN1() const { return m_n1; }
+const double Computations::GetN1() const { return m_n1; }
 
-const float Computations::GetN2() const { return m_n2; }
+const double Computations::GetN2() const { return m_n2; }
 
 
 // Member functions

@@ -3,7 +3,7 @@
 #include "Mat4.h"
 
 // Constructors
-Vector::Vector(float x, float y, float z, float w) : Tuple(x, y, z, w) {}
+Vector::Vector(double x, double y, double z, double w) : Tuple(x, y, z, w) {}
 
 Vector::Vector(Vector const& other) : Tuple(other.getX(), other.getY(), other.getZ(), other.getW()) {}
 
@@ -15,7 +15,7 @@ Vector::~Vector() {}
 
 
 // Member functions
-void Vector::set(float newX, float newY, float newZ, float newW) {
+void Vector::set(double newX, double newY, double newZ, double newW) {
     m_x = newX;
     m_y = newY;
     m_z = newZ;
@@ -61,7 +61,7 @@ Vector& Vector::operator-=(const Vector& v) {
 }
 
 Vector& Vector::Normalize() {
-    float mag = this->Magnitude();
+    double mag = this->Magnitude();
     this->m_x = this->m_x / mag;
     this->m_y = this->m_y / mag;
     this->m_z = this->m_z / mag;
@@ -70,14 +70,14 @@ Vector& Vector::Normalize() {
 
 Vector Vector::Normalized() {
     Vector temp;
-    float mag = this->Magnitude();
+    double mag = this->Magnitude();
     temp.m_x = this->m_x / mag;
     temp.m_y = this->m_y / mag;
     temp.m_z = this->m_z / mag;
     return temp;
 }
 
-float Vector::Dot(Vector const& a) const {
+double Vector::Dot(Vector const& a) const {
     return this->m_x * a.m_x + this->m_y * a.m_y + this->m_z * a.m_z;
 }
 
@@ -122,9 +122,9 @@ Vector operator-(Vector const& v) {
 }
 
 Vector operator*(Mat4 const& m, Vector const& v) {
-    float x = m[0][0] * v.getX() + m[0][1] * v.getY() + m[0][2] * v.getZ() + m[0][3] * v.getW();
-    float y = m[1][0] * v.getX() + m[1][1] * v.getY() + m[1][2] * v.getZ() + m[1][3] * v.getW();
-    float z = m[2][0] * v.getX() + m[2][1] * v.getY() + m[2][2] * v.getZ() + m[2][3] * v.getW();
-    float w = m[3][0] * v.getX() + m[3][1] * v.getY() + m[3][2] * v.getZ() + m[3][3] * v.getW();
+    double x = m[0][0] * v.getX() + m[0][1] * v.getY() + m[0][2] * v.getZ() + m[0][3] * v.getW();
+    double y = m[1][0] * v.getX() + m[1][1] * v.getY() + m[1][2] * v.getZ() + m[1][3] * v.getW();
+    double z = m[2][0] * v.getX() + m[2][1] * v.getY() + m[2][2] * v.getZ() + m[2][3] * v.getW();
+    double w = m[3][0] * v.getX() + m[3][1] * v.getY() + m[3][2] * v.getZ() + m[3][3] * v.getW();
     return Vector(x, y, z, w);
 }

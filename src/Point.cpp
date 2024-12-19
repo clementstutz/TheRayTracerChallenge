@@ -3,7 +3,7 @@
 #include "Mat4.h"
 
 // Constructors
-Point::Point(float x, float y, float z, float w) : Tuple(x, y, z, w) {}
+Point::Point(double x, double y, double z, double w) : Tuple(x, y, z, w) {}
 
 Point::Point(Point const& other) : Tuple(other.getX(), other.getY(), other.getZ(), other.getW()) {}
 
@@ -15,7 +15,7 @@ Point::~Point() {}
 
 
 // Member functions
-void Point::set(float newX, float newY, float newZ, float newW) {
+void Point::set(double newX, double newY, double newZ, double newW) {
     m_x = newX;
     m_y = newY;
     m_z = newZ;
@@ -92,10 +92,10 @@ Point operator-(Point const& p) {
 }
 
 Point operator*(Mat4 const& m, Point const& p) {
-    float x = m[0][0] * p.getX() + m[0][1] * p.getY() + m[0][2] * p.getZ() + m[0][3] * p.getW();
-    float y = m[1][0] * p.getX() + m[1][1] * p.getY() + m[1][2] * p.getZ() + m[1][3] * p.getW();
-    float z = m[2][0] * p.getX() + m[2][1] * p.getY() + m[2][2] * p.getZ() + m[2][3] * p.getW();
-    float w = m[3][0] * p.getX() + m[3][1] * p.getY() + m[3][2] * p.getZ() + m[3][3] * p.getW();
+    double x = m[0][0] * p.getX() + m[0][1] * p.getY() + m[0][2] * p.getZ() + m[0][3] * p.getW();
+    double y = m[1][0] * p.getX() + m[1][1] * p.getY() + m[1][2] * p.getZ() + m[1][3] * p.getW();
+    double z = m[2][0] * p.getX() + m[2][1] * p.getY() + m[2][2] * p.getZ() + m[2][3] * p.getW();
+    double w = m[3][0] * p.getX() + m[3][1] * p.getY() + m[3][2] * p.getZ() + m[3][3] * p.getW();
     Point temp(x, y, z, w);
     return temp;
 }

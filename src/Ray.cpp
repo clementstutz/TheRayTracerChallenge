@@ -63,7 +63,7 @@ void Ray::afficher(std::ostream& flux) const {
     flux << "Ray (" << m_origin << " -> " << m_direction << ")";
 }
 
-Point Ray::position(float t) const {
+Point Ray::position(double t) const {
     return m_origin + m_direction * t;
 }
 

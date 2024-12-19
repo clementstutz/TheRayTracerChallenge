@@ -73,8 +73,8 @@ void Save::writePPMBody(Canvas const& canvas, int maxValue, std::ofstream& flux)
 	}
 }
 
-int Save::clamp(float channelColor, int maxValue, int minValue) {
-	int value = static_cast<int>(channelColor + 0.5f); // Arrondi au plus proche
+int Save::clamp(double channelColor, int maxValue, int minValue) {
+	int value = static_cast<int>(channelColor + 0.5); // Arrondi au plus proche
 	if (value > maxValue) return maxValue;
 	else if(value < minValue) return minValue;
 	else return value;

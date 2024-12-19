@@ -12,7 +12,7 @@ protected:
 
 public:
 	// Constructors
-	Point(float x = 0.0f, float y = 0.0f, float z = 0.0f, float w = 1.0f);
+	Point(double x = 0.0, double y = 0.0, double z = 0.0, double w = 1.0);
 	Point(Point const& other);
 	Point(Point&& other) noexcept;
 	
@@ -22,14 +22,14 @@ public:
 
 
 	// Member functions
-	void set(float newX, float newY, float newZ, float newW = 1.0);
+	void set(double newX, double newY, double newZ, double newW = 1.0);
 	Point& operator=(Point const& other);
 	Point& operator=(Point&& other) noexcept;
 	Point& operator+=(Vector const& v);
 	Point& operator-=(Vector const& v);
 	template <typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
 	Point& operator*=(T const& scalar) {
-		float f_scalar = static_cast<float>(scalar);
+		double f_scalar = static_cast<double>(scalar);
 		m_x *= f_scalar;
 		m_y *= f_scalar;
 		m_z *= f_scalar;

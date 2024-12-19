@@ -16,6 +16,6 @@ private:
 
 	static void writePPMBody(Canvas const& canvas, int maxValue, std::ofstream& flux);
 
-	static int clamp(float channelColor, int maxValue, int minValue = 0);
+	static int clamp(double channelColor, int maxValue, int minValue = 0);
 };
 

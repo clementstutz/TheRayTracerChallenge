@@ -123,11 +123,11 @@ Intersection Scene::Hit(std::vector<Intersection> const& intersections) {  // WA
 }
 
 Ray Scene::RayForPixel(Camera const& camera, int x, int y) {
-    float xOffset = (x + 0.5f) * camera.GetPixelSize();
-    float yOffset = (y + 0.5f) * camera.GetPixelSize();
+    double xOffset = (x + 0.5) * camera.GetPixelSize();
+    double yOffset = (y + 0.5) * camera.GetPixelSize();
 
-    float worldX = camera.GetHalfWidth() - xOffset;
-    float worldY = camera.GetHalfHeight() - yOffset;
+    double worldX = camera.GetHalfWidth() - xOffset;
+    double worldY = camera.GetHalfHeight() - yOffset;
 
     Point pixel = camera.GetTransform().inverted() * Point(worldX, worldY, -1.0);
     Point origin = camera.GetTransform().inverted() * Point(0, 0, 0);
@@ -150,38 +150,34 @@ Color Scene::ShadeHit(Computations const& c, int remaining) {
         return Color::black;
     }
 
-    //Color surfaceColor;
-    //for (int i = 0; i < m_lights.size(); i++) {
-    //    //std::cout << "lights["<<i<<"] = " << *m_lights[i] << std::endl;
-    //    // Is this light in shadow?
-    //    if (c.GetRayObject().CanReceiveShadows()) {
-    //        bool isShadow = IsShadowed(c.GetOverPoint(), *m_lights[i]);
-    //        //std::cout << "isShadow = " << isShadow << std::endl;
-    //        surfaceColor += c.GetRayObject().Lighting(c.GetPoint(), *m_lights[i], c.GetEye(), c.GetNormal(), isShadow);
-    //        //std::cout << "surfaceColor = " << surfaceColor << std::endl;
-    //    }
-    //}
+    Color surfaceColor;
+    for (int i = 0; i < m_lights.size(); i++) {
+        // Is this light in shadow?
+        if (c.GetRayObject().CanReceiveShadows()) {
+            bool isShadow = IsShadowed(c.GetOverPoint(), *m_lights[i]);
+            surfaceColor += c.GetRayObject().Lighting(c.GetPoint(), *m_lights[i], c.GetEye(), c.GetNormal(), isShadow);
+        }
+    }
 
     //Color reflected = ReflectedColor(c, remaining);
     //Color refracted = RefractedColor(c, remaining);
 
     //if (c.GetRayObject().GetMaterial().GetReflectivity() > 0 && c.GetRayObject().GetMaterial().GetTransparency() > 0) {
-    //    float reflectance = Schlick(c);
+    //    double reflectance = Schlick(c);
     //    return surfaceColor + reflected * reflectance + refracted * (1.0 - reflectance);
     //}
 
     //return surfaceColor + reflected + refracted;
 
-    Color finalColor;
-    for (int i = 0; i < m_lights.size(); i++) {
-        finalColor += c.GetRayObject().Lighting(c.GetPoint(), *m_lights[i], c.GetEye(), c.GetNormal());
-    }
-    return finalColor;
+    //for (int i = 0; i < m_lights.size(); i++) {
+    //    surfaceColor += c.GetRayObject().Lighting(c.GetPoint(), *m_lights[i], c.GetEye(), c.GetNormal());
+    //}
+    return surfaceColor;
 }
 
 bool Scene::IsShadowed(Point const& point, Light const& light) {
     Vector temp = light.GetPosition() - point;
-    float distance = temp.Magnitude();
+    double distance = temp.Magnitude();
     Vector direction = temp.Normalize();
 
     Ray ray(point, direction);
@@ -214,14 +210,14 @@ Color Scene::RefractedColor(Computations const& c, int remaining) {
     }
 
     //Check for infinit internal reflection.
-    float nRatio = c.GetN1() / c.GetN2();
-    float cosI = c.GetEye().Dot(c.GetNormal());
-    float sin2T = nRatio * nRatio * (1.0f - (cosI * cosI));
-    if (sin2T > 1.0f) {
+    double nRatio = c.GetN1() / c.GetN2();
+    double cosI = c.GetEye().Dot(c.GetNormal());
+    double sin2T = nRatio * nRatio * (1.0 - (cosI * cosI));
+    if (sin2T > 1.0) {
         return Color::black;
     }
 
-    float cosT = std::sqrt(1.0f - sin2T);
+    double cosT = std::sqrt(1.0 - sin2T);
 
     Vector direction = c.GetNormal() * (nRatio * cosI - cosT) - c.GetEye() * nRatio;
 
@@ -233,22 +229,22 @@ Color Scene::RefractedColor(Computations const& c, int remaining) {
     return refractedColor;
 }
 
-float Scene::Schlick(Computations const& c)   // WARNING :Deal with fresnel effect but don't realy know what it does. (cf. Chapter11Test Test 16)
+double Scene::Schlick(Computations const& c)   // WARNING :Deal with fresnel effect but don't realy know what it does. (cf. Chapter11Test Test 16)
 {
-    float cosI = c.GetEye().Dot(c.GetNormal());
+    double cosI = c.GetEye().Dot(c.GetNormal());
     if (c.GetN1() > c.GetN2())
     {
-        float nRatio = c.GetN1() / c.GetN2();
-        float sin2T = nRatio * nRatio * (1.0f - (cosI * cosI));
-        if (sin2T > 1.0f)
-            return 1.0f;
+        double nRatio = c.GetN1() / c.GetN2();
+        double sin2T = nRatio * nRatio * (1.0 - (cosI * cosI));
+        if (sin2T > 1.0)
+            return 1.0;
 
-        float cosT = std::sqrt(1.0f - sin2T);
+        double cosT = std::sqrt(1.0 - sin2T);
 
         cosI = cosT;
     }
-    float r0 = std::pow((c.GetN1() - c.GetN2()) / (c.GetN1() + c.GetN2()), 2);
-    return r0 + (1.0f - r0) * std::pow((1.0f - cosI), 5);
+    double r0 = std::pow((c.GetN1() - c.GetN2()) / (c.GetN1() + c.GetN2()), 2);
+    return r0 + (1.0 - r0) * std::pow((1.0 - cosI), 5);
 }
 
 Canvas Scene::Render(Camera const& camera, int remaining) {
@@ -269,7 +265,7 @@ Canvas Scene::Render(Camera const& camera, int remaining) {
             canvas.setPixel(x, y, pixelColor);
         }
         // affiche le pourcentage de progression de la génération de l'image
-        std::cout << "y progression = " << (static_cast<float>(y + 1) / static_cast<float>(camera.GetVSize()) * 100) << "%" << std::endl;
+        std::cout << "y progression = " << ((static_cast<double>(y) + 1.0) / static_cast<double>(camera.GetVSize()) * 100) << "%" << std::endl;
     }
     std::cout << "Rendering done !" << std::endl;
     return canvas;

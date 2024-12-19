@@ -6,16 +6,16 @@
 class Mat4
 {
 private:
-	float m_mat[4][4];
+	double m_mat[4][4];
 
 	void afficher(std::ostream& flux) const;
 
 public:
 	// Constructors
-	Mat4(float m00 = 1.0f, float m01 = 0.0f, float m02 = 0.0f, float m03 = 0.0f,
-		 float m10 = 0.0f, float m11 = 1.0f, float m12 = 0.0f, float m13 = 0.0f,
-		 float m20 = 0.0f, float m21 = 0.0f, float m22 = 1.0f, float m23 = 0.0f,
-		 float m30 = 0.0f, float m31 = 0.0f, float m32 = 0.0f, float m33 = 1.0f);
+	Mat4(double m00 = 1.0, double m01 = 0.0, double m02 = 0.0, double m03 = 0.0,
+		 double m10 = 0.0, double m11 = 1.0, double m12 = 0.0, double m13 = 0.0,
+		 double m20 = 0.0, double m21 = 0.0, double m22 = 1.0, double m23 = 0.0,
+		 double m30 = 0.0, double m31 = 0.0, double m32 = 0.0, double m33 = 1.0);
 	Mat4(Mat4 const& other);
 	Mat4(Mat4&& other) noexcept;
 
@@ -25,8 +25,8 @@ public:
 
 
 	// Accessors
-	float(&operator[](int row))[4];				//setter
-	const float(&operator[](int row) const)[4];	//getter
+	double(&operator[](int row))[4];				//setter
+	const double(&operator[](int row) const)[4];	//getter
 
 
 	// Member functions
@@ -42,7 +42,7 @@ public:
 
 	template <typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
 	Mat4& operator*=(T const& scalar) {
-		float f_scalar = static_cast<float>(scalar);
+		double f_scalar = static_cast<double>(scalar);
 		m_mat[0][0] *= f_scalar;
 		m_mat[0][1] *= f_scalar;
 		m_mat[0][2] *= f_scalar;
@@ -73,14 +73,14 @@ public:
 
 	Mat4 transposed() const;
 
-	float det();
+	double det();
 
 	Mat4& invert();
 
 	Mat4 inverted() const;
 
-	static Mat4 TranslateMatrix(float x, float y, float z);
-	Mat4& Translate(float x, float y, float z);
+	static Mat4 TranslateMatrix(double x, double y, double z);
+	Mat4& Translate(double x, double y, double z);
 
 	static Mat4 TranslateMatrix(Point p);
 	Mat4& Translate(Point p);
@@ -88,8 +88,8 @@ public:
 	static Mat4 TranslateMatrix(Vector v);
 	Mat4& Translate(Vector v);
 
-	static Mat4 ScaleMatrix(float x, float y, float z);
-	Mat4& Scale(float x, float y, float z);
+	static Mat4 ScaleMatrix(double x, double y, double z);
+	Mat4& Scale(double x, double y, double z);
 
 	static Mat4  ScaleMatrix(Point p1);
 	Mat4& Scale(Point p1);
@@ -97,20 +97,20 @@ public:
 	static Mat4  ScaleMatrix(Vector v1);
 	Mat4& Scale(Vector v1);
 
-	static Mat4  RotateMatrix(float x, float y, float z);
-	Mat4& Rotate(float x, float y, float z);
+	static Mat4  RotateMatrix(double x, double y, double z);
+	Mat4& Rotate(double x, double y, double z);
 
-	static Mat4 RotateXMatrix(float x);
-	Mat4& RotateX(float x);
+	static Mat4 RotateXMatrix(double x);
+	Mat4& RotateX(double x);
 
-	static Mat4 RotateYMatrix(float y);
-	Mat4& RotateY(float y);
+	static Mat4 RotateYMatrix(double y);
+	Mat4& RotateY(double y);
 
-	static Mat4 RotateZMatrix(float z);
-	Mat4& RotateZ(float z);
+	static Mat4 RotateZMatrix(double z);
+	Mat4& RotateZ(double z);
 
-	static Mat4 ShearMatrix(float xy, float xz, float yx, float yz, float zx, float zy);
-	Mat4& Shear(float xy, float xz, float yx, float yz, float zx, float zy);
+	static Mat4 ShearMatrix(double xy, double xz, double yx, double yz, double zx, double zy);
+	Mat4& Shear(double xy, double xz, double yx, double yz, double zx, double zy);
 };
 
 bool operator!=(const Mat4& mat_a, const Mat4& mat_b);

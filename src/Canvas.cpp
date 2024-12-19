@@ -70,7 +70,7 @@ void Canvas::drawCircle(int cx, int cy, int radius, Color const& color) {
         for (int x = xStart; x <= xEnd; x++) {
             // Calculate distance to center, use square as it is faster that root.
             int squareRadius = radius * radius;
-            float distance = (x - cx) * (x - cx) + (y - cy) * (y - cy);
+            double distance = (x - cx) * (x - cx) + (y - cy) * (y - cy);
             if (static_cast<int>(distance) < squareRadius) {
                 // Draw to location, which tests to see if it is even possible.
                 setPixel(x, y, color);

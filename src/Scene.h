@@ -52,7 +52,7 @@ public:
 	bool IsShadowed(Point const& point, Light const& light);
 	Color ReflectedColor(Computations const& c, int remaining = 1);
 	Color RefractedColor(Computations const& c, int remaining = 1);
-	float Schlick(Computations const& c);
+	double Schlick(Computations const& c);
 	Canvas Render(Camera const& camera, int remaining = 1);
 };
 

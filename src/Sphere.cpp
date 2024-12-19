@@ -42,15 +42,15 @@ std::vector<Intersection> Sphere::Intersect(Ray const& ray) {
 	Ray transRay = RayToObjectSpace(ray);
 
     Vector sphereToRay = (transRay.getOrigin() - Point());
-    float a = transRay.getDirection().Dot(transRay.getDirection());   //Should always be 1.0 NOTE: normaliser la direction pour éviter ce calcult et les erreur d'arondie!
-    float b = 2.0f * transRay.getDirection().Dot(sphereToRay);
-    float c = sphereToRay.Dot(sphereToRay) - 1.0f;
-    float discriminant = b * b - 4.0f * a * c;
+    double a = transRay.getDirection().Dot(transRay.getDirection());   //Should always be 1.0 NOTE: normaliser la direction pour éviter ce calcult et les erreur d'arondie!
+    double b = 2.0 * transRay.getDirection().Dot(sphereToRay);
+    double c = sphereToRay.Dot(sphereToRay) - 1.0;
+    double discriminant = b * b - 4.0 * a * c;
     if (discriminant < 0)   // Miss.
         return intersectionPoints; //NOTE: pour optimiser on peut peut-être essayer de ne pas renvoyer de liste vide comme c'est le cas ici...
 
-    float t1 = (-b - sqrt(discriminant)) / (2.0f * a);
-    float t2 = (-b + sqrt(discriminant)) / (2.0f * a);
+    double t1 = (-b - sqrt(discriminant)) / (2.0 * a);
+    double t2 = (-b + sqrt(discriminant)) / (2.0 * a);
 
     // NOTE: pour optimiser encore on pourrait regarder le signe de t1 et t2 et ne renvoyer que les valeur positiver
     // les valeurs négatives sont des intersection qui on lieu derrière la camera (normalement...)

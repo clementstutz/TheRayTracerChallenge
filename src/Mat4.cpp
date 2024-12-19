@@ -6,10 +6,10 @@
 #include "Mat2.h"
 
 // Constructors
-Mat4::Mat4(float m00, float m01, float m02, float m03,
-		   float m10, float m11, float m12, float m13,
-		   float m20, float m21, float m22, float m23,
-		   float m30, float m31, float m32, float m33) {
+Mat4::Mat4(double m00, double m01, double m02, double m03,
+		   double m10, double m11, double m12, double m13,
+		   double m20, double m21, double m22, double m23,
+		   double m30, double m31, double m32, double m33) {
 	m_mat[0][0] = m00;
 	m_mat[0][1] = m01;
 	m_mat[0][2] = m02;
@@ -80,14 +80,14 @@ Mat4::Mat4(Mat4&& other) noexcept {
 
 
 // Accessors
-float(&Mat4::operator[](int row))[4]{
+double(&Mat4::operator[](int row))[4]{
 	if (row < 0 || row >= 4) {
 		throw std::out_of_range("Index hors limites pour Mat4.");
 	}
 	return m_mat[row];
 }
 
-const float(&Mat4::operator[](int row) const)[4]{
+const double(&Mat4::operator[](int row) const)[4]{
 	if (row < 0 || row >= 4) {
 		throw std::out_of_range("Index hors limites pour Mat4.");
 	}
@@ -223,40 +223,40 @@ Mat4& Mat4::operator-=(Mat4 const& other) {
 }
 
 Mat4& Mat4::operator*=(Mat4 const& other) {
-    float a00 = m_mat[0][0] * other.m_mat[0][0] + m_mat[0][1] * other.m_mat[1][0] +
+    double a00 = m_mat[0][0] * other.m_mat[0][0] + m_mat[0][1] * other.m_mat[1][0] +
                 m_mat[0][2] * other.m_mat[2][0] + m_mat[0][3] * other.m_mat[3][0];
-    float a01 = m_mat[0][0] * other.m_mat[0][1] + m_mat[0][1] * other.m_mat[1][1] +
+    double a01 = m_mat[0][0] * other.m_mat[0][1] + m_mat[0][1] * other.m_mat[1][1] +
                 m_mat[0][2] * other.m_mat[2][1] + m_mat[0][3] * other.m_mat[3][1];
-    float a02 = m_mat[0][0] * other.m_mat[0][2] + m_mat[0][1] * other.m_mat[1][2] +
+    double a02 = m_mat[0][0] * other.m_mat[0][2] + m_mat[0][1] * other.m_mat[1][2] +
                 m_mat[0][2] * other.m_mat[2][2] + m_mat[0][3] * other.m_mat[3][2];
-    float a03 = m_mat[0][0] * other.m_mat[0][3] + m_mat[0][1] * other.m_mat[1][3] +
+    double a03 = m_mat[0][0] * other.m_mat[0][3] + m_mat[0][1] * other.m_mat[1][3] +
                 m_mat[0][2] * other.m_mat[2][3] + m_mat[0][3] * other.m_mat[3][3];
 
-    float a10 = m_mat[1][0] * other.m_mat[0][0] + m_mat[1][1] * other.m_mat[1][0] +
+    double a10 = m_mat[1][0] * other.m_mat[0][0] + m_mat[1][1] * other.m_mat[1][0] +
                 m_mat[1][2] * other.m_mat[2][0] + m_mat[1][3] * other.m_mat[3][0];
-    float a11 = m_mat[1][0] * other.m_mat[0][1] + m_mat[1][1] * other.m_mat[1][1] +
+    double a11 = m_mat[1][0] * other.m_mat[0][1] + m_mat[1][1] * other.m_mat[1][1] +
                 m_mat[1][2] * other.m_mat[2][1] + m_mat[1][3] * other.m_mat[3][1];
-    float a12 = m_mat[1][0] * other.m_mat[0][2] + m_mat[1][1] * other.m_mat[1][2] +
+    double a12 = m_mat[1][0] * other.m_mat[0][2] + m_mat[1][1] * other.m_mat[1][2] +
                 m_mat[1][2] * other.m_mat[2][2] + m_mat[1][3] * other.m_mat[3][2];
-    float a13 = m_mat[1][0] * other.m_mat[0][3] + m_mat[1][1] * other.m_mat[1][3] +
+    double a13 = m_mat[1][0] * other.m_mat[0][3] + m_mat[1][1] * other.m_mat[1][3] +
                 m_mat[1][2] * other.m_mat[2][3] + m_mat[1][3] * other.m_mat[3][3];
 
-    float a20 = m_mat[2][0] * other.m_mat[0][0] + m_mat[2][1] * other.m_mat[1][0] +
+    double a20 = m_mat[2][0] * other.m_mat[0][0] + m_mat[2][1] * other.m_mat[1][0] +
                 m_mat[2][2] * other.m_mat[2][0] + m_mat[2][3] * other.m_mat[3][0];
-    float a21 = m_mat[2][0] * other.m_mat[0][1] + m_mat[2][1] * other.m_mat[1][1] +
+    double a21 = m_mat[2][0] * other.m_mat[0][1] + m_mat[2][1] * other.m_mat[1][1] +
                 m_mat[2][2] * other.m_mat[2][1] + m_mat[2][3] * other.m_mat[3][1];
-    float a22 = m_mat[2][0] * other.m_mat[0][2] + m_mat[2][1] * other.m_mat[1][2] +
+    double a22 = m_mat[2][0] * other.m_mat[0][2] + m_mat[2][1] * other.m_mat[1][2] +
                 m_mat[2][2] * other.m_mat[2][2] + m_mat[2][3] * other.m_mat[3][2];
-    float a23 = m_mat[2][0] * other.m_mat[0][3] + m_mat[2][1] * other.m_mat[1][3] +
+    double a23 = m_mat[2][0] * other.m_mat[0][3] + m_mat[2][1] * other.m_mat[1][3] +
                 m_mat[2][2] * other.m_mat[2][3] + m_mat[2][3] * other.m_mat[3][3];
 
-    float a30 = m_mat[3][0] * other.m_mat[0][0] + m_mat[3][1] * other.m_mat[1][0] +
+    double a30 = m_mat[3][0] * other.m_mat[0][0] + m_mat[3][1] * other.m_mat[1][0] +
                 m_mat[3][2] * other.m_mat[2][0] + m_mat[3][3] * other.m_mat[3][0];
-    float a31 = m_mat[3][0] * other.m_mat[0][1] + m_mat[3][1] * other.m_mat[1][1] +
+    double a31 = m_mat[3][0] * other.m_mat[0][1] + m_mat[3][1] * other.m_mat[1][1] +
                 m_mat[3][2] * other.m_mat[2][1] + m_mat[3][3] * other.m_mat[3][1];
-    float a32 = m_mat[3][0] * other.m_mat[0][2] + m_mat[3][1] * other.m_mat[1][2] +
+    double a32 = m_mat[3][0] * other.m_mat[0][2] + m_mat[3][1] * other.m_mat[1][2] +
                 m_mat[3][2] * other.m_mat[2][2] + m_mat[3][3] * other.m_mat[3][2];
-    float a33 = m_mat[3][0] * other.m_mat[0][3] + m_mat[3][1] * other.m_mat[1][3] +
+    double a33 = m_mat[3][0] * other.m_mat[0][3] + m_mat[3][1] * other.m_mat[1][3] +
                 m_mat[3][2] * other.m_mat[2][3] + m_mat[3][3] * other.m_mat[3][3];
 
     m_mat[0][0] = a00;
@@ -354,74 +354,74 @@ Mat4 Mat4::transposed() const {
 	return temp;
 }
 
-float Mat4::det() {
-	float a = m_mat[2][2] * m_mat[3][3] - m_mat[2][3] * m_mat[3][2];
-	float b = m_mat[2][1] * m_mat[3][3] - m_mat[2][3] * m_mat[3][1];
-	float c = m_mat[2][1] * m_mat[3][2] - m_mat[2][2] * m_mat[3][1];
-	float d = m_mat[1][1] * a - m_mat[1][2] * b + m_mat[1][3] * c;
+double Mat4::det() {
+	double a = m_mat[2][2] * m_mat[3][3] - m_mat[2][3] * m_mat[3][2];
+	double b = m_mat[2][1] * m_mat[3][3] - m_mat[2][3] * m_mat[3][1];
+	double c = m_mat[2][1] * m_mat[3][2] - m_mat[2][2] * m_mat[3][1];
+	double d = m_mat[1][1] * a - m_mat[1][2] * b + m_mat[1][3] * c;
 
-	float e = m_mat[2][0] * m_mat[3][3] - m_mat[2][3] * m_mat[3][0];
-	float f = m_mat[2][0] * m_mat[3][2] - m_mat[2][2] * m_mat[3][0];
-	float g = m_mat[1][0] * a - m_mat[1][2] * e + m_mat[1][3] * f;
+	double e = m_mat[2][0] * m_mat[3][3] - m_mat[2][3] * m_mat[3][0];
+	double f = m_mat[2][0] * m_mat[3][2] - m_mat[2][2] * m_mat[3][0];
+	double g = m_mat[1][0] * a - m_mat[1][2] * e + m_mat[1][3] * f;
 
-	float h = m_mat[2][0] * m_mat[3][1] - m_mat[2][1] * m_mat[3][0];
-	float i = m_mat[1][0] * b - m_mat[1][1] * e + m_mat[1][3] * h;
+	double h = m_mat[2][0] * m_mat[3][1] - m_mat[2][1] * m_mat[3][0];
+	double i = m_mat[1][0] * b - m_mat[1][1] * e + m_mat[1][3] * h;
 
-	float j = m_mat[1][0] * c - m_mat[1][1] * f + m_mat[1][2] * h;
+	double j = m_mat[1][0] * c - m_mat[1][1] * f + m_mat[1][2] * h;
 
 	return m_mat[0][0] * d - m_mat[0][1] * g + m_mat[0][2] * i - m_mat[0][3] * j;
 }
 
 Mat4& Mat4::invert() {
-	float det = this->det();
-	if (Utils::FE(det, 0.0f)){
+	double det = this->det();
+	if (Utils::FE(det, 0.0)){
 		throw std::runtime_error("La matrice n'est pas inversible.");
 	}
-	float invDet = 1.0f;
-	invDet = 1.0f / det;
+	double invDet = 1.0;
+	invDet = 1.0 / det;
 
 	// Pré-calcul des termes communs pour les mineurs
-	float minor0 = m_mat[2][2] * m_mat[3][3] - m_mat[2][3] * m_mat[3][2];
-	float minor1 = m_mat[2][1] * m_mat[3][3] - m_mat[2][3] * m_mat[3][1];
-	float minor2 = m_mat[2][1] * m_mat[3][2] - m_mat[2][2] * m_mat[3][1];
-	float minor3 = m_mat[2][0] * m_mat[3][3] - m_mat[2][3] * m_mat[3][0];
-	float minor4 = m_mat[2][0] * m_mat[3][2] - m_mat[2][2] * m_mat[3][0];
-	float minor5 = m_mat[2][0] * m_mat[3][1] - m_mat[2][1] * m_mat[3][0];
+	double minor0 = m_mat[2][2] * m_mat[3][3] - m_mat[2][3] * m_mat[3][2];
+	double minor1 = m_mat[2][1] * m_mat[3][3] - m_mat[2][3] * m_mat[3][1];
+	double minor2 = m_mat[2][1] * m_mat[3][2] - m_mat[2][2] * m_mat[3][1];
+	double minor3 = m_mat[2][0] * m_mat[3][3] - m_mat[2][3] * m_mat[3][0];
+	double minor4 = m_mat[2][0] * m_mat[3][2] - m_mat[2][2] * m_mat[3][0];
+	double minor5 = m_mat[2][0] * m_mat[3][1] - m_mat[2][1] * m_mat[3][0];
 
-	float minor6 = m_mat[1][2] * m_mat[3][3] - m_mat[1][3] * m_mat[3][2];
-	float minor7 = m_mat[1][1] * m_mat[3][3] - m_mat[1][3] * m_mat[3][1];
-	float minor8 = m_mat[1][1] * m_mat[3][2] - m_mat[1][2] * m_mat[3][1];
-	float minor9 = m_mat[1][0] * m_mat[3][3] - m_mat[1][3] * m_mat[3][0];
-	float minor10 = m_mat[1][0] * m_mat[3][2] - m_mat[1][2] * m_mat[3][0];
-	float minor11 = m_mat[1][0] * m_mat[3][1] - m_mat[1][1] * m_mat[3][0];
+	double minor6 = m_mat[1][2] * m_mat[3][3] - m_mat[1][3] * m_mat[3][2];
+	double minor7 = m_mat[1][1] * m_mat[3][3] - m_mat[1][3] * m_mat[3][1];
+	double minor8 = m_mat[1][1] * m_mat[3][2] - m_mat[1][2] * m_mat[3][1];
+	double minor9 = m_mat[1][0] * m_mat[3][3] - m_mat[1][3] * m_mat[3][0];
+	double minor10 = m_mat[1][0] * m_mat[3][2] - m_mat[1][2] * m_mat[3][0];
+	double minor11 = m_mat[1][0] * m_mat[3][1] - m_mat[1][1] * m_mat[3][0];
 
-	float minor12 = m_mat[1][2] * m_mat[2][3] - m_mat[1][3] * m_mat[2][2];
-	float minor13 = m_mat[1][1] * m_mat[2][3] - m_mat[1][3] * m_mat[2][1];
-	float minor14 = m_mat[1][1] * m_mat[2][2] - m_mat[1][2] * m_mat[2][1];
-	float minor15 = m_mat[1][0] * m_mat[2][3] - m_mat[1][3] * m_mat[2][0];
-	float minor16 = m_mat[1][0] * m_mat[2][2] - m_mat[1][2] * m_mat[2][0];
-	float minor17 = m_mat[1][0] * m_mat[2][1] - m_mat[1][1] * m_mat[2][0];
+	double minor12 = m_mat[1][2] * m_mat[2][3] - m_mat[1][3] * m_mat[2][2];
+	double minor13 = m_mat[1][1] * m_mat[2][3] - m_mat[1][3] * m_mat[2][1];
+	double minor14 = m_mat[1][1] * m_mat[2][2] - m_mat[1][2] * m_mat[2][1];
+	double minor15 = m_mat[1][0] * m_mat[2][3] - m_mat[1][3] * m_mat[2][0];
+	double minor16 = m_mat[1][0] * m_mat[2][2] - m_mat[1][2] * m_mat[2][0];
+	double minor17 = m_mat[1][0] * m_mat[2][1] - m_mat[1][1] * m_mat[2][0];
 
 	// Calcul des cofacteurs
-	float a00 =  (m_mat[1][1] * minor0 - m_mat[1][2] * minor1 + m_mat[1][3] * minor2) * invDet;
-	float a01 = -(m_mat[1][0] * minor0 - m_mat[1][2] * minor3 + m_mat[1][3] * minor4) * invDet;
-	float a02 =  (m_mat[1][0] * minor1 - m_mat[1][1] * minor3 + m_mat[1][3] * minor5) * invDet;
-	float a03 = -(m_mat[1][0] * minor2 - m_mat[1][1] * minor4 + m_mat[1][2] * minor5) * invDet;
+	double a00 =  (m_mat[1][1] * minor0 - m_mat[1][2] * minor1 + m_mat[1][3] * minor2) * invDet;
+	double a01 = -(m_mat[1][0] * minor0 - m_mat[1][2] * minor3 + m_mat[1][3] * minor4) * invDet;
+	double a02 =  (m_mat[1][0] * minor1 - m_mat[1][1] * minor3 + m_mat[1][3] * minor5) * invDet;
+	double a03 = -(m_mat[1][0] * minor2 - m_mat[1][1] * minor4 + m_mat[1][2] * minor5) * invDet;
 
-	float a10 = -(m_mat[0][1] * minor0 - m_mat[0][2] * minor1 + m_mat[0][3] * minor2) * invDet;
-	float a11 =  (m_mat[0][0] * minor0 - m_mat[0][2] * minor3 + m_mat[0][3] * minor4) * invDet;
-	float a12 = -(m_mat[0][0] * minor1 - m_mat[0][1] * minor3 + m_mat[0][3] * minor5) * invDet;
-	float a13 =  (m_mat[0][0] * minor2 - m_mat[0][1] * minor4 + m_mat[0][2] * minor5) * invDet;
+	double a10 = -(m_mat[0][1] * minor0 - m_mat[0][2] * minor1 + m_mat[0][3] * minor2) * invDet;
+	double a11 =  (m_mat[0][0] * minor0 - m_mat[0][2] * minor3 + m_mat[0][3] * minor4) * invDet;
+	double a12 = -(m_mat[0][0] * minor1 - m_mat[0][1] * minor3 + m_mat[0][3] * minor5) * invDet;
+	double a13 =  (m_mat[0][0] * minor2 - m_mat[0][1] * minor4 + m_mat[0][2] * minor5) * invDet;
 
-	float a20 =  (m_mat[0][1] * minor6 - m_mat[0][2] * minor7 + m_mat[0][3] * minor8) * invDet;
-	float a21 = -(m_mat[0][0] * minor6 - m_mat[0][2] * minor9 + m_mat[0][3] * minor10) * invDet;
-	float a22 =  (m_mat[0][0] * minor7 - m_mat[0][1] * minor9 + m_mat[0][3] * minor11) * invDet;
-	float a23 = -(m_mat[0][0] * minor8 - m_mat[0][1] * minor10 + m_mat[0][2] * minor11) * invDet;
+	double a20 =  (m_mat[0][1] * minor6 - m_mat[0][2] * minor7 + m_mat[0][3] * minor8) * invDet;
+	double a21 = -(m_mat[0][0] * minor6 - m_mat[0][2] * minor9 + m_mat[0][3] * minor10) * invDet;
+	double a22 =  (m_mat[0][0] * minor7 - m_mat[0][1] * minor9 + m_mat[0][3] * minor11) * invDet;
+	double a23 = -(m_mat[0][0] * minor8 - m_mat[0][1] * minor10 + m_mat[0][2] * minor11) * invDet;
 
-	float a30 = -(m_mat[0][1] * minor12 - m_mat[0][2] * minor13 + m_mat[0][3] * minor14) * invDet;
-	float a31 =  (m_mat[0][0] * minor12 - m_mat[0][2] * minor15 + m_mat[0][3] * minor16) * invDet;
-	float a32 = -(m_mat[0][0] * minor13 - m_mat[0][1] * minor15 + m_mat[0][3] * minor17) * invDet;
-	float a33 =  (m_mat[0][0] * minor14 - m_mat[0][1] * minor16 + m_mat[0][2] * minor17) * invDet;
+	double a30 = -(m_mat[0][1] * minor12 - m_mat[0][2] * minor13 + m_mat[0][3] * minor14) * invDet;
+	double a31 =  (m_mat[0][0] * minor12 - m_mat[0][2] * minor15 + m_mat[0][3] * minor16) * invDet;
+	double a32 = -(m_mat[0][0] * minor13 - m_mat[0][1] * minor15 + m_mat[0][3] * minor17) * invDet;
+	double a33 =  (m_mat[0][0] * minor14 - m_mat[0][1] * minor16 + m_mat[0][2] * minor17) * invDet;
 
 	// Mise à jour de la matrice
 	m_mat[0][0] = a00; m_mat[0][1] = a10; m_mat[0][2] = a20; m_mat[0][3] = a30;
@@ -437,7 +437,7 @@ Mat4 Mat4::inverted() const {
 	return copy;
 }
 
-Mat4 Mat4::TranslateMatrix(float x, float y, float z) {
+Mat4 Mat4::TranslateMatrix(double x, double y, double z) {
 	Mat4 temp;
 	temp[0][3] = x;
 	temp[1][3] = y;
@@ -445,7 +445,7 @@ Mat4 Mat4::TranslateMatrix(float x, float y, float z) {
 	return temp;
 }
 
-Mat4& Mat4::Translate(float x, float y, float z) {
+Mat4& Mat4::Translate(double x, double y, double z) {
 	Mat4 temp = TranslateMatrix(x, y, z);
 	*this *= temp;
 	return *this;
@@ -479,7 +479,7 @@ Mat4& Mat4::Translate(Vector v) {
 	return *this;
 }
 
-Mat4 Mat4::ScaleMatrix(float x, float y, float z) {
+Mat4 Mat4::ScaleMatrix(double x, double y, double z) {
 	Mat4 temp;
 	temp[0][0] = x;
 	temp[1][1] = y;
@@ -487,7 +487,7 @@ Mat4 Mat4::ScaleMatrix(float x, float y, float z) {
 	return temp;
 }
 
-Mat4& Mat4::Scale(float x, float y, float z) {
+Mat4& Mat4::Scale(double x, double y, double z) {
 	Mat4 temp = ScaleMatrix(x, y, z);
 	*this *= temp;
 	return *this;
@@ -521,7 +521,7 @@ Mat4& Mat4::Scale(Vector v) {
 	return *this;
 }
 
-Mat4 Mat4::RotateMatrix(float x, float y, float z) {
+Mat4 Mat4::RotateMatrix(double x, double y, double z) {
 	// Ces rotations sont par rapport au repere globale qui rest inchangé par les rotations!!
 	// on tourne dabord au tour de X, puis de Y puis de Z !!
 	Mat4 tempX = Mat4::RotateXMatrix(x);
@@ -530,13 +530,13 @@ Mat4 Mat4::RotateMatrix(float x, float y, float z) {
 	return tempZ * tempY * tempX;
 }
 
-Mat4& Mat4::Rotate(float x, float y, float z) {
+Mat4& Mat4::Rotate(double x, double y, double z) {
 	Mat4 temp = RotateMatrix(x, y, z);
 	*this *= temp;
 	return *this;
 }
 
-Mat4 Mat4::RotateXMatrix(float x) {
+Mat4 Mat4::RotateXMatrix(double x) {
 	Mat4 temp;
 	temp[1][1] = cos(x);
 	temp[1][2] = -sin(x);
@@ -545,13 +545,13 @@ Mat4 Mat4::RotateXMatrix(float x) {
 	return temp;
 }
 
-Mat4& Mat4::RotateX(float x) {
+Mat4& Mat4::RotateX(double x) {
 	Mat4 temp = RotateXMatrix(x);
 	*this *= temp;
 	return *this;
 }
 
-Mat4 Mat4::RotateYMatrix(float y) {
+Mat4 Mat4::RotateYMatrix(double y) {
 	Mat4 temp;
 	temp[0][0] = cos(y);
 	temp[0][2] = sin(y);
@@ -560,13 +560,13 @@ Mat4 Mat4::RotateYMatrix(float y) {
 	return temp;
 }
 
-Mat4& Mat4::RotateY(float y) {
+Mat4& Mat4::RotateY(double y) {
 	Mat4 temp = RotateYMatrix(y);
 	*this *= temp;
 	return *this;
 }
 
-Mat4 Mat4::RotateZMatrix(float z) {
+Mat4 Mat4::RotateZMatrix(double z) {
 	Mat4 temp;
 	temp[0][0] = cos(z);
 	temp[0][1] = -sin(z);
@@ -575,13 +575,13 @@ Mat4 Mat4::RotateZMatrix(float z) {
 	return temp;
 }
 
-Mat4& Mat4::RotateZ(float z) {
+Mat4& Mat4::RotateZ(double z) {
 	Mat4 temp = RotateZMatrix(z);
 	*this *= temp;
 	return *this;
 }
 
-Mat4 Mat4::ShearMatrix(float xy, float xz, float yx, float yz, float zx, float zy) {
+Mat4 Mat4::ShearMatrix(double xy, double xz, double yx, double yz, double zx, double zy) {
 	Mat4 temp;
 	temp[0][1] = xy;
 	temp[0][2] = xz;
@@ -592,7 +592,7 @@ Mat4 Mat4::ShearMatrix(float xy, float xz, float yx, float yz, float zx, float z
 	return temp;
 }
 
-Mat4& Mat4::Shear(float xy, float xz, float yx, float yz, float zx, float zy) {
+Mat4& Mat4::Shear(double xy, double xz, double yx, double yz, double zx, double zy) {
 	Mat4 temp = ShearMatrix(xy, xz, yx, yz, zx, zy);
 	*this *= temp;
 	return *this;

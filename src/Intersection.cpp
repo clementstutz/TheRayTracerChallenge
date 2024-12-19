@@ -6,9 +6,9 @@
 #include "RayObject.h"
 
 // Constructors
-Intersection::Intersection() : m_rayObject(nullptr), m_length(0.0f) {}
+Intersection::Intersection() : m_rayObject(nullptr), m_length(0.0) {}
 
-Intersection::Intersection(const RayObject& obj, float const& length) :
+Intersection::Intersection(const RayObject& obj, double const& length) :
     m_rayObject(&obj),
     m_length(length) {}
 
@@ -20,7 +20,7 @@ Intersection::Intersection(Intersection&& other) noexcept :
     m_rayObject(std::exchange(other.m_rayObject, nullptr)),
     m_length(std::move(other.m_length)) {
     // Reset source object pour éviter des doublons
-    other.m_length = 0.0f;
+    other.m_length = 0.0;
 }
 
 
@@ -34,7 +34,7 @@ const RayObject& Intersection::getObj() const {
     return *m_rayObject;
 }
 
-float Intersection::getLength() const { return m_length; }
+double Intersection::getLength() const { return m_length; }
 
 
 // Member functions
@@ -50,7 +50,7 @@ Intersection& Intersection::operator=(Intersection&& other) noexcept {
     if (this != &other) {
         m_rayObject = std::exchange(other.m_rayObject, nullptr);
         m_length = std::move(other.m_length);
-        other.m_length = 0.0f;
+        other.m_length = 0.0;
     }
     return *this;
 }
