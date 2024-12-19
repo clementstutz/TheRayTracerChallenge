@@ -6,14 +6,14 @@ TEST(CameraTests, constructor_default) {
 
     EXPECT_EQ(160, camera.GetHSize());
     EXPECT_EQ(120, camera.GetVSize());
-    EXPECT_FLOAT_EQ(Utils::GetPI() / 2.0f, camera.GetFov());
+    EXPECT_FLOAT_EQ(Utils::GetPI() / 2.0, camera.GetFov());
     EXPECT_EQ(Mat4(), camera.GetTransform());
 }
 
 TEST(CameraTests, constructor_values) {
     int hSize = 100;
     int vSize = 50;
-    float fieldOfView = Utils::GetPI() / 3.0f;
+    double fieldOfView = Utils::GetPI() / 3.0;
     Camera camera(hSize, vSize, fieldOfView);
 
     EXPECT_EQ(hSize, camera.GetHSize());

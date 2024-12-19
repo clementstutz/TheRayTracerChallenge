@@ -159,20 +159,20 @@ TEST(SphereTests, get_normal) {
     normal = sphere.GetNormal(worldPoint, intersections[0]);
     EXPECT_EQ(normal, Vector(0, 0, 1));
 
-    worldPoint = Point(sqrt(3) / 3.0f, sqrt(3) / 3.0f, sqrt(3) / 3.0f);
+    worldPoint = Point(sqrt(3) / 3.0, sqrt(3) / 3.0, sqrt(3) / 3.0);
     normal = sphere.GetNormal(worldPoint, intersections[0]);
-    EXPECT_EQ(normal, Vector(sqrt(3) / 3.0f, sqrt(3) / 3.0f, sqrt(3) / 3.0f));
+    EXPECT_EQ(normal, Vector(sqrt(3) / 3.0, sqrt(3) / 3.0, sqrt(3) / 3.0));
 
     // Transformed sphere
     sphere.SetMatrix(Mat4::TranslateMatrix(0, 1, 0));
-    worldPoint = Point(0.0f, 1.70710678f, -0.70710678f);
+    worldPoint = Point(0.0, 1.70710678, -0.70710678);
     normal = sphere.GetNormal(worldPoint, intersections[0]);
     Vector ref(0, 0.70710678, -0.70710678);
     EXPECT_EQ(normal, ref);
 
     Sphere sphere_2;
-    sphere_2.SetMatrix(Mat4::ScaleMatrix(1, 0.5, 1) * Mat4::RotateZMatrix(Utils::GetPI() / 5.0f));
-    worldPoint = Point(0.0f, sqrt(2) / 2.0f, -sqrt(2) / 2.0f);
+    sphere_2.SetMatrix(Mat4::ScaleMatrix(1, 0.5, 1) * Mat4::RotateZMatrix(Utils::GetPI() / 5.0));
+    worldPoint = Point(0.0, sqrt(2) / 2.0, -sqrt(2) / 2.0);
     normal = sphere_2.GetNormal(worldPoint, intersections[0]);
     EXPECT_EQ(normal, Vector(0, 0.9701425, -0.2425356));
 }

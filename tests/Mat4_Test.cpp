@@ -5,25 +5,25 @@
 
 TEST(Mat4Tests, constructor_default) {
     Mat4 m1;
-    EXPECT_FLOAT_EQ(m1[0][0], 1.0f);
-    EXPECT_FLOAT_EQ(m1[0][1], 0.0f);
-    EXPECT_FLOAT_EQ(m1[0][2], 0.0f);
-    EXPECT_FLOAT_EQ(m1[0][3], 0.0f);
+    EXPECT_FLOAT_EQ(m1[0][0], 1.0);
+    EXPECT_FLOAT_EQ(m1[0][1], 0.0);
+    EXPECT_FLOAT_EQ(m1[0][2], 0.0);
+    EXPECT_FLOAT_EQ(m1[0][3], 0.0);
 
-    EXPECT_FLOAT_EQ(m1[1][0], 0.0f);
-    EXPECT_FLOAT_EQ(m1[1][1], 1.0f);
-    EXPECT_FLOAT_EQ(m1[1][2], 0.0f);
-    EXPECT_FLOAT_EQ(m1[1][3], 0.0f);
+    EXPECT_FLOAT_EQ(m1[1][0], 0.0);
+    EXPECT_FLOAT_EQ(m1[1][1], 1.0);
+    EXPECT_FLOAT_EQ(m1[1][2], 0.0);
+    EXPECT_FLOAT_EQ(m1[1][3], 0.0);
 
-    EXPECT_FLOAT_EQ(m1[2][0], 0.0f);
-    EXPECT_FLOAT_EQ(m1[2][1], 0.0f);
-    EXPECT_FLOAT_EQ(m1[2][2], 1.0f);
-    EXPECT_FLOAT_EQ(m1[2][3], 0.0f);
+    EXPECT_FLOAT_EQ(m1[2][0], 0.0);
+    EXPECT_FLOAT_EQ(m1[2][1], 0.0);
+    EXPECT_FLOAT_EQ(m1[2][2], 1.0);
+    EXPECT_FLOAT_EQ(m1[2][3], 0.0);
 
-    EXPECT_FLOAT_EQ(m1[3][0], 0.0f);
-    EXPECT_FLOAT_EQ(m1[3][1], 0.0f);
-    EXPECT_FLOAT_EQ(m1[3][2], 0.0f);
-    EXPECT_FLOAT_EQ(m1[3][3], 1.0f);
+    EXPECT_FLOAT_EQ(m1[3][0], 0.0);
+    EXPECT_FLOAT_EQ(m1[3][1], 0.0);
+    EXPECT_FLOAT_EQ(m1[3][2], 0.0);
+    EXPECT_FLOAT_EQ(m1[3][3], 1.0);
 }
 
 TEST(Mat4Tests, constructor_surcharged) {
@@ -31,25 +31,25 @@ TEST(Mat4Tests, constructor_surcharged) {
             5, 6, 7, 8,
             9, 8, 7, 6,
             5, 4, 3, 2);
-    EXPECT_FLOAT_EQ(m1[0][0], 1.0f);
-    EXPECT_FLOAT_EQ(m1[0][1], 2.0f);
-    EXPECT_FLOAT_EQ(m1[0][2], 3.0f);
-    EXPECT_FLOAT_EQ(m1[0][3], 4.0f);
+    EXPECT_FLOAT_EQ(m1[0][0], 1.0);
+    EXPECT_FLOAT_EQ(m1[0][1], 2.0);
+    EXPECT_FLOAT_EQ(m1[0][2], 3.0);
+    EXPECT_FLOAT_EQ(m1[0][3], 4.0);
 
-    EXPECT_FLOAT_EQ(m1[1][0], 5.0f);
-    EXPECT_FLOAT_EQ(m1[1][1], 6.0f);
-    EXPECT_FLOAT_EQ(m1[1][2], 7.0f);
-    EXPECT_FLOAT_EQ(m1[1][3], 8.0f);
+    EXPECT_FLOAT_EQ(m1[1][0], 5.0);
+    EXPECT_FLOAT_EQ(m1[1][1], 6.0);
+    EXPECT_FLOAT_EQ(m1[1][2], 7.0);
+    EXPECT_FLOAT_EQ(m1[1][3], 8.0);
 
-    EXPECT_FLOAT_EQ(m1[2][0], 9.0f);
-    EXPECT_FLOAT_EQ(m1[2][1], 8.0f);
-    EXPECT_FLOAT_EQ(m1[2][2], 7.0f);
-    EXPECT_FLOAT_EQ(m1[2][3], 6.0f);
+    EXPECT_FLOAT_EQ(m1[2][0], 9.0);
+    EXPECT_FLOAT_EQ(m1[2][1], 8.0);
+    EXPECT_FLOAT_EQ(m1[2][2], 7.0);
+    EXPECT_FLOAT_EQ(m1[2][3], 6.0);
 
-    EXPECT_FLOAT_EQ(m1[3][0], 5.0f);
-    EXPECT_FLOAT_EQ(m1[3][1], 4.0f);
-    EXPECT_FLOAT_EQ(m1[3][2], 3.0f);
-    EXPECT_FLOAT_EQ(m1[3][3], 2.0f);
+    EXPECT_FLOAT_EQ(m1[3][0], 5.0);
+    EXPECT_FLOAT_EQ(m1[3][1], 4.0);
+    EXPECT_FLOAT_EQ(m1[3][2], 3.0);
+    EXPECT_FLOAT_EQ(m1[3][3], 2.0);
 }
 
 TEST(Mat4Tests, constructor_copy) {
@@ -58,25 +58,25 @@ TEST(Mat4Tests, constructor_copy) {
             9, 8, 7, 6,
             5, 4, 3, 2);
     Mat4 m2(m1);
-    EXPECT_FLOAT_EQ(m2[0][0], 1.0f);
-    EXPECT_FLOAT_EQ(m2[0][1], 2.0f);
-    EXPECT_FLOAT_EQ(m2[0][2], 3.0f);
-    EXPECT_FLOAT_EQ(m2[0][3], 4.0f);
+    EXPECT_FLOAT_EQ(m2[0][0], 1.0);
+    EXPECT_FLOAT_EQ(m2[0][1], 2.0);
+    EXPECT_FLOAT_EQ(m2[0][2], 3.0);
+    EXPECT_FLOAT_EQ(m2[0][3], 4.0);
 
-    EXPECT_FLOAT_EQ(m2[1][0], 5.0f);
-    EXPECT_FLOAT_EQ(m2[1][1], 6.0f);
-    EXPECT_FLOAT_EQ(m2[1][2], 7.0f);
-    EXPECT_FLOAT_EQ(m2[1][3], 8.0f);
+    EXPECT_FLOAT_EQ(m2[1][0], 5.0);
+    EXPECT_FLOAT_EQ(m2[1][1], 6.0);
+    EXPECT_FLOAT_EQ(m2[1][2], 7.0);
+    EXPECT_FLOAT_EQ(m2[1][3], 8.0);
 
-    EXPECT_FLOAT_EQ(m2[2][0], 9.0f);
-    EXPECT_FLOAT_EQ(m2[2][1], 8.0f);
-    EXPECT_FLOAT_EQ(m2[2][2], 7.0f);
-    EXPECT_FLOAT_EQ(m2[2][3], 6.0f);
+    EXPECT_FLOAT_EQ(m2[2][0], 9.0);
+    EXPECT_FLOAT_EQ(m2[2][1], 8.0);
+    EXPECT_FLOAT_EQ(m2[2][2], 7.0);
+    EXPECT_FLOAT_EQ(m2[2][3], 6.0);
 
-    EXPECT_FLOAT_EQ(m2[3][0], 5.0f);
-    EXPECT_FLOAT_EQ(m2[3][1], 4.0f);
-    EXPECT_FLOAT_EQ(m2[3][2], 3.0f);
-    EXPECT_FLOAT_EQ(m2[3][3], 2.0f);
+    EXPECT_FLOAT_EQ(m2[3][0], 5.0);
+    EXPECT_FLOAT_EQ(m2[3][1], 4.0);
+    EXPECT_FLOAT_EQ(m2[3][2], 3.0);
+    EXPECT_FLOAT_EQ(m2[3][3], 2.0);
 }
 
 TEST(Mat4Tests, stream_output) {
@@ -104,54 +104,54 @@ TEST(Mat4Tests, operator_afectation) {
             5, 4, 3, 2);
     Mat4 m2;
     m2 = m1;
-    EXPECT_FLOAT_EQ(m2[0][0], 1.0f);
-    EXPECT_FLOAT_EQ(m2[0][1], 2.0f);
-    EXPECT_FLOAT_EQ(m2[0][2], 3.0f);
-    EXPECT_FLOAT_EQ(m2[0][3], 4.0f);
+    EXPECT_FLOAT_EQ(m2[0][0], 1.0);
+    EXPECT_FLOAT_EQ(m2[0][1], 2.0);
+    EXPECT_FLOAT_EQ(m2[0][2], 3.0);
+    EXPECT_FLOAT_EQ(m2[0][3], 4.0);
 
-    EXPECT_FLOAT_EQ(m2[1][0], 5.0f);
-    EXPECT_FLOAT_EQ(m2[1][1], 6.0f);
-    EXPECT_FLOAT_EQ(m2[1][2], 7.0f);
-    EXPECT_FLOAT_EQ(m2[1][3], 8.0f);
+    EXPECT_FLOAT_EQ(m2[1][0], 5.0);
+    EXPECT_FLOAT_EQ(m2[1][1], 6.0);
+    EXPECT_FLOAT_EQ(m2[1][2], 7.0);
+    EXPECT_FLOAT_EQ(m2[1][3], 8.0);
 
-    EXPECT_FLOAT_EQ(m2[2][0], 9.0f);
-    EXPECT_FLOAT_EQ(m2[2][1], 8.0f);
-    EXPECT_FLOAT_EQ(m2[2][2], 7.0f);
-    EXPECT_FLOAT_EQ(m2[2][3], 6.0f);
+    EXPECT_FLOAT_EQ(m2[2][0], 9.0);
+    EXPECT_FLOAT_EQ(m2[2][1], 8.0);
+    EXPECT_FLOAT_EQ(m2[2][2], 7.0);
+    EXPECT_FLOAT_EQ(m2[2][3], 6.0);
 
-    EXPECT_FLOAT_EQ(m2[3][0], 5.0f);
-    EXPECT_FLOAT_EQ(m2[3][1], 4.0f);
-    EXPECT_FLOAT_EQ(m2[3][2], 3.0f);
-    EXPECT_FLOAT_EQ(m2[3][3], 2.0f);
+    EXPECT_FLOAT_EQ(m2[3][0], 5.0);
+    EXPECT_FLOAT_EQ(m2[3][1], 4.0);
+    EXPECT_FLOAT_EQ(m2[3][2], 3.0);
+    EXPECT_FLOAT_EQ(m2[3][3], 2.0);
 
-    m1[0][1] = 1.0f;
-    m1[0][2] = 1.0f;
-    m1[1][0] = 1.0f;
-    m1[1][1] = 1.0f;
-    EXPECT_FLOAT_EQ(m1[0][1], 1.0f);
-    EXPECT_FLOAT_EQ(m1[0][2], 1.0f);
-    EXPECT_FLOAT_EQ(m1[1][0], 1.0f);
-    EXPECT_FLOAT_EQ(m1[1][1], 1.0f);
+    m1[0][1] = 1.0;
+    m1[0][2] = 1.0;
+    m1[1][0] = 1.0;
+    m1[1][1] = 1.0;
+    EXPECT_FLOAT_EQ(m1[0][1], 1.0);
+    EXPECT_FLOAT_EQ(m1[0][2], 1.0);
+    EXPECT_FLOAT_EQ(m1[1][0], 1.0);
+    EXPECT_FLOAT_EQ(m1[1][1], 1.0);
 
-    EXPECT_FLOAT_EQ(m2[0][0], 1.0f);
-    EXPECT_FLOAT_EQ(m2[0][1], 2.0f);
-    EXPECT_FLOAT_EQ(m2[0][2], 3.0f);
-    EXPECT_FLOAT_EQ(m2[0][3], 4.0f);
+    EXPECT_FLOAT_EQ(m2[0][0], 1.0);
+    EXPECT_FLOAT_EQ(m2[0][1], 2.0);
+    EXPECT_FLOAT_EQ(m2[0][2], 3.0);
+    EXPECT_FLOAT_EQ(m2[0][3], 4.0);
 
-    EXPECT_FLOAT_EQ(m2[1][0], 5.0f);
-    EXPECT_FLOAT_EQ(m2[1][1], 6.0f);
-    EXPECT_FLOAT_EQ(m2[1][2], 7.0f);
-    EXPECT_FLOAT_EQ(m2[1][3], 8.0f);
+    EXPECT_FLOAT_EQ(m2[1][0], 5.0);
+    EXPECT_FLOAT_EQ(m2[1][1], 6.0);
+    EXPECT_FLOAT_EQ(m2[1][2], 7.0);
+    EXPECT_FLOAT_EQ(m2[1][3], 8.0);
 
-    EXPECT_FLOAT_EQ(m2[2][0], 9.0f);
-    EXPECT_FLOAT_EQ(m2[2][1], 8.0f);
-    EXPECT_FLOAT_EQ(m2[2][2], 7.0f);
-    EXPECT_FLOAT_EQ(m2[2][3], 6.0f);
+    EXPECT_FLOAT_EQ(m2[2][0], 9.0);
+    EXPECT_FLOAT_EQ(m2[2][1], 8.0);
+    EXPECT_FLOAT_EQ(m2[2][2], 7.0);
+    EXPECT_FLOAT_EQ(m2[2][3], 6.0);
 
-    EXPECT_FLOAT_EQ(m2[3][0], 5.0f);
-    EXPECT_FLOAT_EQ(m2[3][1], 4.0f);
-    EXPECT_FLOAT_EQ(m2[3][2], 3.0f);
-    EXPECT_FLOAT_EQ(m2[3][3], 2.0f);
+    EXPECT_FLOAT_EQ(m2[3][0], 5.0);
+    EXPECT_FLOAT_EQ(m2[3][1], 4.0);
+    EXPECT_FLOAT_EQ(m2[3][2], 3.0);
+    EXPECT_FLOAT_EQ(m2[3][3], 2.0);
 }
 
 TEST(Mat4Tests, equality) {
@@ -167,25 +167,25 @@ TEST(Mat4Tests, equality) {
 TEST(Mat4Tests, transpose) {
     Mat4 m1(1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2);
     m1.transpose();
-    EXPECT_FLOAT_EQ(m1[0][0], 1.0f);
-    EXPECT_FLOAT_EQ(m1[0][1], 5.0f);
-    EXPECT_FLOAT_EQ(m1[0][2], 9.0f);
-    EXPECT_FLOAT_EQ(m1[0][3], 5.0f);
+    EXPECT_FLOAT_EQ(m1[0][0], 1.0);
+    EXPECT_FLOAT_EQ(m1[0][1], 5.0);
+    EXPECT_FLOAT_EQ(m1[0][2], 9.0);
+    EXPECT_FLOAT_EQ(m1[0][3], 5.0);
 
-    EXPECT_FLOAT_EQ(m1[1][0], 2.0f);
-    EXPECT_FLOAT_EQ(m1[1][1], 6.0f);
-    EXPECT_FLOAT_EQ(m1[1][2], 8.0f);
-    EXPECT_FLOAT_EQ(m1[1][3], 4.0f);
+    EXPECT_FLOAT_EQ(m1[1][0], 2.0);
+    EXPECT_FLOAT_EQ(m1[1][1], 6.0);
+    EXPECT_FLOAT_EQ(m1[1][2], 8.0);
+    EXPECT_FLOAT_EQ(m1[1][3], 4.0);
 
-    EXPECT_FLOAT_EQ(m1[2][0], 3.0f);
-    EXPECT_FLOAT_EQ(m1[2][1], 7.0f);
-    EXPECT_FLOAT_EQ(m1[2][2], 7.0f);
-    EXPECT_FLOAT_EQ(m1[2][3], 3.0f);
+    EXPECT_FLOAT_EQ(m1[2][0], 3.0);
+    EXPECT_FLOAT_EQ(m1[2][1], 7.0);
+    EXPECT_FLOAT_EQ(m1[2][2], 7.0);
+    EXPECT_FLOAT_EQ(m1[2][3], 3.0);
 
-    EXPECT_FLOAT_EQ(m1[3][0], 4.0f);
-    EXPECT_FLOAT_EQ(m1[3][1], 8.0f);
-    EXPECT_FLOAT_EQ(m1[3][2], 6.0f);
-    EXPECT_FLOAT_EQ(m1[3][3], 2.0f);
+    EXPECT_FLOAT_EQ(m1[3][0], 4.0);
+    EXPECT_FLOAT_EQ(m1[3][1], 8.0);
+    EXPECT_FLOAT_EQ(m1[3][2], 6.0);
+    EXPECT_FLOAT_EQ(m1[3][3], 2.0);
 }
 
 TEST(Mat4Tests, transposed) {
@@ -193,46 +193,46 @@ TEST(Mat4Tests, transposed) {
     Mat4 m2;
     m2 = m1.transposed();
     //m1 hasen't changed
-    EXPECT_FLOAT_EQ(m1[0][0], 1.0f);
-    EXPECT_FLOAT_EQ(m1[0][1], 2.0f);
-    EXPECT_FLOAT_EQ(m1[0][2], 3.0f);
-    EXPECT_FLOAT_EQ(m1[0][3], 4.0f);
+    EXPECT_FLOAT_EQ(m1[0][0], 1.0);
+    EXPECT_FLOAT_EQ(m1[0][1], 2.0);
+    EXPECT_FLOAT_EQ(m1[0][2], 3.0);
+    EXPECT_FLOAT_EQ(m1[0][3], 4.0);
 
-    EXPECT_FLOAT_EQ(m1[1][0], 5.0f);
-    EXPECT_FLOAT_EQ(m1[1][1], 6.0f);
-    EXPECT_FLOAT_EQ(m1[1][2], 7.0f);
-    EXPECT_FLOAT_EQ(m1[1][3], 8.0f);
+    EXPECT_FLOAT_EQ(m1[1][0], 5.0);
+    EXPECT_FLOAT_EQ(m1[1][1], 6.0);
+    EXPECT_FLOAT_EQ(m1[1][2], 7.0);
+    EXPECT_FLOAT_EQ(m1[1][3], 8.0);
 
-    EXPECT_FLOAT_EQ(m1[2][0], 9.0f);
-    EXPECT_FLOAT_EQ(m1[2][1], 8.0f);
-    EXPECT_FLOAT_EQ(m1[2][2], 7.0f);
-    EXPECT_FLOAT_EQ(m1[2][3], 6.0f);
+    EXPECT_FLOAT_EQ(m1[2][0], 9.0);
+    EXPECT_FLOAT_EQ(m1[2][1], 8.0);
+    EXPECT_FLOAT_EQ(m1[2][2], 7.0);
+    EXPECT_FLOAT_EQ(m1[2][3], 6.0);
 
-    EXPECT_FLOAT_EQ(m1[3][0], 5.0f);
-    EXPECT_FLOAT_EQ(m1[3][1], 4.0f);
-    EXPECT_FLOAT_EQ(m1[3][2], 3.0f);
-    EXPECT_FLOAT_EQ(m1[3][3], 2.0f);
+    EXPECT_FLOAT_EQ(m1[3][0], 5.0);
+    EXPECT_FLOAT_EQ(m1[3][1], 4.0);
+    EXPECT_FLOAT_EQ(m1[3][2], 3.0);
+    EXPECT_FLOAT_EQ(m1[3][3], 2.0);
 
     //m2 hase changed
-    EXPECT_FLOAT_EQ(m2[0][0], 1.0f);
-    EXPECT_FLOAT_EQ(m2[0][1], 5.0f);
-    EXPECT_FLOAT_EQ(m2[0][2], 9.0f);
-    EXPECT_FLOAT_EQ(m2[0][3], 5.0f);
+    EXPECT_FLOAT_EQ(m2[0][0], 1.0);
+    EXPECT_FLOAT_EQ(m2[0][1], 5.0);
+    EXPECT_FLOAT_EQ(m2[0][2], 9.0);
+    EXPECT_FLOAT_EQ(m2[0][3], 5.0);
 
-    EXPECT_FLOAT_EQ(m2[1][0], 2.0f);
-    EXPECT_FLOAT_EQ(m2[1][1], 6.0f);
-    EXPECT_FLOAT_EQ(m2[1][2], 8.0f);
-    EXPECT_FLOAT_EQ(m2[1][3], 4.0f);
+    EXPECT_FLOAT_EQ(m2[1][0], 2.0);
+    EXPECT_FLOAT_EQ(m2[1][1], 6.0);
+    EXPECT_FLOAT_EQ(m2[1][2], 8.0);
+    EXPECT_FLOAT_EQ(m2[1][3], 4.0);
 
-    EXPECT_FLOAT_EQ(m2[2][0], 3.0f);
-    EXPECT_FLOAT_EQ(m2[2][1], 7.0f);
-    EXPECT_FLOAT_EQ(m2[2][2], 7.0f);
-    EXPECT_FLOAT_EQ(m2[2][3], 3.0f);
+    EXPECT_FLOAT_EQ(m2[2][0], 3.0);
+    EXPECT_FLOAT_EQ(m2[2][1], 7.0);
+    EXPECT_FLOAT_EQ(m2[2][2], 7.0);
+    EXPECT_FLOAT_EQ(m2[2][3], 3.0);
 
-    EXPECT_FLOAT_EQ(m2[3][0], 4.0f);
-    EXPECT_FLOAT_EQ(m2[3][1], 8.0f);
-    EXPECT_FLOAT_EQ(m2[3][2], 6.0f);
-    EXPECT_FLOAT_EQ(m2[3][3], 2.0f);
+    EXPECT_FLOAT_EQ(m2[3][0], 4.0);
+    EXPECT_FLOAT_EQ(m2[3][1], 8.0);
+    EXPECT_FLOAT_EQ(m2[3][2], 6.0);
+    EXPECT_FLOAT_EQ(m2[3][3], 2.0);
 }
 
 TEST(Mat4Tests, det) {
@@ -240,8 +240,8 @@ TEST(Mat4Tests, det) {
             -3, 1, 7, 3,
             1, 2, -9, 6,
             -6, 7, 7, -9);
-    float det = m1.det();
-    EXPECT_FLOAT_EQ(det, -4071.0f);
+    double det = m1.det();
+    EXPECT_FLOAT_EQ(det, -4071.0);
 }
 
 TEST(Mat4Tests, invert) {
@@ -250,8 +250,8 @@ TEST(Mat4Tests, invert) {
             7, 7, -6, -7,
             1, -3, 7, 4);
 
-    float det = m1.det();
-    EXPECT_FLOAT_EQ(det, 532.0f);
+    double det = m1.det();
+    EXPECT_FLOAT_EQ(det, 532.0);
 
     m1.invert();
 
@@ -285,25 +285,25 @@ TEST(Mat4Tests, inverted) {
     Mat4 inv1 = m1.inverted();
 
     //m1 is still the same
-    EXPECT_FLOAT_EQ(m1[0][0], -5.0f);
-    EXPECT_FLOAT_EQ(m1[0][1], 2.0f);
-    EXPECT_FLOAT_EQ(m1[0][2], 6.0f);
-    EXPECT_FLOAT_EQ(m1[0][3], -8.0f);
+    EXPECT_FLOAT_EQ(m1[0][0], -5.0);
+    EXPECT_FLOAT_EQ(m1[0][1], 2.0);
+    EXPECT_FLOAT_EQ(m1[0][2], 6.0);
+    EXPECT_FLOAT_EQ(m1[0][3], -8.0);
 
-    EXPECT_FLOAT_EQ(m1[1][0], 1.0f);
-    EXPECT_FLOAT_EQ(m1[1][1], -5.0f);
-    EXPECT_FLOAT_EQ(m1[1][2], 1.0f);
-    EXPECT_FLOAT_EQ(m1[1][3], 8.0f);
+    EXPECT_FLOAT_EQ(m1[1][0], 1.0);
+    EXPECT_FLOAT_EQ(m1[1][1], -5.0);
+    EXPECT_FLOAT_EQ(m1[1][2], 1.0);
+    EXPECT_FLOAT_EQ(m1[1][3], 8.0);
 
-    EXPECT_FLOAT_EQ(m1[2][0], 7.0f);
-    EXPECT_FLOAT_EQ(m1[2][1], 7.0f);
-    EXPECT_FLOAT_EQ(m1[2][2], -6.0f);
-    EXPECT_FLOAT_EQ(m1[2][3], -7.0f);
+    EXPECT_FLOAT_EQ(m1[2][0], 7.0);
+    EXPECT_FLOAT_EQ(m1[2][1], 7.0);
+    EXPECT_FLOAT_EQ(m1[2][2], -6.0);
+    EXPECT_FLOAT_EQ(m1[2][3], -7.0);
 
-    EXPECT_FLOAT_EQ(m1[3][0], 1.0f);
-    EXPECT_FLOAT_EQ(m1[3][1], -3.0f);
-    EXPECT_FLOAT_EQ(m1[3][2], 7.0f);
-    EXPECT_FLOAT_EQ(m1[3][3], 4.0f);
+    EXPECT_FLOAT_EQ(m1[3][0], 1.0);
+    EXPECT_FLOAT_EQ(m1[3][1], -3.0);
+    EXPECT_FLOAT_EQ(m1[3][2], 7.0);
+    EXPECT_FLOAT_EQ(m1[3][3], 4.0);
 
     EXPECT_NEAR(inv1[0][0], 0.21805, 0.00001);
     EXPECT_NEAR(inv1[0][1], 0.45113, 0.00001);
@@ -331,9 +331,9 @@ TEST(Mat4Tests, inverted) {
 
 TEST(Mat4Tests, translate_matrix) {
     Mat4 trans = Mat4::TranslateMatrix(5, -3, 2);
-    EXPECT_FLOAT_EQ(trans[0][3], 5.0f);
-    EXPECT_FLOAT_EQ(trans[1][3], -3.0f);
-    EXPECT_FLOAT_EQ(trans[2][3], 2.0f);
+    EXPECT_FLOAT_EQ(trans[0][3], 5.0);
+    EXPECT_FLOAT_EQ(trans[1][3], -3.0);
+    EXPECT_FLOAT_EQ(trans[2][3], 2.0);
 
     Point pOrigine(-3, 4, 5);
     Point pOrigineTrans = trans * pOrigine;
@@ -363,16 +363,16 @@ TEST(Mat4Tests, translate_matrix) {
 
 TEST(Mat4Tests, scale_matrix) {
     Mat4 scaling = Mat4::ScaleMatrix(-1, 1, 2);
-    EXPECT_FLOAT_EQ(scaling[0][0], -1.0f);
-    EXPECT_FLOAT_EQ(scaling[1][1], 1.0f);
-    EXPECT_FLOAT_EQ(scaling[2][2], 2.0f);
+    EXPECT_FLOAT_EQ(scaling[0][0], -1.0);
+    EXPECT_FLOAT_EQ(scaling[1][1], 1.0);
+    EXPECT_FLOAT_EQ(scaling[2][2], 2.0);
 
     Point pOrigine(2, 3, 4);
     Point pOrigineScaled = scaling * pOrigine;
-    EXPECT_FLOAT_EQ(pOrigineScaled.getX(), -2.0f);
-    EXPECT_FLOAT_EQ(pOrigineScaled.getY(), 3.0f);
-    EXPECT_FLOAT_EQ(pOrigineScaled.getZ(), 8.0f);
-    EXPECT_FLOAT_EQ(pOrigineScaled.getW(), 1.0f);
+    EXPECT_FLOAT_EQ(pOrigineScaled.getX(), -2.0);
+    EXPECT_FLOAT_EQ(pOrigineScaled.getY(), 3.0);
+    EXPECT_FLOAT_EQ(pOrigineScaled.getZ(), 8.0);
+    EXPECT_FLOAT_EQ(pOrigineScaled.getW(), 1.0);
 
     Mat4 inverseScaling = scaling.inverted();
     Point result1 = inverseScaling * pOrigineScaled;
@@ -400,23 +400,23 @@ TEST(Mat4Tests, scale_matrix) {
 }
 
 TEST(Mat4Tests, rotate_X_matrix) {
-    Mat4 halfQuarter = Mat4::RotateXMatrix(Utils::GetPI() / 4.0f);
-    EXPECT_FLOAT_EQ(halfQuarter[1][1], cos(Utils::GetPI() / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[1][2], -sin(Utils::GetPI() / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[2][1], sin(Utils::GetPI() / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[2][2], cos(Utils::GetPI() / 4.0f));
+    Mat4 halfQuarter = Mat4::RotateXMatrix(Utils::GetPI() / 4.0);
+    EXPECT_FLOAT_EQ(halfQuarter[1][1], cos(Utils::GetPI() / 4.0));
+    EXPECT_FLOAT_EQ(halfQuarter[1][2], -sin(Utils::GetPI() / 4.0));
+    EXPECT_FLOAT_EQ(halfQuarter[2][1], sin(Utils::GetPI() / 4.0));
+    EXPECT_FLOAT_EQ(halfQuarter[2][2], cos(Utils::GetPI() / 4.0));
 
-    Mat4 fullQuarter = Mat4::RotateXMatrix(Utils::GetPI() / 2.0f);
-    EXPECT_FLOAT_EQ(fullQuarter[1][1], cos(Utils::GetPI() / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[1][2], -sin(Utils::GetPI() / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[2][1], sin(Utils::GetPI() / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[2][2], cos(Utils::GetPI() / 2.0f));
+    Mat4 fullQuarter = Mat4::RotateXMatrix(Utils::GetPI() / 2.0);
+    EXPECT_FLOAT_EQ(fullQuarter[1][1], cos(Utils::GetPI() / 2.0));
+    EXPECT_FLOAT_EQ(fullQuarter[1][2], -sin(Utils::GetPI() / 2.0));
+    EXPECT_FLOAT_EQ(fullQuarter[2][1], sin(Utils::GetPI() / 2.0));
+    EXPECT_FLOAT_EQ(fullQuarter[2][2], cos(Utils::GetPI() / 2.0));
     
     // Points
     // Rotate a point by pi/4
     Point pOrigine(0, 1, 0);
     Point pRotateX_half = halfQuarter * pOrigine;
-    Point ref1(0, sqrt(2) / 2.0f, sqrt(2) / 2.0f);
+    Point ref1(0, sqrt(2) / 2.0, sqrt(2) / 2.0);
     EXPECT_EQ(pRotateX_half, ref1);
     EXPECT_FLOAT_EQ(pRotateX_half.getX(), ref1.getX());
     EXPECT_FLOAT_EQ(pRotateX_half.getY(), ref1.getY());
@@ -442,7 +442,7 @@ TEST(Mat4Tests, rotate_X_matrix) {
     // Rotate a vector by pi/4
     Vector vOrigine(0, 1, 0);
     Vector vRotateX_half = halfQuarter * vOrigine;
-    Vector ref3(0, sqrt(2) / 2.0f, sqrt(2) / 2.0f);
+    Vector ref3(0, sqrt(2) / 2.0, sqrt(2) / 2.0);
     EXPECT_EQ(vRotateX_half, ref3);
     EXPECT_FLOAT_EQ(vRotateX_half.getX(), ref3.getX());
     EXPECT_FLOAT_EQ(vRotateX_half.getY(), ref3.getY());
@@ -464,23 +464,23 @@ TEST(Mat4Tests, rotate_X_matrix) {
 }
 
 TEST(Mat4Tests, rotate_Y_matrix) {
-    Mat4 halfQuarter = Mat4::RotateYMatrix(Utils::GetPI() / 4.0f);
-    EXPECT_FLOAT_EQ(halfQuarter[0][0], cos(Utils::GetPI() / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[0][2], sin(Utils::GetPI() / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[2][0], -sin(Utils::GetPI() / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[2][2], cos(Utils::GetPI() / 4.0f));
+    Mat4 halfQuarter = Mat4::RotateYMatrix(Utils::GetPI() / 4.0);
+    EXPECT_FLOAT_EQ(halfQuarter[0][0], cos(Utils::GetPI() / 4.0));
+    EXPECT_FLOAT_EQ(halfQuarter[0][2], sin(Utils::GetPI() / 4.0));
+    EXPECT_FLOAT_EQ(halfQuarter[2][0], -sin(Utils::GetPI() / 4.0));
+    EXPECT_FLOAT_EQ(halfQuarter[2][2], cos(Utils::GetPI() / 4.0));
 
-    Mat4 fullQuarter = Mat4::RotateYMatrix(Utils::GetPI() / 2.0f);
-    EXPECT_FLOAT_EQ(fullQuarter[0][0], cos(Utils::GetPI() / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[0][2], sin(Utils::GetPI() / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[2][0], -sin(Utils::GetPI() / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[2][2], cos(Utils::GetPI() / 2.0f));
+    Mat4 fullQuarter = Mat4::RotateYMatrix(Utils::GetPI() / 2.0);
+    EXPECT_FLOAT_EQ(fullQuarter[0][0], cos(Utils::GetPI() / 2.0));
+    EXPECT_FLOAT_EQ(fullQuarter[0][2], sin(Utils::GetPI() / 2.0));
+    EXPECT_FLOAT_EQ(fullQuarter[2][0], -sin(Utils::GetPI() / 2.0));
+    EXPECT_FLOAT_EQ(fullQuarter[2][2], cos(Utils::GetPI() / 2.0));
 
     // Points
     // Rotate a point by pi/4
     Point pOrigine(0, 0, 1);
     Point pRotateY_half = halfQuarter * pOrigine;
-    Point ref1(sqrt(2) / 2.0f, 0, sqrt(2) / 2.0f);
+    Point ref1(sqrt(2) / 2.0, 0, sqrt(2) / 2.0);
     EXPECT_EQ(pRotateY_half, ref1);
     EXPECT_FLOAT_EQ(pRotateY_half.getX(), ref1.getX());
     EXPECT_FLOAT_EQ(pRotateY_half.getY(), ref1.getY());
@@ -506,7 +506,7 @@ TEST(Mat4Tests, rotate_Y_matrix) {
     // Rotate a vector by pi/4
     Vector vOrigine(0, 0, 1);
     Vector vRotateY_half = halfQuarter * vOrigine;
-    Vector ref3(sqrt(2) / 2.0f, 0, sqrt(2) / 2.0f);
+    Vector ref3(sqrt(2) / 2.0, 0, sqrt(2) / 2.0);
     EXPECT_EQ(vRotateY_half, ref3);
     EXPECT_FLOAT_EQ(vRotateY_half.getX(), ref3.getX());
     EXPECT_FLOAT_EQ(vRotateY_half.getY(), ref3.getY());
@@ -528,23 +528,23 @@ TEST(Mat4Tests, rotate_Y_matrix) {
 }
 
 TEST(Mat4Tests, rotate_Z_matrix) {
-    Mat4 halfQuarter = Mat4::RotateZMatrix(Utils::GetPI() / 4.0f);
-    EXPECT_FLOAT_EQ(halfQuarter[0][0], cos(Utils::GetPI() / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[0][1], -sin(Utils::GetPI() / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[1][0], sin(Utils::GetPI() / 4.0f));
-    EXPECT_FLOAT_EQ(halfQuarter[1][1], cos(Utils::GetPI() / 4.0f));
+    Mat4 halfQuarter = Mat4::RotateZMatrix(Utils::GetPI() / 4.0);
+    EXPECT_FLOAT_EQ(halfQuarter[0][0], cos(Utils::GetPI() / 4.0));
+    EXPECT_FLOAT_EQ(halfQuarter[0][1], -sin(Utils::GetPI() / 4.0));
+    EXPECT_FLOAT_EQ(halfQuarter[1][0], sin(Utils::GetPI() / 4.0));
+    EXPECT_FLOAT_EQ(halfQuarter[1][1], cos(Utils::GetPI() / 4.0));
 
-    Mat4 fullQuarter = Mat4::RotateZMatrix(Utils::GetPI() / 2.0f);
-    EXPECT_FLOAT_EQ(fullQuarter[0][0], cos(Utils::GetPI() / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[0][1], -sin(Utils::GetPI() / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[1][0], sin(Utils::GetPI() / 2.0f));
-    EXPECT_FLOAT_EQ(fullQuarter[1][1], cos(Utils::GetPI() / 2.0f));
+    Mat4 fullQuarter = Mat4::RotateZMatrix(Utils::GetPI() / 2.0);
+    EXPECT_FLOAT_EQ(fullQuarter[0][0], cos(Utils::GetPI() / 2.0));
+    EXPECT_FLOAT_EQ(fullQuarter[0][1], -sin(Utils::GetPI() / 2.0));
+    EXPECT_FLOAT_EQ(fullQuarter[1][0], sin(Utils::GetPI() / 2.0));
+    EXPECT_FLOAT_EQ(fullQuarter[1][1], cos(Utils::GetPI() / 2.0));
 
     // Points
     // Rotate a point by pi/4
     Point pOrigine(1, 0, 0);
     Point pRotateZ_half = halfQuarter * pOrigine;
-    Point ref1(sqrt(2) / 2.0f, sqrt(2) / 2.0f, 0);
+    Point ref1(sqrt(2) / 2.0, sqrt(2) / 2.0, 0);
     EXPECT_EQ(pRotateZ_half, ref1);
     EXPECT_FLOAT_EQ(pRotateZ_half.getX(), ref1.getX());
     EXPECT_FLOAT_EQ(pRotateZ_half.getY(), ref1.getY());
@@ -570,7 +570,7 @@ TEST(Mat4Tests, rotate_Z_matrix) {
     // Rotate a vector by pi/4
     Vector vOrigine(1, 0, 0);
     Vector vRotateZ_half = halfQuarter * vOrigine;
-    Vector ref3(sqrt(2) / 2.0f, sqrt(2) / 2.0f, 0);
+    Vector ref3(sqrt(2) / 2.0, sqrt(2) / 2.0, 0);
     EXPECT_EQ(vRotateZ_half, ref3);
     EXPECT_FLOAT_EQ(vRotateZ_half.getX(), ref3.getX());
     EXPECT_FLOAT_EQ(vRotateZ_half.getY(), ref3.getY());

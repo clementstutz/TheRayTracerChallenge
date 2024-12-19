@@ -3,65 +3,65 @@
 
 TEST(ColorTests, constructor_default) {
 	Color c1;
-	EXPECT_FLOAT_EQ(c1.getR(), 0.0f);
-	EXPECT_FLOAT_EQ(c1.getG(), 0.0f);
-	EXPECT_FLOAT_EQ(c1.getB(), 0.0f);
+	EXPECT_FLOAT_EQ(c1.getR(), 0.0);
+	EXPECT_FLOAT_EQ(c1.getG(), 0.0);
+	EXPECT_FLOAT_EQ(c1.getB(), 0.0);
 }
 
 TEST(ColorTests, constructor_values) {
-	Color c1(1.0f);
-	EXPECT_FLOAT_EQ(c1.getR(), 1.0f);
-	EXPECT_FLOAT_EQ(c1.getG(), 0.0f);
-	EXPECT_FLOAT_EQ(c1.getB(), 0.0f);
+	Color c1(1.0);
+	EXPECT_FLOAT_EQ(c1.getR(), 1.0);
+	EXPECT_FLOAT_EQ(c1.getG(), 0.0);
+	EXPECT_FLOAT_EQ(c1.getB(), 0.0);
 
-	Color c2(1.0f, 2.0f);
-	EXPECT_FLOAT_EQ(c2.getR(), 1.0f);
-	EXPECT_FLOAT_EQ(c2.getG(), 2.0f);
-	EXPECT_FLOAT_EQ(c2.getB(), 0.0f);
+	Color c2(1.0, 2.0);
+	EXPECT_FLOAT_EQ(c2.getR(), 1.0);
+	EXPECT_FLOAT_EQ(c2.getG(), 2.0);
+	EXPECT_FLOAT_EQ(c2.getB(), 0.0);
 
-	Color c3(1.0f, 2.0f, 3.0f);
-	EXPECT_FLOAT_EQ(c3.getR(), 1.0f);
-	EXPECT_FLOAT_EQ(c3.getG(), 2.0f);
-	EXPECT_FLOAT_EQ(c3.getB(), 3.0f);
+	Color c3(1.0, 2.0, 3.0);
+	EXPECT_FLOAT_EQ(c3.getR(), 1.0);
+	EXPECT_FLOAT_EQ(c3.getG(), 2.0);
+	EXPECT_FLOAT_EQ(c3.getB(), 3.0);
 }
 
 TEST(ColorTests, constructor_copy) {
-	Color c1(1.0f, 2.0f, 3.0f);
+	Color c1(1.0, 2.0, 3.0);
 	Color c2(c1);
-	EXPECT_FLOAT_EQ(c2.getR(), 1.0f);
-	EXPECT_FLOAT_EQ(c2.getG(), 2.0f);
-	EXPECT_FLOAT_EQ(c2.getB(), 3.0f);
+	EXPECT_FLOAT_EQ(c2.getR(), 1.0);
+	EXPECT_FLOAT_EQ(c2.getG(), 2.0);
+	EXPECT_FLOAT_EQ(c2.getB(), 3.0);
 }
 
 TEST(ColorTests, constructor_move) {
-	Color c2(Color(1.0f, 2.0f, 3.0f));
-	EXPECT_FLOAT_EQ(c2.getR(), 1.0f);
-	EXPECT_FLOAT_EQ(c2.getG(), 2.0f);
-	EXPECT_FLOAT_EQ(c2.getB(), 3.0f);
+	Color c2(Color(1.0, 2.0, 3.0));
+	EXPECT_FLOAT_EQ(c2.getR(), 1.0);
+	EXPECT_FLOAT_EQ(c2.getG(), 2.0);
+	EXPECT_FLOAT_EQ(c2.getB(), 3.0);
 }
 
 TEST(ColorTests, affectation_copy) {
-	Color c1(1.0f, 2.0f, 3.0f);
+	Color c1(1.0, 2.0, 3.0);
 	Color c2;
 	c2 = c1;
-	EXPECT_FLOAT_EQ(c2.getR(), 1.0f);
-	EXPECT_FLOAT_EQ(c2.getG(), 2.0f);
-	EXPECT_FLOAT_EQ(c2.getB(), 3.0f);
+	EXPECT_FLOAT_EQ(c2.getR(), 1.0);
+	EXPECT_FLOAT_EQ(c2.getG(), 2.0);
+	EXPECT_FLOAT_EQ(c2.getB(), 3.0);
 }
 
 TEST(ColorTests, affectation_move) {
-	Color c1(1.0f, 2.0f, 3.0f);
+	Color c1(1.0, 2.0, 3.0);
 	Color c2;
 	c2 = std::move(c1);
-	EXPECT_FLOAT_EQ(c2.getR(), 1.0f);
-	EXPECT_FLOAT_EQ(c2.getG(), 2.0f);
-	EXPECT_FLOAT_EQ(c2.getB(), 3.0f);
+	EXPECT_FLOAT_EQ(c2.getR(), 1.0);
+	EXPECT_FLOAT_EQ(c2.getG(), 2.0);
+	EXPECT_FLOAT_EQ(c2.getB(), 3.0);
 }
 
 TEST(ColorTests, equality) {
-	Color c1(1.0f, 2.0f, 3.0f);
-	Color c2(1.0f, 2.0f, 3.0f);
-	Color c3(3.0f, 2.0f, 1.0f);
+	Color c1(1.0, 2.0, 3.0);
+	Color c2(1.0, 2.0, 3.0);
+	Color c3(3.0, 2.0, 1.0);
 
 	EXPECT_TRUE(c1 == c1);
 	EXPECT_FALSE(c1 != c1);
@@ -106,10 +106,10 @@ TEST(ColorTests, negate_Color) {
 }
 
 TEST(ColorTests, scalar_multiplication) {
-	float s1 = 2.0f;
-	float s2 = 0.25f;
-	Color c1(1.0f, 2.0f, 3.0f);
-	Color ref1(2.0f, 4.0f, 6.0f);
+	double s1 = 2.0;
+	double s2 = 0.25;
+	Color c1(1.0, 2.0, 3.0);
+	Color ref1(2.0, 4.0, 6.0);
 	Color c2 = c1 * s1;
 
 	EXPECT_TRUE(c2 == ref1);
@@ -118,7 +118,7 @@ TEST(ColorTests, scalar_multiplication) {
 	EXPECT_FLOAT_EQ(c2.getB(), ref1.getB());
 
 	Color c3 = s2 * c2;
-	Color ref2(0.5f, 1.0f, 1.5f);
+	Color ref2(0.5, 1.0, 1.5);
 	EXPECT_TRUE(c3 == ref2);
 	EXPECT_FLOAT_EQ(c3.getR(), ref2.getR());
 	EXPECT_FLOAT_EQ(c3.getG(), ref2.getG());
@@ -138,9 +138,9 @@ TEST(ColorTests, scalar_multiplication) {
 }
 
 TEST(ColorTests, multiply_two_colors) {
-	Color c1(1.0f, 2.0f, 3.0f);
-	Color c2(2.0f, 4.0f, 5.0f);
-	Color ref1(2.0f, 8.0f, 15.0f);
+	Color c1(1.0, 2.0, 3.0);
+	Color c2(2.0, 4.0, 5.0);
+	Color ref1(2.0, 8.0, 15.0);
 	Color c3 = c1 * c2;
 
 	EXPECT_TRUE(c3 == ref1);
@@ -156,30 +156,30 @@ TEST(ColorTests, multiply_two_colors) {
 }
 
 TEST(ColorTests, static_colors) {
-	Color ref_red(1.0f, 0.0f, 0.0f);
+	Color ref_red(1.0, 0.0, 0.0);
 	EXPECT_EQ(Color::red, ref_red);
 
-	Color ref_green(0.0f, 1.0f, 0.0f);
+	Color ref_green(0.0, 1.0, 0.0);
 	EXPECT_EQ(Color::green, ref_green);
 
-	Color ref_blue(0.0f, 0.0f, 1.0f);
+	Color ref_blue(0.0, 0.0, 1.0);
 	EXPECT_EQ(Color::blue, ref_blue);
 
-	Color ref_cyan(0.0f, 1.0f, 1.0f);
+	Color ref_cyan(0.0, 1.0, 1.0);
 	EXPECT_EQ(Color::cyan, ref_cyan);
 
-	Color ref_magenta(1.0f, 0.0f, 1.0f);
+	Color ref_magenta(1.0, 0.0, 1.0);
 	EXPECT_EQ(Color::magenta, ref_magenta);
 
-	Color ref_yellow(1.0f, 1.0f, 0.0f);
+	Color ref_yellow(1.0, 1.0, 0.0);
 	EXPECT_EQ(Color::yellow, ref_yellow);
 
-	Color ref_white(1.0f, 1.0f, 1.0f);
+	Color ref_white(1.0, 1.0, 1.0);
 	EXPECT_EQ(Color::white, ref_white);
 
-	Color ref_grey(0.5f, 0.5f, 0.5f);
+	Color ref_grey(0.5, 0.5, 0.5);
 	EXPECT_EQ(Color::grey, ref_grey);
 
-	Color ref_black(0.0f, 0.0f, 0.0f);
+	Color ref_black(0.0, 0.0, 0.0);
 	EXPECT_EQ(Color::black, ref_black);
 }

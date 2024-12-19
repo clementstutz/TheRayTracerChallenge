@@ -127,13 +127,13 @@ TEST(RayObject_for_TestTests, material) {
 
     rayObject.SetMaterial(Material(Color::red, 1, 0.5, 12, 100, 0.75, 0.7, 0.2));
     EXPECT_EQ(rayObject.GetMaterial().GetColor(), Color::red);
-    EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetAmbient(), 1.0f);
-    EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetDiffuse(), 0.5f);
-    EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetSpecular(), 12.0f);
-    EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetShininess(), 100.0f);
-    EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetReflectivity(), 0.75f);
-    EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetRefractiveIndex(), 0.7f);
-    EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetTransparency(), 0.2f);
+    EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetAmbient(), 1.0);
+    EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetDiffuse(), 0.5);
+    EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetSpecular(), 12.0);
+    EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetShininess(), 100.0);
+    EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetReflectivity(), 0.75);
+    EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetRefractiveIndex(), 0.7);
+    EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetTransparency(), 0.2);
 }
 
 TEST(RayObject_for_TestTests, lighting) {

@@ -29,10 +29,10 @@ TEST(RayTests, position) {
     Point ref1(4, 6, 3);
     Point ref2(-2, -2, 3);
     Point ref3(8.5, 12, 3);
-    EXPECT_EQ(ray.position(0.0f), ori);
-    EXPECT_EQ(ray.position(1.0f), ref1);
-    EXPECT_EQ(ray.position(-1.0f), ref2);
-    EXPECT_EQ(ray.position(2.5f), ref3);
+    EXPECT_EQ(ray.position(0.0), ori);
+    EXPECT_EQ(ray.position(1.0), ref1);
+    EXPECT_EQ(ray.position(-1.0), ref2);
+    EXPECT_EQ(ray.position(2.5), ref3);
 }
 
 TEST(RayTests, transform_TranslateMatrix) {
@@ -55,7 +55,7 @@ TEST(RayTests, transform_ScaleMatrix) {
 
 TEST(RayTests, transform_RotateMatrix) {
     Ray ray(Point(1, 2, 3), Vector(0, 1, 0));
-    Mat4 transMat = Mat4::RotateMatrix(Utils::GetPI()/2.0f, Utils::GetPI() / 2.0f, Utils::GetPI() / 2.0f);
+    Mat4 transMat = Mat4::RotateMatrix(Utils::GetPI()/2.0, Utils::GetPI() / 2.0, Utils::GetPI() / 2.0);
     Ray result = transMat * ray;
 
     EXPECT_EQ(result.getOrigin(), Point(3, 2, -1));

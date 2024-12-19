@@ -2,9 +2,9 @@
 #include "Utils.h"
 
 TEST(UtilsTests, FE) {
-    float a = 1.0;
-    float b = 2.0;
-    float c = 2.0;
+    double a = 1.0;
+    double b = 2.0;
+    double c = 2.0;
 
     EXPECT_TRUE(Utils::FE(a, a));
     EXPECT_FALSE(Utils::FE(a, b));
@@ -22,7 +22,7 @@ TEST(UtilsTests, FE) {
     b = 1.202;
     EXPECT_FALSE(Utils::FE(a, b));
 
-    a = 0.0f;
-    b = 0.000000001f;
+    a = 0.0;
+    b = 0.000000001;
     EXPECT_TRUE(Utils::FE(a, b));
 }
