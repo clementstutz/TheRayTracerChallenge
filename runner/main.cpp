@@ -14,6 +14,7 @@
 #include "Scene.h"
 #include "Utils.h"
 #include "Camera.h"
+#include "Plane.h"
 
 using namespace std;
 
@@ -29,15 +30,15 @@ void static runSimulation() {
 
     Canvas canvas(900, 550);
 
-    Point start(0.0f, 1.0f, 0.0f);
-    Vector velocity(1.0f, 1.8f, 0.0f);
+    Point start(0.0, 1.0, 0.0);
+    Vector velocity(1.0, 1.8, 0.0);
     velocity.Normalize();
     velocity *= 11.25;
     Projectile projectile(start, velocity);
-    Environment environment(Vector(0.0f, -0.1f, 0.0f),
-                            Vector(-0.01f, 0.0f, 0.0f));
+    Environment environment(Vector(0.0, -0.1, 0.0),
+                            Vector(-0.01, 0.0, 0.0));
 
-    while (projectile.m_position.getY() >= 0.0f && currentIteration < maxIteration)
+    while (projectile.m_position.getY() >= 0.0 && currentIteration < maxIteration)
     {
         tick(projectile, environment);
         currentIteration++;
@@ -111,9 +112,9 @@ void static Chapter5Challenge() {
 
     Point camera(0, 0, -5);
     Point wall(0, 0, 10);
-    float wallSize = 10.0;
-    float increment = wallSize / resolution;
-    float half = wallSize / 2;
+    double wallSize = 10.0;
+    double increment = wallSize / resolution;
+    double half = wallSize / 2;
     for (int y = 0; y < resolution; y++) {
         for (int x = 0; x < resolution; x++) {
             Vector temp = wall - Point(half - x * increment, half - y * increment, wall.getZ());
@@ -156,13 +157,13 @@ void static Chapter6Challenge() {
     Point camera(0, 0, -5);
 
     Point wall(0, 0, 10);
-    float wallSize = 10.0;
+    double wallSize = 10.0;
 
     for (int y = 0; y < resolution; y++) {  // 1: (int y = 0; y < resolution; y++) -or- 2:int y = resolution-1; y >=0; y--
         for (int x = 0; x < resolution; x++) {
-            float increment = wallSize / resolution;
-            Vector temp = wall - Point((wallSize * 0.5f) - x * increment,
-                                       (wallSize * 0.5f) - y * increment,
+            double increment = wallSize / resolution;
+            Vector temp = wall - Point((wallSize * 0.5) - x * increment,
+                                       (wallSize * 0.5) - y * increment,
                                        wall.getZ());
             Point currentWallPixel(temp.getX(), temp.getY(), temp.getZ());
             
@@ -186,6 +187,63 @@ void static Chapter6Challenge() {
 }
 
 void static Chapter7Challenge() {
+    Camera camera(500, 300, Utils::GetPI() / 3.0);
+    camera.ViewTransform(Point(0, 1.5, -5.0),
+        Point(0, 1, 0),
+        Vector(0, 1, 0));
+
+    Scene scene;
+
+    Light light(Point(-10, 10, -10), Color::white);
+
+    Sphere floor;
+    floor.SetMatrix(Mat4::ScaleMatrix(10, 0.01, 10));
+    floor.SetMaterial(Material(Color(1, 0.9, 0.9), 0.1, 0.9, 0.0));
+    //floor.SetCanCastShadows(false);
+
+    Sphere leftWall;
+    leftWall.SetMatrix(Mat4::TranslateMatrix(0, 0, 5) *
+        Mat4::RotateYMatrix(Utils::GetPI() / -4.0) *
+        Mat4::RotateXMatrix(Utils::GetPI() / 2.0) *
+        Mat4::ScaleMatrix(10, 0.01, 10));
+    leftWall.SetMaterial(Material(Color(1, 0.9, 0.9), 0.1, 0.9, 0.0));
+    //leftWall.SetCanCastShadows(false);
+
+    Sphere rightWall;
+    rightWall.SetMatrix(Mat4::TranslateMatrix(0, 0, 5) *
+        Mat4::RotateYMatrix(Utils::GetPI() / 4.0) *
+        Mat4::RotateXMatrix(Utils::GetPI() / 2.0) *
+        Mat4::ScaleMatrix(10, 0.01, 10));
+    //rightWall.SetCanCastShadows(false);
+
+    Sphere middle;
+    middle.SetMatrix(Mat4::TranslateMatrix(-0.5, 1, 0.5));
+    middle.SetMaterial(Material(Color(0.1, 1.0, 0.5), 0.1, 0.7, 0.3));
+    middle.SetCanCastShadows(false);
+
+    Sphere right;
+    right.SetMatrix(Mat4::TranslateMatrix(1.5, 0.5, -0.5) *
+        Mat4::ScaleMatrix(0.5, 0.5, 0.5));
+    right.SetMaterial(Material(Color(0.5, 1.0, 0.1), 0.1, 0.7, 0.3));
+    right.SetCanCastShadows(false);
+
+    Sphere left;
+    left.SetMatrix(Mat4::TranslateMatrix(-1.5, 0.33, -0.75) *
+        Mat4::ScaleMatrix(0.33, 0.33, 0.33));
+    left.SetMaterial(Material(Color(1, 0.8, 0.1), 0.1, 0.7, 0.3));
+    left.SetCanCastShadows(false);
+
+    Canvas canvas = scene.Render(camera);
+    Save::saveCanvas(canvas, "Chapter_7_PuttingItAllTogether");
+    cout << "Image created." << endl;
+}
+
+void static Chapter8Challenge() {
+    Camera camera(500, 300, Utils::GetPI() / 3.0);
+    camera.ViewTransform(Point(0, 1.5, -5.0),
+        Point(0, 1, 0),
+        Vector(0, 1, 0));
+
     Scene scene;
 
     Light light(Point(-10, 10, -10), Color::white);
@@ -198,7 +256,8 @@ void static Chapter7Challenge() {
     leftWall.SetMatrix(Mat4::TranslateMatrix(0, 0, 5) *
         Mat4::RotateYMatrix(Utils::GetPI() / -4.0) *
         Mat4::RotateXMatrix(Utils::GetPI() / 2.0) *
-        Mat4::ScaleMatrix(10, 0.01f, 10));
+        Mat4::ScaleMatrix(10, 0.01, 10));
+
     leftWall.SetMaterial(Material(Color(1, 0.9, 0.9), 0.1, 0.9, 0.0));
 
     Sphere rightWall;
@@ -206,13 +265,15 @@ void static Chapter7Challenge() {
         Mat4::RotateYMatrix(Utils::GetPI() / 4.0) *
         Mat4::RotateXMatrix(Utils::GetPI() / 2.0) *
         Mat4::ScaleMatrix(10, 0.01, 10));
+    //rightWall.SetMaterial(Material(Color(0.1, 1.0, 0.5), 0.1, 0.7, 0.3));
 
     Sphere middle;
     middle.SetMatrix(Mat4::TranslateMatrix(-0.5, 1, 0.5));
     middle.SetMaterial(Material(Color(0.1, 1.0, 0.5), 0.1, 0.7, 0.3));
 
     Sphere right;
-    right.SetMatrix(Mat4::TranslateMatrix(1.5, 0.5, -0.5) * Mat4::ScaleMatrix(0.5, 0.5, 0.5));
+    right.SetMatrix(Mat4::TranslateMatrix(1.5, 0.5, -0.5) *
+        Mat4::ScaleMatrix(0.5, 0.5, 0.5));
     right.SetMaterial(Material(Color(0.5, 1.0, 0.1), 0.1, 0.7, 0.3));
 
     Sphere left;
@@ -220,15 +281,42 @@ void static Chapter7Challenge() {
         Mat4::ScaleMatrix(0.33, 0.33, 0.33));
     left.SetMaterial(Material(Color(1, 0.8, 0.1), 0.1, 0.7, 0.3));
 
-    Camera camera(400, 300, Utils::GetPI() / 3.0);
-
-    camera.ViewTransform(Point(0, 1.5, -5.0), Point(0, 1, 0), Vector(0, 1, 0));
-
     Canvas canvas = scene.Render(camera);
-    Save::saveCanvas(canvas, "Chapter_7_PuttingItAllTogether");
-    scene.Clear();
+    Save::saveCanvas(canvas, "Chapter_8_Chalenge");
     cout << "Image created." << endl;
 }
+
+void static Chapter9Challenge() {
+    Camera camera(500, 300, Utils::GetPI() / 3.0);
+    camera.ViewTransform(Point(0, 2, -10),
+        Point(0, 2, 4),
+        Vector(0, 1, 0));
+
+    Scene scene;
+
+    Light light_1(Point(-5, 5, -5), Color::white);
+    Light light_2(Point(5, 0.4, -5), Color(0.6, 0.6, 0.15));
+
+    Plane floor;
+    floor.SetMaterial(Material(Color::red));
+
+    Plane wall;
+    wall.SetMaterial(Material(Color::blue));
+    wall.SetMatrix(Mat4::RotateXMatrix(Utils::GetPI() / 2.0) *
+        Mat4::TranslateMatrix(0, 0, 4));
+
+    Sphere sphere_1;
+    sphere_1.SetMatrix(Mat4::TranslateMatrix(0, 0.5, -3) *
+        Mat4::ScaleMatrix(0.5, 0.5, 0.5));
+
+    Sphere sphere_2;
+    sphere_2.SetMatrix(Mat4::TranslateMatrix(2, 1, -1));
+
+    Canvas canvas = scene.Render(camera);
+    Save::saveCanvas(canvas, "Chapter_9_Challenge");
+    cout <<"Image created." << endl;
+}
+
 
 int main() {
     runSimulation();
@@ -252,5 +340,17 @@ int main() {
     auto fin_7 = std::chrono::high_resolution_clock::now();
     auto duree_7 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_7 - debut_7);
     std::cout << "Durée d'exécution : " << duree_7.count() << " ms" << std::endl;
+
+    auto debut_8 = std::chrono::high_resolution_clock::now();
+    Chapter8Challenge();
+    auto fin_8 = std::chrono::high_resolution_clock::now();
+    auto duree_8 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_8 - debut_8);
+    std::cout << "Durée d'exécution : " << duree_8.count() << " ms" << std::endl;
+
+    auto debut_9 = std::chrono::high_resolution_clock::now();
+    Chapter9Challenge();
+    auto fin_9 = std::chrono::high_resolution_clock::now();
+    auto duree_9 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_9 - debut_9);
+    std::cout << "Durée d'exécution : " << duree_9.count() << " ms" << std::endl;
 
 }
