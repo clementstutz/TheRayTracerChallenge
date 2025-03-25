@@ -29,7 +29,7 @@ TEST(SceneTests, constructor_default) {
     EXPECT_EQ(scene.GetRayObjects(), r);
 }
 
-TEST(SceneTests, accessors) {    
+TEST(SceneTests, accessors) {
     Scene scene;
     Sphere sphere;
     std::vector<RayObject*> ref1 = scene.GetRayObjects();
@@ -43,7 +43,7 @@ TEST(SceneTests, accessors) {
 TEST(SceneTests, Intersections) {
     Scene scene;
     scene.DefaultScene();
-    
+
     Ray ray(Point(0, 0, -5), Vector(0, 0, 1));
 
     std::vector<Intersection> intersections = scene.Intersections(ray);
@@ -156,22 +156,22 @@ TEST(SceneTests, RayThroughTransformed) {
     Camera camera(201, 101, Utils::GetPI() / 2);
     Scene scene;
 
-    std::cout << "camera.GetTransform() = " << camera.GetTransform() << std::endl;
+    camera.ViewTransform(Point(0, 2, -10),
+        Point(0, 2, 4),
+        Vector(0, 1, 0));
 
-    //Mat4* transformed = &camera.GetTransform();
-    //*transformed = Mat4::RotateYMatrix(Utils::GetPI() / 4.0) * Mat4::TranslateMatrix(0, -2, 5);
-    std::cout << "camera.GetTransform() = " << camera.GetTransform() << std::endl;
-    //std::cout << "*transformed = " << *transformed << std::endl;
     Ray ray = scene.RayForPixel(camera, 100, 50);
+    EXPECT_EQ(ray.getOrigin(), Point(0, 2, -10));
+    EXPECT_EQ(ray.getDirection(), Vector(0, 0, 1));
 
-    std::cout << "camera.GetTransform() = " << camera.GetTransform() << std::endl;
 
-    std::cout << ray.getOrigin() << std::endl;
-    EXPECT_EQ(Point(0, 2, -5), ray.getOrigin());
+    camera.ViewTransform(Point(0, 0, -1),
+        Point(1, 1, 0),
+        Vector(0, 1, 0));
 
-    std::cout << ray.getDirection() << std::endl;
-    EXPECT_EQ(Vector(std::sqrt(2.0)/2.0, 0, -std::sqrt(2.0) / 2.0), ray.getDirection());
-    EXPECT_EQ(1, 2);
+    ray = scene.RayForPixel(camera, 100, 50);
+    EXPECT_EQ(ray.getOrigin(), Point(0, 0, -1));
+    EXPECT_EQ(ray.getDirection(), Vector(std::sqrt(3.0) / 3.0, std::sqrt(3.0) / 3.0, std::sqrt(3.0) / 3.0));
 }
 
 TEST(SceneTests, RenderWorldWithCamera) {
