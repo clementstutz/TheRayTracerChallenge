@@ -168,10 +168,10 @@ Vector RayObject::NormalToWorld(Vector const&localNormal) const  {
 Color RayObject::Lighting(Point const&position, Light const& light, Vector const& eye, Vector const& normal, bool inShadow) const
 {
 	Color temp = m_material.GetColor();
-	/*if (m_material.m_pattern != null)
-	{
-		temp = m_material.m_pattern.PatternAtObject(this, position);
-	}*/
+	if (m_material.GetPattern() != nullptr) {
+		Point objectPoint = WorldToObject(position);
+		temp = m_material.GetPattern()->PatternAtObject(objectPoint);
+	}
 
 	Color effectiveColor = temp * light.GetIntensity();
 	Vector lightVec = (light.GetPosition() - position).Normalize();

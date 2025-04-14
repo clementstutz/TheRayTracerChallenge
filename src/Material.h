@@ -1,5 +1,7 @@
 #pragma once
 #include "Color.h"
+#include "Pattern.h"
+
 
 namespace RefractiveIndex {
     constexpr double Vacuum = 1.0;
@@ -20,14 +22,14 @@ private:
     double m_reflectivity;
     double m_refractiveIndex;
     double m_transparency;
-    //Pattern m_pattern = null;
+    std::shared_ptr<Pattern> m_pattern;
 
     void afficher(std::ostream& flux) const;
 
 public:
 	// Constructors
 	Material();
-    Material(Color const& color, double ambient=0.1, double diffuse=0.9, double specular = 0.9, double shininess = 200.0, double reflectivity = 0.0, double refractiveIndex = 1.0, double transparency = 0.0);//, Pattern pattern);
+    Material(Color const& color, double ambient=0.1, double diffuse=0.9, double specular = 0.9, double shininess = 200.0, double reflectivity = 0.0, double refractiveIndex = 1.0, double transparency = 0.0, std::shared_ptr<Pattern> pattern=nullptr);
     Material(Material const& other);
 	Material(Material&& other) noexcept;
 
@@ -45,7 +47,7 @@ public:
     double GetReflectivity() const;
     double GetRefractiveIndex() const;
     double GetTransparency() const;
-    //Pattern GetPattern() const;
+    std::shared_ptr<Pattern> GetPattern() const;
     void SetColor(Color const& color);
     void SetAmbient(double ambient);
     void SetDiffuse(double diffuse);
@@ -54,7 +56,7 @@ public:
     void SetReflectivity(double reflectivity);
     void SetRefractiveIndex(double refractiveIndex);
     void SetTransparency(double transparency);
-    //void SetPattern(Pattern pattern);
+    void SetPattern(Pattern const& pattern);
 
     // Member functions
     Material& operator=(Material const& other);
