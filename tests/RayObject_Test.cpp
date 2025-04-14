@@ -134,6 +134,7 @@ TEST(RayObject_for_TestTests, material) {
     EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetReflectivity(), 0.75);
     EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetRefractiveIndex(), 0.7);
     EXPECT_FLOAT_EQ(rayObject.GetMaterial().GetTransparency(), 0.2);
+    EXPECT_EQ(rayObject.GetMaterial().GetPattern(), nullptr);
 }
 
 TEST(RayObject_for_TestTests, lighting) {

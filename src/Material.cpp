@@ -11,11 +11,11 @@ Material::Material() :
     m_shininess(200.0),        // [10; 200] normalement
     m_reflectivity(0.0),       // [0; 1] normalement
     m_refractiveIndex(1.0),    // RefractiveIndex.Air;
-    m_transparency(0.0)        // [0; 1] normalement
-    //m_pattern(null)
+    m_transparency(0.0),       // [0; 1] normalement
+    m_pattern(nullptr)
 {}
 
-Material::Material(Color const& color, double ambient, double diffuse, double specular, double shininess, double reflectivity, double refractiveIndex, double transparency) :
+Material::Material(Color const& color, double ambient, double diffuse, double specular, double shininess, double reflectivity, double refractiveIndex, double transparency, std::shared_ptr<Pattern> pattern) :
     m_color(color),
     m_ambient(ambient),
     m_diffuse(diffuse),
@@ -23,8 +23,8 @@ Material::Material(Color const& color, double ambient, double diffuse, double sp
     m_shininess(shininess),
     m_reflectivity(reflectivity),
     m_refractiveIndex(refractiveIndex),
-    m_transparency(transparency)
-    //m_pattern(null)
+    m_transparency(transparency),
+    m_pattern(pattern)
 {}
 
 Material::Material(Material const& other) :
@@ -35,8 +35,8 @@ Material::Material(Material const& other) :
     m_shininess(other.m_shininess),
     m_reflectivity(other.m_reflectivity),
     m_refractiveIndex(other.m_refractiveIndex),
-    m_transparency(other.m_transparency)
-    //m_pattern = other.m_pattern
+    m_transparency(other.m_transparency),
+    m_pattern(other.m_pattern)
 {}
 
 Material::Material(Material&& other) noexcept :
@@ -47,8 +47,8 @@ Material::Material(Material&& other) noexcept :
     m_shininess(std::move(other.m_shininess)),
     m_reflectivity(std::move(other.m_reflectivity)),
     m_refractiveIndex(std::move(other.m_refractiveIndex)),
-    m_transparency(std::move(other.m_transparency))
-    //m_pattern(std::move(other.m_pattern)) 
+    m_transparency(std::move(other.m_transparency)),
+    m_pattern(std::move(other.m_pattern)) 
     {
     // Reset source object pour éviter des doublons
     other.m_color = Color();
@@ -59,7 +59,7 @@ Material::Material(Material&& other) noexcept :
     other.m_reflectivity = 0.0;
     other.m_refractiveIndex = 0.0;
     other.m_transparency = 0.0;
-    //other.m_pattern = nullptr;
+    other.m_pattern = nullptr;
 }
 
 
@@ -72,7 +72,7 @@ double Material::GetShininess() const {return m_shininess;}
 double Material::GetReflectivity() const {return m_reflectivity;}
 double Material::GetRefractiveIndex() const {return m_refractiveIndex;}
 double Material::GetTransparency() const {return m_transparency;}
-//Pattern Material::GetPattern() const {return m_pattern;}
+std::shared_ptr<Pattern> Material::GetPattern() const {return m_pattern;}
 
 void Material::SetColor(Color const& color) {m_color = color;}
 
@@ -114,6 +114,10 @@ void Material::SetTransparency(double transparency) {
     else { m_transparency = transparency; }
 }
 
+void Material::SetPattern(Pattern const& pattern) {
+    m_pattern = pattern.clone();
+}
+
 
 // Member functions
 Material& Material::operator=(Material const& other) {
@@ -126,7 +130,7 @@ Material& Material::operator=(Material const& other) {
         m_reflectivity = other.m_reflectivity;
         m_refractiveIndex = other.m_refractiveIndex;
         m_transparency = other.m_transparency;
-        //m_pattern = other.m_pattern;
+        m_pattern = other.m_pattern;
     }
     return *this;
 }
@@ -141,7 +145,7 @@ Material& Material::operator=(Material&& other) noexcept {
         m_reflectivity = other.m_reflectivity;
         m_refractiveIndex = other.m_refractiveIndex;
         m_transparency = other.m_transparency;
-        //m_pattern = other.m_pattern;
+        m_pattern = other.m_pattern;
         // Reset source object
         other.m_color = Color();
         other.m_ambient = 0.0;
@@ -151,7 +155,7 @@ Material& Material::operator=(Material&& other) noexcept {
         other.m_reflectivity = 0.0;
         other.m_refractiveIndex = 0.0;
         other.m_transparency = 0.0;
-        //other.m_pattern = null;
+        other.m_pattern = nullptr;
     }
     return *this;
 }
@@ -164,8 +168,8 @@ bool Material::operator==(Material const& other) const {
            (m_shininess == other.m_shininess) &&
            (m_reflectivity == other.m_reflectivity) &&
            (m_refractiveIndex == other.m_refractiveIndex) &&
-           (m_transparency == other.m_transparency);//&&
-           //(m_pattern == other.m_pattern);
+           (m_transparency == other.m_transparency) &&
+           (m_pattern == other.m_pattern);
 }
 
 std::ostream& operator<<(std::ostream& flux, Material const& material) {
