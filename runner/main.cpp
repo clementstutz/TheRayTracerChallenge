@@ -15,6 +15,13 @@
 #include "Utils.h"
 #include "Camera.h"
 #include "Plane.h"
+#include "SolidColorPattern.h"
+#include "StripePattern.h"
+#include "GradientPattern.h"
+#include "RingPattern.h"
+#include "CheckersPattern.h"
+#include "RadialGradientPattern.h"
+#include "BlendPattern.h"
 
 using namespace std;
 
@@ -317,40 +324,239 @@ void static Chapter9Challenge() {
     cout <<"Image created." << endl;
 }
 
+void static Chapter10_1Challenge() {
+    Camera camera(500, 300, Utils::GetPI() / 3.0);
+    camera.ViewTransform(Point(0, 2, -10),
+        Point(0, 2, 4),
+        Vector(0, 1, 0));
+
+    Scene scene;
+
+    Light light_1(Point(-5, 5, -5), Color::white);
+    Light light_2(Point(5, 0.4, -5), Color(0.6, 0.6, 0.15));
+
+    Plane floor;
+    Material m_1(Color::red);
+    m_1.SetPattern(RingPattern(SolidColorPattern(Color(1, 0, 0)), SolidColorPattern(Color(0, 1, 0))));
+    floor.SetMaterial(m_1);
+
+    Plane wall;
+    Material m_2(Color::blue);
+    m_2.SetPattern(StripePattern(SolidColorPattern(Color(1, 1, 1)), SolidColorPattern(Color(0, 0, 0))));
+    wall.SetMaterial(m_2);
+    wall.SetMatrix(Mat4::RotateXMatrix(Utils::GetPI() / 2.0) *
+        Mat4::TranslateMatrix(0, 0, 4));
+
+    Sphere sphere_1;
+    Material m_3(Color::blue);
+    m_3.SetPattern(CheckersPattern(SolidColorPattern(Color(1, 1, 0)), SolidColorPattern(Color(0, 0, 1))));
+    sphere_1.SetMaterial(m_3);
+    sphere_1.SetMatrix(Mat4::TranslateMatrix(0, 0.5, -3) *
+        Mat4::ScaleMatrix(0.5, 0.5, 0.5));
+
+    Sphere sphere_2;
+    Material m_4(Color::blue);
+    m_4.SetPattern(GradientPattern(SolidColorPattern(Color(1, 1, 1)), SolidColorPattern(Color(0, 1, 0))));
+    sphere_2.SetMaterial(m_4);
+    sphere_2.SetMatrix(Mat4::TranslateMatrix(2, 1, -1));
+
+    Canvas canvas = scene.Render(camera);
+    Save::saveCanvas(canvas, "Chapter_10_1_Challenge");
+    cout << "Image created." << endl;
+}
+
+void static Chapter10_2Challenge() {
+    Camera camera(500, 300, Utils::GetPI() / 3.0);
+    camera.ViewTransform(Point(0, 2, -10),
+        Point(0, 2, 4),
+        Vector(0, 1, 0));
+
+    Scene scene;
+
+    Light light_1(Point(-5, 5, -5), Color::white);
+    Light light_2(Point(5, 0.4, -5), Color(0.6, 0.6, 0.15));
+
+    Plane floor;
+    Material m_1(Color::red);
+    m_1.SetPattern(RingPattern(SolidColorPattern(Color(1, 0, 0)), SolidColorPattern(Color(0, 1, 0))));
+    floor.SetMaterial(m_1);
+
+    Plane wall;
+    Material m_2(Color::blue);
+    m_2.SetPattern(RadialGradientPattern());
+    wall.SetMaterial(m_2);
+    wall.SetMatrix(Mat4::RotateXMatrix(Utils::GetPI() / 2.0) *
+        Mat4::TranslateMatrix(0, 0, 4));
+
+    Sphere sphere_1;
+    Material m_3(Color::blue);
+    m_3.SetPattern(RadialGradientPattern());
+    sphere_1.SetMaterial(m_3);
+    sphere_1.SetMatrix(Mat4::TranslateMatrix(0, 0.5, -3) *
+        Mat4::ScaleMatrix(0.5, 0.5, 0.5));
+
+    Sphere sphere_2;
+    Material m_4(Color::blue);
+    m_4.SetPattern(RadialGradientPattern());
+    sphere_2.SetMaterial(m_4);
+    sphere_2.SetMatrix(Mat4::TranslateMatrix(2, 1, -1));
+
+    Canvas canvas = scene.Render(camera);
+    Save::saveCanvas(canvas, "Chapter_10_2_Challenge");
+    cout << "Image created." << endl;
+}
+
+void static Chapter10_3Challenge() {
+    Camera camera(500, 300, Utils::GetPI() / 3.0);
+    camera.ViewTransform(Point(0, 2, -10),
+        Point(0, 2, 4),
+        Vector(0, 1, 0));
+
+    Scene scene;
+
+    Light light_1(Point(-5, 5, -5), Color::white);
+    Light light_2(Point(5, 0.4, -5), Color(0.6, 0.6, 0.15));
+
+    CheckersPattern checkersPattern{ RadialGradientPattern(), SolidColorPattern(Color::green) };
+    Plane floor;
+    Material m_1(Color::red);
+    m_1.SetPattern(checkersPattern);
+    floor.SetMaterial(m_1);
+
+    Plane wall;
+    Material m_2(Color::blue);
+    m_2.SetPattern(checkersPattern);
+    wall.SetMaterial(m_2);
+    wall.SetMatrix(Mat4::RotateXMatrix(Utils::GetPI() / 2.0) *
+        Mat4::TranslateMatrix(0, 0, 4));
+
+    Sphere sphere_1;
+    Material m_3(Color::blue);
+    m_3.SetPattern(checkersPattern);
+    sphere_1.SetMaterial(m_3);
+    sphere_1.SetMatrix(Mat4::TranslateMatrix(0, 0.5, -3) *
+        Mat4::ScaleMatrix(0.5, 0.5, 0.5));
+
+    Sphere sphere_2;
+    Material m_4(Color::blue);
+    m_4.SetPattern(checkersPattern);
+    sphere_2.SetMaterial(m_4);
+    sphere_2.SetMatrix(Mat4::TranslateMatrix(2, 1, -1));
+
+    Canvas canvas = scene.Render(camera);
+    Save::saveCanvas(canvas, "Chapter_10_3_Challenge");
+    cout << "Image created." << endl;
+}
+
+void static Chapter10_4Challenge() {
+    Camera camera(500, 300, Utils::GetPI() / 3.0);
+    camera.ViewTransform(Point(0, 2, -10),
+        Point(0, 2, 4),
+        Vector(0, 1, 0));
+
+    Scene scene;
+
+    Light light_1(Point(-5, 5, -5), Color::white);
+    Light light_2(Point(5, 0.4, -5), Color(0.6, 0.6, 0.15));
+
+    StripePattern s1{SolidColorPattern(Color::white), SolidColorPattern(Color::green)};
+    StripePattern s2{ SolidColorPattern(Color::white), SolidColorPattern(Color::green) };
+    s2.SetMatrix(Mat4::RotateYMatrix(Utils::GetPI()/2.0));
+    BlendPattern blendPattern(s1, s2, 0.5);
+
+    Plane floor;
+    Material m_1(Color::blue);
+    m_1.SetPattern(blendPattern);
+    floor.SetMaterial(m_1);
+
+    Plane wall;
+    Material m_2(Color::blue);
+    m_2.SetPattern(blendPattern);
+    wall.SetMaterial(m_2);
+    wall.SetMatrix(Mat4::RotateXMatrix(Utils::GetPI() / 2.0) *
+        Mat4::TranslateMatrix(0, 0, 4));
+
+    Sphere sphere_1;
+    Material m_3(Color::blue);
+    m_3.SetPattern(blendPattern);
+    sphere_1.SetMaterial(m_3);
+    sphere_1.SetMatrix(Mat4::TranslateMatrix(0, 0.5, -3) *
+        Mat4::ScaleMatrix(0.5, 0.5, 0.5));
+
+    Sphere sphere_2;
+    Material m_4(Color::blue);
+    m_4.SetPattern(blendPattern);
+    sphere_2.SetMaterial(m_4);
+    sphere_2.SetMatrix(Mat4::TranslateMatrix(2, 1, -1));
+
+    Canvas canvas = scene.Render(camera);
+    Save::saveCanvas(canvas, "Chapter_10_4_Challenge");
+    cout << "Image created." << endl;
+}
+
 
 int main() {
-    runSimulation();
+    //runSimulation();
 
-    Chapter4TransformChallenge();
+    //Chapter4TransformChallenge();
 
-    auto debut_5 = std::chrono::high_resolution_clock::now();
+    /*auto debut_5 = std::chrono::high_resolution_clock::now();
     Chapter5Challenge();
     auto fin_5 = std::chrono::high_resolution_clock::now();
     auto duree_5 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_5 - debut_5);
-    std::cout << "Durée d'exécution : " << duree_5.count() << " ms" << std::endl;
+    std::cout << "Durée d'exécution : " << duree_5.count() << " ms" << std::endl;*/
 
-    auto debut_6 = std::chrono::high_resolution_clock::now();
+    /*auto debut_6 = std::chrono::high_resolution_clock::now();
     Chapter6Challenge();
     auto fin_6 = std::chrono::high_resolution_clock::now();
     auto duree_6 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_6 - debut_6);
-    std::cout << "Durée d'exécution : " << duree_6.count() << " ms" << std::endl;
+    std::cout << "Durée d'exécution : " << duree_6.count() << " ms" << std::endl;*/
 
-    auto debut_7 = std::chrono::high_resolution_clock::now();
+    /*auto debut_7 = std::chrono::high_resolution_clock::now();
     Chapter7Challenge();
     auto fin_7 = std::chrono::high_resolution_clock::now();
     auto duree_7 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_7 - debut_7);
-    std::cout << "Durée d'exécution : " << duree_7.count() << " ms" << std::endl;
+    std::cout << "Durée d'exécution : " << duree_7.count() << " ms" << std::endl;*/
 
-    auto debut_8 = std::chrono::high_resolution_clock::now();
+    /*auto debut_8 = std::chrono::high_resolution_clock::now();
     Chapter8Challenge();
     auto fin_8 = std::chrono::high_resolution_clock::now();
     auto duree_8 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_8 - debut_8);
-    std::cout << "Durée d'exécution : " << duree_8.count() << " ms" << std::endl;
+    std::cout << "Durée d'exécution : " << duree_8.count() << " ms" << std::endl;*/
 
-    auto debut_9 = std::chrono::high_resolution_clock::now();
+    /*auto debut_9 = std::chrono::high_resolution_clock::now();
     Chapter9Challenge();
     auto fin_9 = std::chrono::high_resolution_clock::now();
     auto duree_9 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_9 - debut_9);
-    std::cout << "Durée d'exécution : " << duree_9.count() << " ms" << std::endl;
+    std::cout << "Durée d'exécution : " << duree_9.count() << " ms" << std::endl;*/
 
+    /*auto debut_9_2 = std::chrono::high_resolution_clock::now();
+    Chapter9_2Challenge();
+    auto fin_9_2 = std::chrono::high_resolution_clock::now();
+    auto duree_9_2 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_9_2 - debut_9_2);
+    std::cout << "Durée d'exécution : " << duree_9_2.count() << " ms" << std::endl;*/
+
+    /*auto debut_10_1 = std::chrono::high_resolution_clock::now();
+    Chapter10_1Challenge();
+    auto fin_10_1 = std::chrono::high_resolution_clock::now();
+    auto duree_10_1 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_10_1 - debut_10_1);
+    std::cout << "Durée d'exécution : " << duree_10_1.count() << " ms" << std::endl;*/
+
+    /*auto debut_10_2 = std::chrono::high_resolution_clock::now();
+    Chapter10_2Challenge();
+    auto fin_10_2 = std::chrono::high_resolution_clock::now();
+    auto duree_10_2 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_10_2 - debut_10_2);
+    std::cout << "Durée d'exécution : " << duree_10_2.count() << " ms" << std::endl;*/
+
+    /*auto debut_10_3 = std::chrono::high_resolution_clock::now();
+    Chapter10_3Challenge();
+    auto fin_10_3 = std::chrono::high_resolution_clock::now();
+    auto duree_10_3 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_10_3 - debut_10_3);
+    std::cout << "Durée d'exécution : " << duree_10_3.count() << " ms" << std::endl;*/
+
+    auto debut_10_4 = std::chrono::high_resolution_clock::now();
+    Chapter10_4Challenge();
+    auto fin_10_4 = std::chrono::high_resolution_clock::now();
+    auto duree_10_4 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_10_4 - debut_10_4);
+    std::cout << "Durée d'exécution : " << duree_10_4.count() << " ms" << std::endl;
 }
