@@ -106,7 +106,7 @@ void Material::SetReflectivity(double reflectivity) {
     else { m_reflectivity = reflectivity; }
 }
 
-void Material::SetRefractiveIndex(double refractiveIndex) {m_specular = refractiveIndex;}
+void Material::SetRefractiveIndex(double refractiveIndex) {m_refractiveIndex = refractiveIndex;}
 
 void Material::SetTransparency(double transparency) {
     if (transparency < 0.0) { m_transparency = 0.0; }
@@ -187,4 +187,9 @@ void Material::afficher(std::ostream& flux) const {
         ", Refractive Index: " << m_refractiveIndex <<
         ", Transparency: " << m_transparency <<
         ")";
+}
+
+// Non-member functions
+bool operator!=(Material const& a, Material const& b) {
+    return !(a == b);
 }
