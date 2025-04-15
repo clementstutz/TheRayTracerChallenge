@@ -64,3 +64,6 @@ public:
     bool operator==(Material const& other) const;
     friend std::ostream& operator<<(std::ostream& flux, Material const& material);
 };
+
+// Non-member functions
+bool operator!=(Material const& a, Material const& b);
