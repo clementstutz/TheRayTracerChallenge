@@ -22,6 +22,7 @@
 #include "CheckersPattern.h"
 #include "RadialGradientPattern.h"
 #include "BlendPattern.h"
+#include "Cube.h"
 
 using namespace std;
 
@@ -66,7 +67,7 @@ void static runSimulation() {
     Save::saveCanvas(canvas, "free_fall");
 }
 
-void static Chapter4TransformChallenge() {//drawCircle
+void static Chapter_4_TransformChallenge() {//drawCircle
     cout << "Chapter 4 Challeng" << endl;
     // Create canvas of set size and width.
     // Creat Transform that first offsets a point by 1/2 canvas size then
@@ -98,7 +99,7 @@ void static Chapter4TransformChallenge() {//drawCircle
     Save::saveCanvas(canvas, "Chapter_4_TransformChallenge");
 }
 
-void static Chapter5Challenge() {
+void static Chapter_5_Challenge() {
     cout << "Chapter 5 Challeng" << endl;
     Scene scene;
     Mat4 transmatrix;
@@ -138,7 +139,7 @@ void static Chapter5Challenge() {
     cout << "Image created." << endl;
 }
 
-void static Chapter6Challenge() {
+void static Chapter_6_Challenge() {
     cout << "Chapter 6 Challeng" << endl;
     Scene scene;
     Mat4 transmatrix;
@@ -193,7 +194,7 @@ void static Chapter6Challenge() {
     cout << "Image created." << endl;
 }
 
-void static Chapter7Challenge() {
+void static Chapter_7_Challenge() {
     Camera camera(500, 300, Utils::GetPI() / 3.0);
     camera.ViewTransform(Point(0, 1.5, -5.0),
         Point(0, 1, 0),
@@ -245,7 +246,7 @@ void static Chapter7Challenge() {
     cout << "Image created." << endl;
 }
 
-void static Chapter8Challenge() {
+void static Chapter_8_Challenge() {
     Camera camera(500, 300, Utils::GetPI() / 3.0);
     camera.ViewTransform(Point(0, 1.5, -5.0),
         Point(0, 1, 0),
@@ -293,7 +294,7 @@ void static Chapter8Challenge() {
     cout << "Image created." << endl;
 }
 
-void static Chapter9Challenge() {
+void static Chapter_9_Challenge() {
     Camera camera(500, 300, Utils::GetPI() / 3.0);
     camera.ViewTransform(Point(0, 2, -10),
         Point(0, 2, 4),
@@ -324,7 +325,7 @@ void static Chapter9Challenge() {
     cout <<"Image created." << endl;
 }
 
-void static Chapter10_1Challenge() {
+void static Chapter_10_1_Challenge() {
     Camera camera(500, 300, Utils::GetPI() / 3.0);
     camera.ViewTransform(Point(0, 2, -10),
         Point(0, 2, 4),
@@ -365,7 +366,7 @@ void static Chapter10_1Challenge() {
     cout << "Image created." << endl;
 }
 
-void static Chapter10_2Challenge() {
+void static Chapter_10_2_Challenge() {
     Camera camera(500, 300, Utils::GetPI() / 3.0);
     camera.ViewTransform(Point(0, 2, -10),
         Point(0, 2, 4),
@@ -406,7 +407,7 @@ void static Chapter10_2Challenge() {
     cout << "Image created." << endl;
 }
 
-void static Chapter10_3Challenge() {
+void static Chapter_10_3_Challenge() {
     Camera camera(500, 300, Utils::GetPI() / 3.0);
     camera.ViewTransform(Point(0, 2, -10),
         Point(0, 2, 4),
@@ -448,7 +449,7 @@ void static Chapter10_3Challenge() {
     cout << "Image created." << endl;
 }
 
-void static Chapter10_4Challenge() {
+void static Chapter_10_4_Challenge() {
     Camera camera(500, 300, Utils::GetPI() / 3.0);
     camera.ViewTransform(Point(0, 2, -10),
         Point(0, 2, 4),
@@ -494,69 +495,432 @@ void static Chapter10_4Challenge() {
     cout << "Image created." << endl;
 }
 
+void static Chapter_11_Challenge_Reflection() {
+    Camera camera(500, 300, Utils::GetPI() / 3.0);
+    camera.ViewTransform(Point(0, 2, -5),
+        Point(0, 1, -1),
+        Vector(0, 1, 0));
+
+    int recursion = 2;
+
+    Scene scene;
+
+    Light light(Point(-10, 10, -10), Color::white);
+
+    Material m_1;
+    m_1.SetPattern(CheckersPattern());
+    Plane floor;
+    floor.SetMaterial(m_1);
+
+    GradientPattern pattern_2{ SolidColorPattern(Color::red), SolidColorPattern(Color::white) };
+    pattern_2.SetMatrix(Mat4::RotateYMatrix(Utils::GetPI() / 2));
+    Material m_2;
+    m_2.SetPattern(pattern_2);
+    Plane wall;
+    wall.SetMaterial(m_2);
+    wall.SetMatrix(Mat4::TranslateMatrix(0, 0, 4.1) * Mat4::RotateXMatrix(Utils::GetPI() / 2.0));
+
+    Material m_3;
+    m_3.SetReflectivity(1.0);
+    Sphere sphere_1;
+    sphere_1.SetMaterial(m_3);
+    sphere_1.SetMatrix(Mat4::TranslateMatrix(-1, 0.5, -2) * Mat4::ScaleMatrix(0.5, 0.5, 0.5));
+
+    Material m_4;
+    m_4.SetReflectivity(1.0);
+    Sphere sphere_2;
+    sphere_2.SetMaterial(m_4);
+    sphere_2.SetMatrix(Mat4::TranslateMatrix(1, 1, 0));
+
+    Canvas canvas = scene.Render(camera, recursion);
+    Save::saveCanvas(canvas, "Chapter_11_Reflection_" + std::to_string(recursion));
+    std::cout << "Image created." << std::endl;
+}
+
+void static Chapter_11_Challenge_Transparency() {
+    Camera camera(500, 300, Utils::GetPI() / 3.0);
+    camera.ViewTransform(Point(0, 0, -3),
+        Point(0, 0, 4),
+        Vector(0, 1, 0));
+
+    int recursion = 1;
+
+    Scene scene;
+
+    Light light(Point(-10, 10, -10), Color::white);
+
+    StripePattern s1{ SolidColorPattern(Color::white), SolidColorPattern(Color::green) };
+    StripePattern s2{ SolidColorPattern(Color::white), SolidColorPattern(Color::green) };
+    s1.SetMatrix(Mat4::RotateYMatrix(Utils::GetPI() / 2));
+    BlendPattern blend(s1, s2);
+
+    Material m_1;
+    m_1.SetPattern(blend);
+    Plane wall;
+    wall.SetMaterial(m_1);
+    wall.SetMatrix(Mat4::RotateXMatrix(Utils::GetPI() / 2.0));
+
+    Material m_2;
+    m_2.SetColor(Color::red);
+    m_2.SetDiffuse(0.1);
+    m_2.SetShininess(300);
+    m_2.SetReflectivity(1.0);
+    m_2.SetTransparency(0.9);
+    m_2.SetRefractiveIndex(RefractiveIndex::Vacuum);
+
+    Sphere sphere;
+    sphere.SetMaterial(m_2);
+    sphere.SetMatrix(Mat4::TranslateMatrix(0, 0, -0.5));
+    sphere.SetCanCastShadows(false);
+
+    Canvas canvas = scene.Render(camera, recursion);
+    Save::saveCanvas(canvas, "Chapter_11_Transparency_" + std::to_string(recursion));
+    std::cout << "Image created." << std::endl;
+}
+
+void static Chapter_11_Challenge_UnderwaterScene() {
+    Camera camera(500, 300, Utils::GetPI() / 3.0);
+    camera.ViewTransform(Point(0, 4, -10),
+        Point(0, -2, 4),
+        Vector(0, 1, 0));
+
+    int recursion = 1;
+
+    Scene scene;
+
+    Light light(Point(-10, 10, -10), Color::white);
+
+    Material m_1;
+    m_1.SetColor(Color(0.3, 0.7, 0.99));
+    m_1.SetDiffuse(0.3);
+    m_1.SetReflectivity(0.4);
+    m_1.SetTransparency(0.5);
+    m_1.SetRefractiveIndex(RefractiveIndex::Water);
+
+    Plane waterSurface;
+    waterSurface.SetMaterial(m_1);
+    waterSurface.SetCanCastShadows(false);
+
+    Material m_2;
+    m_2.SetColor(Color(0.5, 0.25, 0.1));
+    m_2.SetDiffuse(0.9);
+    m_2.SetReflectivity(0.0);
+    m_2.SetTransparency(0.0);
+    m_2.SetSpecular(0.0);
+    m_2.SetRefractiveIndex(RefractiveIndex::Air);
+
+    Plane waterBed;
+    waterBed.SetMaterial(m_2);
+    waterBed.SetCanCastShadows(false);
+    waterBed.SetMatrix(Mat4::TranslateMatrix(0, -10, 0));
+
+    Sphere sphere_1;
+    sphere_1.SetMatrix(Mat4::TranslateMatrix(0, -2.4, 0) *
+        Mat4::RotateZMatrix(Utils::GetPI() / -15) *
+        Mat4::ScaleMatrix(1, 4, 1));
+
+    Canvas canvas = scene.Render(camera, recursion);
+    Save::saveCanvas(canvas, "Chapter_11_UnderwaterScene_" + std::to_string(recursion));
+    std::cout << "Image created." << std::endl;
+}
+
+void static Chapter_12_Challenge_Cube_with_pattern() {
+    Camera camera(500, 300, Utils::GetPI() / 3.0);
+    camera.ViewTransform(Point(0, 2, -10),
+        Point(0, 0, 0),
+        Vector(0, 1, 0));
+    Scene scene;
+    Light light(Point(-4, 4, -3), Color::white);
+
+    CheckersPattern pattern{SolidColorPattern(Color::red), SolidColorPattern(Color::cyan)};
+    pattern.SetMatrix(Mat4::ScaleMatrix(1, 0.5, 1));
+    Material m;
+    m.SetPattern(pattern);
+    Cube cube;
+    cube.SetMaterial(m);
+    cube.SetMatrix(Mat4::TranslateMatrix(-2, 0, 0));
+    Sphere s;
+    s.SetMaterial(m);
+    s.SetMatrix(Mat4::TranslateMatrix(2, 0, 0));
+
+    Canvas canvas = scene.Render(camera);
+    Save::saveCanvas(canvas, "Chapter_12_Cube");
+    std::cout << "Image created." << std::endl;
+}
+
+void static Chapter_12_Challenge_CubeRoom() {
+    Camera camera(500, 300, Utils::GetPI() / 3.0);
+    camera.ViewTransform(Point(0, 2.2, -5),
+        Point(0, 1, 4),
+        Vector(0, 1, 0));
+
+    int recursion = 5;
+
+    Scene scene;
+
+    Light light(Point(-4, 4, -3), Color::white);
+
+    //Create a cube room
+    //Floor
+    CheckersPattern floor_pattern{ SolidColorPattern(Color::white), SolidColorPattern(Color::black) };
+    floor_pattern.SetMatrix(Mat4::ScaleMatrix(0.1, 1, 0.1));
+    Material floor_m;
+    floor_m.SetReflectivity(0.2);
+    floor_m.SetPattern(floor_pattern);
+    Plane floor;
+    floor.SetMaterial(floor_m);
+    floor.SetMatrix(Mat4::TranslateMatrix(0, 0.1, 0) * Mat4::ScaleMatrix(10, 0.1, 10));
+
+    //Ceiling
+    Material ceiling_m(Color(0.9, 0.9, 0.95));
+    Cube ceiling;
+    ceiling.SetMaterial(ceiling_m);
+    ceiling.SetMatrix(Mat4::TranslateMatrix(0, 5, 0) * Mat4::ScaleMatrix(10, 0.1, 10));
+
+    //Back  Wall
+    Material backWall_m(Color(0.6, 0.1, 0.05));
+    backWall_m.SetReflectivity(0);
+    Cube backWall;
+    backWall.SetMaterial(backWall_m);
+    backWall.SetMatrix(Mat4::TranslateMatrix(0, 0, 0) * Mat4::ScaleMatrix(5, 5, 6));
+
+    //Mirror
+    Material mirror_m(Color::black);
+    mirror_m.SetShininess(300);
+    mirror_m.SetReflectivity(1);
+    Cube mirror;
+    mirror.SetMaterial(mirror_m);
+    mirror.SetMatrix(Mat4::TranslateMatrix(0, 2, 5.9) * Mat4::ScaleMatrix(2, 1, 0.005));
+
+    //Table
+    Material table_m(Color(0.6471, 0.3843, 0.2196));
+    Cube tableTop;
+    tableTop.SetMaterial(table_m);
+    tableTop.SetMatrix(Mat4::TranslateMatrix(0, 1, 0) * Mat4::ScaleMatrix(2, 0.1, 1));
+
+    Cube leg1;
+    leg1.SetMaterial(table_m);
+    leg1.SetMatrix(Mat4::TranslateMatrix(-1.7, 0, -0.9) * Mat4::ScaleMatrix(0.1, 1, 0.1));
+
+    Cube leg2;
+    leg2.SetMaterial(table_m);
+    leg2.SetMatrix(Mat4::TranslateMatrix(1.7, 0, -0.9) * Mat4::ScaleMatrix(0.1, 1, 0.1));
+
+    Cube leg3;
+    leg3.SetMaterial(table_m);
+    leg3.SetMatrix(Mat4::TranslateMatrix(1.7, 0, 0.9) * Mat4::ScaleMatrix(0.1, 1, 0.1));
+
+    Cube leg4;
+    leg4.SetMaterial(table_m);
+    leg4.SetMatrix(Mat4::TranslateMatrix(-1.7, 0, 0.9) * Mat4::ScaleMatrix(0.1, 1, 0.1));
+
+    //Sphere
+    Material sphere_1_m;
+    sphere_1_m.SetRefractiveIndex(RefractiveIndex::Glass);
+    sphere_1_m.SetDiffuse(0);
+    sphere_1_m.SetTransparency(1);
+    Sphere sphere1;
+    sphere1.SetMaterial(sphere_1_m);
+    sphere1.SetMatrix(Mat4::TranslateMatrix(0.7, 1.5, 0) * Mat4::ScaleMatrix(0.4, 0.4, 0.4));
+    sphere1.SetCanCastShadows(false);
+
+    Material sphere_2_m(Color(0, 0.1, 0));
+    sphere_2_m.SetDiffuse(0.2);
+    sphere_2_m.SetShininess(100);
+    sphere_2_m.SetReflectivity(1);
+    sphere_2_m.SetTransparency(0.2);
+    sphere_2_m.SetRefractiveIndex(RefractiveIndex::Vacuum);
+    Sphere sphere2;
+    sphere2.SetMaterial(sphere_2_m);
+    sphere2.SetMatrix(Mat4::TranslateMatrix(-0.7, 1.5, 0) * Mat4::ScaleMatrix(0.4, 0.4, 0.4));
+
+    Canvas canvas = scene.Render(camera, recursion);
+    Save::saveCanvas(canvas, "Chapter_12_CubeRoom_" + std::to_string(recursion));
+    std::cout << "Image created." << std::endl;
+}
+
+void static Chapter_12_Challenge_CubeRoom_better() {
+    Camera camera(500, 300, Utils::GetPI() / 3.0);
+    camera.ViewTransform(Point(0, 2.2, -5),
+        Point(0, 1, 4),
+        Vector(0, 1, 0));
+
+    int recursion = 5;
+
+    Scene scene;
+
+    Light light(Point(-4, 4, -3), Color::white);
+
+    //Create a cube room
+    //Floor
+    CheckersPattern floor_pattern{ SolidColorPattern(Color::white), SolidColorPattern(Color::black) };
+    floor_pattern.SetMatrix(Mat4::ScaleMatrix(0.2, 0.2, 0.2));
+    Material floor_m;
+    floor_m.SetReflectivity(0.2);
+    floor_m.SetPattern(floor_pattern);
+    Cube floor;
+    floor.SetMaterial(floor_m);
+    floor.SetMatrix(Mat4::TranslateMatrix(0, 0.1, 0) * Mat4::ScaleMatrix(10, 0.1, 10));
+
+    //Ceiling
+    Material ceiling_m(Color(0.9, 0.9, 0.95));
+    Cube ceiling;
+    ceiling.SetMaterial(ceiling_m);
+    ceiling.SetMatrix(Mat4::TranslateMatrix(0, 5, 0) * Mat4::ScaleMatrix(10, 0.1, 10));
+
+    //Back  Wall
+    Material backWall_m(Color(0.6, 0.1, 0.05));
+    backWall_m.SetReflectivity(0);
+    Cube backWall;
+    backWall.SetMaterial(backWall_m);
+    backWall.SetMatrix(Mat4::TranslateMatrix(0, 0, 0) * Mat4::ScaleMatrix(5, 5, 6));
+
+    //Mirror
+    Material mirror_m(Color::black);
+    mirror_m.SetShininess(300);
+    mirror_m.SetReflectivity(1);
+    Cube mirror;
+    mirror.SetMaterial(mirror_m);
+    mirror.SetMatrix(Mat4::TranslateMatrix(0, 2, 5.9) * Mat4::ScaleMatrix(2, 1, 0.005));
+
+    //Table
+    Material table_m(Color(0.6471, 0.3843, 0.2196));
+    Cube tableTop;
+    tableTop.SetMaterial(table_m);
+    tableTop.SetMatrix(Mat4::TranslateMatrix(0, 1, 0) * Mat4::ScaleMatrix(2, 0.1, 1));
+
+    Cube leg1;
+    leg1.SetMaterial(table_m);
+    leg1.SetMatrix(Mat4::TranslateMatrix(-1.7, 0, -0.9) * Mat4::ScaleMatrix(0.1, 1, 0.1));
+
+    Cube leg2;
+    leg2.SetMaterial(table_m);
+    leg2.SetMatrix(Mat4::TranslateMatrix(1.7, 0, -0.9) * Mat4::ScaleMatrix(0.1, 1, 0.1));
+
+    Cube leg3;
+    leg3.SetMaterial(table_m);
+    leg3.SetMatrix(Mat4::TranslateMatrix(1.7, 0, 0.9) * Mat4::ScaleMatrix(0.1, 1, 0.1));
+
+    Cube leg4;
+    leg4.SetMaterial(table_m);
+    leg4.SetMatrix(Mat4::TranslateMatrix(-1.7, 0, 0.9) * Mat4::ScaleMatrix(0.1, 1, 0.1));
+
+    //Sphere
+    Material sphere_1_m;
+    sphere_1_m.SetRefractiveIndex(RefractiveIndex::Glass);
+    sphere_1_m.SetDiffuse(0);
+    sphere_1_m.SetTransparency(1);
+    Sphere sphere1;
+    sphere1.SetMaterial(sphere_1_m);
+    sphere1.SetMatrix(Mat4::TranslateMatrix(0.9, 1.5, 0) * Mat4::ScaleMatrix(0.4, 0.4, 0.4));
+    sphere1.SetCanCastShadows(false);
+
+    Material sphere_2_m(Color(0, 0.1, 0));
+    sphere_2_m.SetDiffuse(0.2);
+    sphere_2_m.SetShininess(100);
+    sphere_2_m.SetReflectivity(1);
+    sphere_2_m.SetTransparency(0.2);
+    sphere_2_m.SetRefractiveIndex(RefractiveIndex::Vacuum);
+    Sphere sphere2;
+    sphere2.SetMaterial(sphere_2_m);
+    sphere2.SetMatrix(Mat4::TranslateMatrix(-0.9, 1.5, 0) * Mat4::ScaleMatrix(0.4, 0.4, 0.4));
+
+    Canvas canvas = scene.Render(camera, recursion);
+    Save::saveCanvas(canvas, "Chapter_12_CubeRoom_better_" + std::to_string(recursion));
+    std::cout << "Image created." << std::endl;
+}
 
 int main() {
     //runSimulation();
 
     //Chapter4TransformChallenge();
 
-    /*auto debut_5 = std::chrono::high_resolution_clock::now();
-    Chapter5Challenge();
-    auto fin_5 = std::chrono::high_resolution_clock::now();
-    auto duree_5 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_5 - debut_5);
-    std::cout << "Durée d'exécution : " << duree_5.count() << " ms" << std::endl;*/
+    auto debut = std::chrono::high_resolution_clock::now();
+    auto fin = std::chrono::high_resolution_clock::now();
+    auto duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
 
-    /*auto debut_6 = std::chrono::high_resolution_clock::now();
-    Chapter6Challenge();
-    auto fin_6 = std::chrono::high_resolution_clock::now();
-    auto duree_6 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_6 - debut_6);
-    std::cout << "Durée d'exécution : " << duree_6.count() << " ms" << std::endl;*/
+    /*debut = std::chrono::high_resolution_clock::now();
+    Chapter_5_Challenge();
+    fin = std::chrono::high_resolution_clock::now();
+    duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
 
-    /*auto debut_7 = std::chrono::high_resolution_clock::now();
-    Chapter7Challenge();
-    auto fin_7 = std::chrono::high_resolution_clock::now();
-    auto duree_7 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_7 - debut_7);
-    std::cout << "Durée d'exécution : " << duree_7.count() << " ms" << std::endl;*/
+    /*debut = std::chrono::high_resolution_clock::now();
+    Chapter_6_Challenge();
+    fin = std::chrono::high_resolution_clock::now();
+    duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
 
-    /*auto debut_8 = std::chrono::high_resolution_clock::now();
-    Chapter8Challenge();
-    auto fin_8 = std::chrono::high_resolution_clock::now();
-    auto duree_8 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_8 - debut_8);
-    std::cout << "Durée d'exécution : " << duree_8.count() << " ms" << std::endl;*/
+    /*debut = std::chrono::high_resolution_clock::now();
+    Chapter_7_Challenge();
+    fin = std::chrono::high_resolution_clock::now();
+    duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
 
-    /*auto debut_9 = std::chrono::high_resolution_clock::now();
-    Chapter9Challenge();
-    auto fin_9 = std::chrono::high_resolution_clock::now();
-    auto duree_9 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_9 - debut_9);
-    std::cout << "Durée d'exécution : " << duree_9.count() << " ms" << std::endl;*/
+    /*debut = std::chrono::high_resolution_clock::now();
+    Chapter_8_Challenge();
+    fin = std::chrono::high_resolution_clock::now();
+    duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
 
-    /*auto debut_9_2 = std::chrono::high_resolution_clock::now();
-    Chapter9_2Challenge();
-    auto fin_9_2 = std::chrono::high_resolution_clock::now();
-    auto duree_9_2 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_9_2 - debut_9_2);
-    std::cout << "Durée d'exécution : " << duree_9_2.count() << " ms" << std::endl;*/
+    /*debut = std::chrono::high_resolution_clock::now();
+    Chapter_9_Challenge();
+    fin = std::chrono::high_resolution_clock::now();
+    duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
 
-    /*auto debut_10_1 = std::chrono::high_resolution_clock::now();
-    Chapter10_1Challenge();
-    auto fin_10_1 = std::chrono::high_resolution_clock::now();
-    auto duree_10_1 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_10_1 - debut_10_1);
-    std::cout << "Durée d'exécution : " << duree_10_1.count() << " ms" << std::endl;*/
+    /*debut = std::chrono::high_resolution_clock::now();
+    Chapter_10_1_Challenge();
+    fin = std::chrono::high_resolution_clock::now();
+    duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
 
-    /*auto debut_10_2 = std::chrono::high_resolution_clock::now();
-    Chapter10_2Challenge();
-    auto fin_10_2 = std::chrono::high_resolution_clock::now();
-    auto duree_10_2 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_10_2 - debut_10_2);
-    std::cout << "Durée d'exécution : " << duree_10_2.count() << " ms" << std::endl;*/
+    /*debut = std::chrono::high_resolution_clock::now();
+    Chapter_10_2_Challenge();
+    fin = std::chrono::high_resolution_clock::now();
+    duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
 
-    /*auto debut_10_3 = std::chrono::high_resolution_clock::now();
-    Chapter10_3Challenge();
-    auto fin_10_3 = std::chrono::high_resolution_clock::now();
-    auto duree_10_3 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_10_3 - debut_10_3);
-    std::cout << "Durée d'exécution : " << duree_10_3.count() << " ms" << std::endl;*/
+    /*debut = std::chrono::high_resolution_clock::now();
+    Chapter_10_3_Challenge();
+    fin = std::chrono::high_resolution_clock::now();
+    duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
 
-    auto debut_10_4 = std::chrono::high_resolution_clock::now();
-    Chapter10_4Challenge();
-    auto fin_10_4 = std::chrono::high_resolution_clock::now();
-    auto duree_10_4 = std::chrono::duration_cast<std::chrono::milliseconds>(fin_10_4 - debut_10_4);
-    std::cout << "Durée d'exécution : " << duree_10_4.count() << " ms" << std::endl;
+    /*debut = std::chrono::high_resolution_clock::now();
+    Chapter_10_4_Challenge();
+    fin = std::chrono::high_resolution_clock::now();
+    duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+
+    //There is noise in the reflections.
+    /*debut = std::chrono::high_resolution_clock::now();
+    Chapter_11_Challenge_Reflection();
+    fin = std::chrono::high_resolution_clock::now();
+    duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+
+    /*debut = std::chrono::high_resolution_clock::now();
+    Chapter_11_Challenge_Transparency();
+    fin = std::chrono::high_resolution_clock::now();
+    duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+
+    /*debut = std::chrono::high_resolution_clock::now();
+    Chapter_11_Challenge_UnderwaterScene();
+    fin = std::chrono::high_resolution_clock::now();
+    duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+
+    /*debut = std::chrono::high_resolution_clock::now();
+    Chapter_12_Challenge_Cube_with_pattern();
+    fin = std::chrono::high_resolution_clock::now();
+    duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+
+    /*debut = std::chrono::high_resolution_clock::now();
+    Chapter_12_Challenge_CubeRoom();
+    fin = std::chrono::high_resolution_clock::now();
+    duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
 }
