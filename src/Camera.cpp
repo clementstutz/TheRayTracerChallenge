@@ -51,6 +51,7 @@ Mat4 Camera::ViewTransform(Point from, Point to, Vector up) {
     if (std::isnan(true_up.getX()))
         std::cout << "Bad Up Vector in Camera's View Transform." << std::endl;
 
+    //NOTE: mettre -from.getX(), -from.getY() et -from.getZ() directement dans orientation pour �viter une multiplaction de orientation par TranslateMatrix() ??
     Mat4 orientation(left.getX(), left.getY(), left.getZ(), 0,
         true_up.getX(), true_up.getY(), true_up.getZ(), 0,
         -forward.getX(), -forward.getY(), -forward.getZ(), 0,
