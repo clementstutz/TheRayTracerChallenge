@@ -67,9 +67,9 @@ CheckersPattern& CheckersPattern::operator=(CheckersPattern&& other) noexcept {
 Color CheckersPattern::patternAt(Point const& objectPoint) const {
 	Point patternPoint = m_matrix.inverted() * objectPoint;
 
-	if ((static_cast<int>(std::floor(patternPoint.getX())) + 
-		static_cast<int>(std::floor(patternPoint.getY())) + 
-		static_cast<int>(std::floor(patternPoint.getZ()))) % 2 == 0.0) {
+	if ((static_cast<int>(std::floor(patternPoint.getX() + Utils::GetEpsilon())) + 
+		static_cast<int>(std::floor(patternPoint.getY() + Utils::GetEpsilon())) +
+		static_cast<int>(std::floor(patternPoint.getZ() + Utils::GetEpsilon()))) % 2 == 0.0) {
 		return m_patternA->patternAt(patternPoint);
 	}
 	return m_patternB->patternAt(patternPoint);
