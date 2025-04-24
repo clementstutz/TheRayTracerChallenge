@@ -3,7 +3,7 @@
 class Utils
 {
 private :
-	static constexpr double EPSILON = 0.001; //1.e10-7;
+	static constexpr double EPSILON = 0.0001; //1.e10-7;
 	static constexpr double PI = 3.14159265358979323846;
 
 public:
