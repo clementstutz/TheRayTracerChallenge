@@ -8,7 +8,7 @@ TEST(GradientPatternTests, patternAt) {
     EXPECT_EQ(pattern.patternAt(Point(-0.99, 0, 0)), Color(0.99, 0.99, 0.99));
     EXPECT_EQ(pattern.patternAt(Point(-0.1, 0, 0)), Color(0.1, 0.1, 0.1));
     EXPECT_EQ(pattern.patternAt(Point(0, 0, 0)), Color::white);
-    EXPECT_EQ(pattern.patternAt(Point(0.999, 0, 0)), Color(0.0001, 0.0001, 0.0001));
+    EXPECT_EQ(pattern.patternAt(Point(0.999, 0, 0)), Color(0.001, 0.001, 0.001));
     EXPECT_EQ(pattern.patternAt(Point(1, 0, 0)), Color::white);
     EXPECT_EQ(pattern.patternAt(Point(1.1, 0, 0)), Color(0.9, 0.9, 0.9));
 
