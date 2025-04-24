@@ -2,6 +2,7 @@
 #include <vector>
 //#include "RayObject.h"
 
+// Déclaration anticipée de classes
 class RayObject;
 
 class Intersection
@@ -33,7 +34,7 @@ public:
 	// Member functions
 	Intersection& operator=(const Intersection& other);	// NOTE : Nécessaire sinon erreurs suivantes : 
 	Intersection& operator=(Intersection&& other) noexcept;
-	bool operator==(Intersection const& other);
+	bool operator==(Intersection const& other) const;
 	friend std::ostream& operator<<(std::ostream& flux, Intersection const& intersection);
 	static std::vector<Intersection>& SortIntersections(std::vector<Intersection>& intersections);
 	bool IsEmpty() const;

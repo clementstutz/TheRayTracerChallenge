@@ -153,26 +153,21 @@ Color Scene::ShadeHit(Computations const& c, int remaining) {
     Color surfaceColor;
     for (int i = 0; i < m_lights.size(); i++) {
         // Is this light in shadow?
-        if (c.GetRayObject().CanReceiveShadows()) {
+        if (c.GetRayObject().CanReceiveShadows()) { // Why do we test for that condition ?
             bool isShadow = IsShadowed(c.GetOverPoint(), *m_lights[i]);
             surfaceColor += c.GetRayObject().Lighting(c.GetPoint(), *m_lights[i], c.GetEye(), c.GetNormal(), isShadow);
         }
     }
 
-    //Color reflected = ReflectedColor(c, remaining);
-    //Color refracted = RefractedColor(c, remaining);
+    Color reflected = ReflectedColor(c, remaining);
+    Color refracted = RefractedColor(c, remaining);
 
-    //if (c.GetRayObject().GetMaterial().GetReflectivity() > 0 && c.GetRayObject().GetMaterial().GetTransparency() > 0) {
-    //    double reflectance = Schlick(c);
-    //    return surfaceColor + reflected * reflectance + refracted * (1.0 - reflectance);
-    //}
+    if (c.GetRayObject().GetMaterial().GetReflectivity() > 0 && c.GetRayObject().GetMaterial().GetTransparency() > 0) {
+        double reflectance = Schlick(c);
+        return surfaceColor + reflected * reflectance + refracted * (1.0 - reflectance);
+    }
 
-    //return surfaceColor + reflected + refracted;
-
-    //for (int i = 0; i < m_lights.size(); i++) {
-    //    surfaceColor += c.GetRayObject().Lighting(c.GetPoint(), *m_lights[i], c.GetEye(), c.GetNormal());
-    //}
-    return surfaceColor;
+    return surfaceColor + reflected + refracted;
 }
 
 bool Scene::IsShadowed(Point const& point, Light const& light) {
@@ -193,7 +188,7 @@ bool Scene::IsShadowed(Point const& point, Light const& light) {
 }
 
 Color Scene::ReflectedColor(Computations const& c, int remaining) {
-    if (remaining == 0 || Utils::FE(c.GetRayObject().GetMaterial().GetReflectivity(), 0.0)) {
+    if (remaining < 1 || Utils::FE(c.GetRayObject().GetMaterial().GetReflectivity(), 0.0)) {
         return Color::black;
     }
 
@@ -205,7 +200,7 @@ Color Scene::RefractedColor(Computations const& c, int remaining) {
     // Check the material of the hit object and if the transparency is 0, return black.
     // Return calculated refracted value if it is transparent.
 
-    if (Utils::FE(c.GetRayObject().GetMaterial().GetTransparency(), 0.0) || remaining == 0) {
+    if (Utils::FE(c.GetRayObject().GetMaterial().GetTransparency(), 0.0) || remaining < 1) {
         return Color::black;
     }
 
@@ -229,7 +224,7 @@ Color Scene::RefractedColor(Computations const& c, int remaining) {
     return refractedColor;
 }
 
-double Scene::Schlick(Computations const& c)   // WARNING :Deal with fresnel effect but don't realy know what it does. (cf. Chapter11Test Test 16)
+double Scene::Schlick(Computations const& c)   // An approximation of the Fresnel effect by Christophe Schlick for fast calculs (cf. chapter 11).
 {
     double cosI = c.GetEye().Dot(c.GetNormal());
     if (c.GetN1() > c.GetN2())

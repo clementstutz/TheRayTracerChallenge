@@ -46,6 +46,6 @@ public:
 
 
 	// Member functions
-	static Computations Prepare(Intersection const& hit, Ray const& ray, std::vector<Intersection> const* xs = nullptr);
+	static Computations Prepare(Intersection const& hit, Ray const& ray, std::vector<Intersection> const* hits = nullptr);
 };
 

@@ -55,7 +55,7 @@ Intersection& Intersection::operator=(Intersection&& other) noexcept {
     return *this;
 }
 
-bool Intersection::operator==(Intersection const& other) {
+bool Intersection::operator==(Intersection const& other) const {
     return (m_rayObject == other.m_rayObject) && (m_length == other.m_length);
 }
 

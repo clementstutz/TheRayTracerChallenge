@@ -2,6 +2,7 @@
 #include "Utils.h"
 #include "Material.h"
 #include "RayObject.h"
+#include "Intersection.h"
 
 // Constructors
 Computations::Computations() :
@@ -50,7 +51,7 @@ const double Computations::GetN2() const { return m_n2; }
 
 
 // Member functions
-Computations Computations::Prepare(Intersection const& hit, Ray const& ray, std::vector<Intersection> const* xs) {
+Computations Computations::Prepare(Intersection const& hit, Ray const& ray, std::vector<Intersection> const* hits) {
     Computations c;
 
     if (hit.IsEmpty()) { return c; }
@@ -67,19 +68,17 @@ Computations Computations::Prepare(Intersection const& hit, Ray const& ray, std:
     c.m_overPoint = c.m_point + c.m_normal * Utils::GetEpsilon();
     c.m_underPoint = c.m_point - c.m_normal * Utils::GetEpsilon();
     c.m_reflectVector = Vector::Reflect(ray.getDirection(), c.m_normal);
-    c.m_n1 = RefractiveIndex::Vacuum;
-    c.m_n2 = RefractiveIndex::Vacuum;
 
     // Transparency Intersections algorithm
-    if (xs != nullptr) {
+    if (hits != nullptr) {
         std::vector<const RayObject*> container;
-        for (Intersection const& intersection : *xs) {
-            // Déterminer m_n1
-            if (&intersection == &hit) {
+        for (Intersection const& intersection : *hits) {
+            // Dï¿½terminer m_n1
+            if (intersection == hit) {
                 c.m_n1 = container.empty() ? RefractiveIndex::Vacuum : container.back()->GetMaterial().GetRefractiveIndex();
             }
 
-            // Mettre à jour container
+            // Mettre ï¿½ jour container
             const RayObject* obj = intersection.getObjPtr();
             auto it = std::find(container.begin(), container.end(), obj);
             if (it != container.end()) {
@@ -89,8 +88,8 @@ Computations Computations::Prepare(Intersection const& hit, Ray const& ray, std:
                 container.push_back(obj);
             }
 
-            // Déterminer m_n2
-            if (&intersection == &hit) {
+            // Dï¿½terminer m_n2
+            if (intersection == hit) {
                 c.m_n2 = container.empty() ? RefractiveIndex::Vacuum : container.back()->GetMaterial().GetRefractiveIndex();
                 break;
             }
