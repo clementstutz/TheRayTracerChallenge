@@ -18,6 +18,16 @@ add_executable(TheRayTracerChallenge_Tests
 	Scene_Test.cpp
 	Sphere_Test.cpp
 	Utils_Test.cpp
+	BlendPattern_Test.cpp
+	CheckersPattern_Test.cpp
+	Cube_Test.cpp
+	GradientPattern_Test.cpp
+	Pattern_Test.cpp
+	Plane_Test.cpp
+	RadialGradientPattern_Test.cpp
+	RingPattern_Test.cpp
+	SolidColorPattern_Test.cpp
+	StripePattern_Test.cpp
 )
 
 # Lier les bibliothèques nécessaires
