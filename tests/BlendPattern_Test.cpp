@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "BlendPattern.h"
 #include "SolidColorPattern.h"
-#include "StripePattern.h""
+#include "StripePattern.h"
 #include "Sphere.h"
 #include "Utils.h"
 
