@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "pch.h"
 #include "Vector.h"
 #include "Point.h"
@@ -281,7 +283,7 @@ TEST(VectorTests, reflect) {
 
 	// Reflecting a vector off a slanted surface
 	incoming = Vector(0, -1, 0);
-	normal = Vector(sqrt(2) / 2.0, sqrt(2) / 2.0, 0);
+	normal = Vector(std::sqrt(2) / 2.0, std::sqrt(2) / 2.0, 0);
 	result = Vector::Reflect(incoming, normal);
 	ref = Vector(1, 0, 0);
 	EXPECT_TRUE(ref == result);
