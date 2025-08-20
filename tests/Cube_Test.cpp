@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "pch.h"
 #include "Cube.h"
 #include "Ray.h"
@@ -232,5 +234,5 @@ TEST(CubeTests, get_normal) {
         Mat4::RotateXMatrix(Utils::GetPI() / 4.0));
     normal = cube.GetNormal(Point(0.5, 0.5, -1.5), Intersection());
     std::cout << normal << std::endl;
-    EXPECT_EQ(Vector(0.5, 0.5, sqrt(2) / 2.0), normal);
+    EXPECT_EQ(Vector(0.5, 0.5, std::sqrt(2) / 2.0), normal);
 }

@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "pch.h"
 #include "Computations.h"
 #include "Scene.h"

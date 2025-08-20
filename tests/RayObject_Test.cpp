@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "pch.h"
 #include "RayObject_for_Test.h"
 #include "Ray.h"
@@ -150,7 +152,7 @@ TEST(RayObject_for_TestTests, lighting) {
     EXPECT_EQ(Color(1.9, 1.9, 1.9), result);
 
     // Off angle lighting
-    eye = Vector(0, sqrt(2) / 2, -sqrt(2) / 2);
+    eye = Vector(0, std::sqrt(2) / 2, -std::sqrt(2) / 2);
     result = test.Lighting(p, light, eye, normal, false);
     EXPECT_EQ(Color(1, 1, 1), result);
 
@@ -161,7 +163,7 @@ TEST(RayObject_for_TestTests, lighting) {
     EXPECT_EQ(Color(0.736396, 0.736396, 0.736396), result);
 
     // Eye opposite refletion vector
-    eye = Vector(0, -sqrt(2) / 2, -sqrt(2) / 2);
+    eye = Vector(0, -std::sqrt(2) / 2, -std::sqrt(2) / 2);
     result = test.Lighting(p, light, eye, normal, false);
     EXPECT_EQ(Color(1.63639, 1.63639, 1.63639), result);
 

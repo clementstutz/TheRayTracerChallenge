@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "pch.h"
 #include "Sphere.h"
 #include "Ray.h"
@@ -159,9 +161,9 @@ TEST(SphereTests, get_normal) {
     normal = sphere.GetNormal(worldPoint, intersections[0]);
     EXPECT_EQ(normal, Vector(0, 0, 1));
 
-    worldPoint = Point(sqrt(3) / 3.0, sqrt(3) / 3.0, sqrt(3) / 3.0);
+    worldPoint = Point(std::sqrt(3) / 3.0, std::sqrt(3) / 3.0, std::sqrt(3) / 3.0);
     normal = sphere.GetNormal(worldPoint, intersections[0]);
-    EXPECT_EQ(normal, Vector(sqrt(3) / 3.0, sqrt(3) / 3.0, sqrt(3) / 3.0));
+    EXPECT_EQ(normal, Vector(std::sqrt(3) / 3.0, std::sqrt(3) / 3.0, std::sqrt(3) / 3.0));
 
     // Transformed sphere
     sphere.SetMatrix(Mat4::TranslateMatrix(0, 1, 0));
@@ -172,7 +174,7 @@ TEST(SphereTests, get_normal) {
 
     Sphere sphere_2;
     sphere_2.SetMatrix(Mat4::ScaleMatrix(1, 0.5, 1) * Mat4::RotateZMatrix(Utils::GetPI() / 5.0));
-    worldPoint = Point(0.0, sqrt(2) / 2.0, -sqrt(2) / 2.0);
+    worldPoint = Point(0.0, std::sqrt(2) / 2.0, -std::sqrt(2) / 2.0);
     normal = sphere_2.GetNormal(worldPoint, intersections[0]);
     EXPECT_EQ(normal, Vector(0, 0.9701425, -0.2425356));
 }

@@ -1,4 +1,5 @@
 #include<cmath>
+
 #include "pch.h"
 #include "Mat4.h"
 #include "Utils.h"
@@ -90,10 +91,10 @@ TEST(Mat4Tests, stream_output) {
     std::ostringstream output;
     output << mat;
 
-    // Chaîne attendue
+    // Chaï¿½ne attendue
     std::string expected = "[[1, 2, 3, 4], [5, 6, 7, 8], [9, 8, 7, 6], [5, 4, 3, 2]]";
 
-    // Vérifier si la sortie correspond
+    // Vï¿½rifier si la sortie correspond
     EXPECT_EQ(output.str(), expected);
 }
 
@@ -416,7 +417,7 @@ TEST(Mat4Tests, rotate_X_matrix) {
     // Rotate a point by pi/4
     Point pOrigine(0, 1, 0);
     Point pRotateX_half = halfQuarter * pOrigine;
-    Point ref1(0, sqrt(2) / 2.0, sqrt(2) / 2.0);
+    Point ref1(0, std::sqrt(2) / 2.0, std::sqrt(2) / 2.0);
     EXPECT_EQ(pRotateX_half, ref1);
     EXPECT_FLOAT_EQ(pRotateX_half.getX(), ref1.getX());
     EXPECT_FLOAT_EQ(pRotateX_half.getY(), ref1.getY());
@@ -442,7 +443,7 @@ TEST(Mat4Tests, rotate_X_matrix) {
     // Rotate a vector by pi/4
     Vector vOrigine(0, 1, 0);
     Vector vRotateX_half = halfQuarter * vOrigine;
-    Vector ref3(0, sqrt(2) / 2.0, sqrt(2) / 2.0);
+    Vector ref3(0, std::sqrt(2) / 2.0, std::sqrt(2) / 2.0);
     EXPECT_EQ(vRotateX_half, ref3);
     EXPECT_FLOAT_EQ(vRotateX_half.getX(), ref3.getX());
     EXPECT_FLOAT_EQ(vRotateX_half.getY(), ref3.getY());
@@ -480,7 +481,7 @@ TEST(Mat4Tests, rotate_Y_matrix) {
     // Rotate a point by pi/4
     Point pOrigine(0, 0, 1);
     Point pRotateY_half = halfQuarter * pOrigine;
-    Point ref1(sqrt(2) / 2.0, 0, sqrt(2) / 2.0);
+    Point ref1(std::sqrt(2) / 2.0, 0, std::sqrt(2) / 2.0);
     EXPECT_EQ(pRotateY_half, ref1);
     EXPECT_FLOAT_EQ(pRotateY_half.getX(), ref1.getX());
     EXPECT_FLOAT_EQ(pRotateY_half.getY(), ref1.getY());
@@ -506,7 +507,7 @@ TEST(Mat4Tests, rotate_Y_matrix) {
     // Rotate a vector by pi/4
     Vector vOrigine(0, 0, 1);
     Vector vRotateY_half = halfQuarter * vOrigine;
-    Vector ref3(sqrt(2) / 2.0, 0, sqrt(2) / 2.0);
+    Vector ref3(std::sqrt(2) / 2.0, 0, std::sqrt(2) / 2.0);
     EXPECT_EQ(vRotateY_half, ref3);
     EXPECT_FLOAT_EQ(vRotateY_half.getX(), ref3.getX());
     EXPECT_FLOAT_EQ(vRotateY_half.getY(), ref3.getY());
@@ -544,7 +545,7 @@ TEST(Mat4Tests, rotate_Z_matrix) {
     // Rotate a point by pi/4
     Point pOrigine(1, 0, 0);
     Point pRotateZ_half = halfQuarter * pOrigine;
-    Point ref1(sqrt(2) / 2.0, sqrt(2) / 2.0, 0);
+    Point ref1(std::sqrt(2) / 2.0, std::sqrt(2) / 2.0, 0);
     EXPECT_EQ(pRotateZ_half, ref1);
     EXPECT_FLOAT_EQ(pRotateZ_half.getX(), ref1.getX());
     EXPECT_FLOAT_EQ(pRotateZ_half.getY(), ref1.getY());
@@ -570,7 +571,7 @@ TEST(Mat4Tests, rotate_Z_matrix) {
     // Rotate a vector by pi/4
     Vector vOrigine(1, 0, 0);
     Vector vRotateZ_half = halfQuarter * vOrigine;
-    Vector ref3(sqrt(2) / 2.0, sqrt(2) / 2.0, 0);
+    Vector ref3(std::sqrt(2) / 2.0, std::sqrt(2) / 2.0, 0);
     EXPECT_EQ(vRotateZ_half, ref3);
     EXPECT_FLOAT_EQ(vRotateZ_half.getX(), ref3.getX());
     EXPECT_FLOAT_EQ(vRotateZ_half.getY(), ref3.getY());

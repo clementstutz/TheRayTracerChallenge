@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "pch.h"
 #include "Plane.h"
 #include "Ray.h"
@@ -172,13 +174,13 @@ TEST(PlaneTest, normalOfPlane) {
 
     Plane plane_2;
     plane_2.SetMatrix(Mat4::RotateZMatrix(Utils::GetPI() / 5.0));
-    worldPoint = Point(0.0, sqrt(2) / 2.0, -sqrt(2) / 2.0);
+    worldPoint = Point(0.0, std::sqrt(2) / 2.0, -std::sqrt(2) / 2.0);
     normal = plane_2.GetNormal(worldPoint, intersections[0]);
     EXPECT_EQ(normal, Vector(-sin(Utils::GetPI() / 5.0), cos(Utils::GetPI() / 5.0), 0));
 
     Plane plane_3;
     plane_3.SetMatrix(Mat4::ScaleMatrix(0.5, 1, 1) * Mat4::RotateZMatrix(Utils::GetPI() / 5.0));
-    worldPoint = Point(0.0, sqrt(2) / 2.0, -sqrt(2) / 2.0);
+    worldPoint = Point(0.0, std::sqrt(2) / 2.0, -std::sqrt(2) / 2.0);
     normal = plane_3.GetNormal(worldPoint, intersections[0]);
     EXPECT_EQ(normal, Vector(-sin(Utils::GetPI() / 5.0) * 2, cos(Utils::GetPI() / 5.0), 0).Normalize());
 }
@@ -201,7 +203,7 @@ TEST(PlaneTest, intersect) {
     ray = Ray(Point(0, 1, 0), Vector(0, -1, 1));
     intersections = plane.Intersect(ray);
     EXPECT_EQ(1, intersections.size());
-    EXPECT_FLOAT_EQ(sqrt(2), intersections[0].getLength());
+    EXPECT_FLOAT_EQ(std::sqrt(2), intersections[0].getLength());
     
     // Parallel
     ray = Ray(Point(1, 2, 3), Vector(0, 0, 1));

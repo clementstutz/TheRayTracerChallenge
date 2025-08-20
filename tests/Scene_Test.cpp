@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "pch.h"
 #include "Point.h"
 #include "Vector.h"
