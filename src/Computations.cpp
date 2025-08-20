@@ -1,3 +1,5 @@
+#include <algorithm>    //for std::find_if
+
 #include "Computations.h"
 #include "Utils.h"
 #include "Material.h"
@@ -80,7 +82,7 @@ Computations Computations::Prepare(Intersection const& hit, Ray const& ray, std:
 
             // Mettre � jour container
             const RayObject* obj = intersection.getObjPtr();
-            auto it = std::find(container.begin(), container.end(), obj);
+            auto it = std::find_if(container.begin(), container.end(), [&obj](const RayObject* ptr) {return ptr == obj;});  // ou : auto it = std::find(container.begin(), container.end(), obj);
             if (it != container.end()) {
                 container.erase(it);
             }

@@ -18,6 +18,17 @@ add_library(TheRayTracerChallenge
 	RayObject_for_Test.cpp
 	Scene.cpp
 	Sphere.cpp
+	BlendPattern.cpp
+	CheckersPattern.cpp
+	Cube.cpp
+	GradientPattern.cpp
+	Pattern_for_Test.cpp
+	Pattern.cpp
+	Plane.cpp
+	RadialGradientPattern.cpp
+	RingPattern.cpp
+	SolidColorPattern.cpp
+	StripePattern.cpp
 )
 
 # Inclure les fichiers d'en-tête (pour permettre aux autres projets de les voir)

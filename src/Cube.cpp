@@ -1,3 +1,5 @@
+#include <limits>  // for std::numeric_limits
+
 #include "Cube.h"
 #include "Utils.h"
 
@@ -12,16 +14,16 @@ Cube::Cube(Cube&& other) noexcept : RayObject(std::move(other)) {}
 // Member functions
 Cube& Cube::operator=(Cube const& other) {
     if (this != &other) {
-        RayObject::operator=(other); // Appelle l'opérateur d'affectation par copie de la classe mère
-        // Copiez ici des membres spécifiques à Cube si nécessaire
+        RayObject::operator=(other); // Appelle l'opï¿½rateur d'affectation par copie de la classe mï¿½re
+        // Copiez ici des membres spï¿½cifiques ï¿½ Cube si nï¿½cessaire
     }
     return *this;
 }
 
 Cube& Cube::operator=(Cube&& other) noexcept {
-    if (this != &other) { // Vérification d'auto-affectation
-        RayObject::operator=(std::move(other)); // Appelle l'opérateur d'affectation par déplacement de la classe mère
-        // Déplacez ici des membres spécifiques à Cube si nécessaire
+    if (this != &other) { // Vï¿½rification d'auto-affectation
+        RayObject::operator=(std::move(other)); // Appelle l'opï¿½rateur d'affectation par dï¿½placement de la classe mï¿½re
+        // Dï¿½placez ici des membres spï¿½cifiques ï¿½ Cube si nï¿½cessaire
     }
     return *this;
 }

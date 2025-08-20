@@ -1,3 +1,6 @@
+#include <cmath>
+#include <algorithm>  // Pour std::remove
+
 #include "Scene.h"
 #include "Computations.h"
 #include "Canvas.h"
@@ -22,7 +25,7 @@ Scene::Scene() :
 Scene::~Scene() {
     Scene::Clear();
     if (Scene::current == this) {
-        Scene::current = nullptr; // Réinitialise le pointeur si c'est l'instance active
+        Scene::current = nullptr; // Rï¿½initialise le pointeur si c'est l'instance active
     }
 }
 
@@ -56,7 +59,7 @@ void Scene::DefaultScene() {
 
 void Scene::ResetCurrentScene() {
     if (Scene::current) {
-        delete Scene::current; // Détruit l'instance existante
+        delete Scene::current; // Dï¿½truit l'instance existante
         Scene::current = nullptr;
     }
 }
@@ -75,18 +78,18 @@ void Scene::Clear() {
 }
 
 void Scene::RemoveLight(Light const& light) {
-    // Utilise std::remove pour déplacer les pointeurs non égaux à &light vers le début
+    // Utilise std::remove pour dï¿½placer les pointeurs non ï¿½gaux ï¿½ &light vers le dï¿½but
     auto it = std::remove(m_lights.begin(), m_lights.end(), &light);
 
-    // Supprime les éléments "supprimés" de la fin du vecteur
+    // Supprime les ï¿½lï¿½ments "supprimï¿½s" de la fin du vecteur
     m_lights.erase(it, m_lights.end());
 }
 
 void Scene::RemoveRayObject(RayObject const& rayObject) {
-    // Utilise std::remove pour déplacer les pointeurs non égaux à &rayObject vers le début
+    // Utilise std::remove pour dï¿½placer les pointeurs non ï¿½gaux ï¿½ &rayObject vers le dï¿½but
     auto it = std::remove(m_rayObjects.begin(), m_rayObjects.end(), &rayObject);
 
-    // Supprime les éléments "supprimés" de la fin du vecteur
+    // Supprime les ï¿½lï¿½ments "supprimï¿½s" de la fin du vecteur
     m_rayObjects.erase(it, m_rayObjects.end());
 }
 
@@ -101,7 +104,7 @@ void Scene::AddRayObject(RayObject& rayObject) {
 std::vector<Intersection> Scene::Intersections(Ray const& ray) {
     std::vector<Intersection> intersections;
     for (RayObject* rObj : m_rayObjects) {
-        if (rObj != nullptr) {  // Vérifie que le pointeur n'est pas nul
+        if (rObj != nullptr) {  // Vï¿½rifie que le pointeur n'est pas nul
             std::vector<Intersection> tempList = rObj->Intersect(ray);
             intersections.insert(intersections.end(), tempList.begin(), tempList.end()); //
         }
@@ -109,9 +112,9 @@ std::vector<Intersection> Scene::Intersections(Ray const& ray) {
     return Intersection::SortIntersections(intersections);
 }
 
-Intersection Scene::Hit(std::vector<Intersection> const& intersections) {  // WARNING : a déplacer dans Intersection ?
+Intersection Scene::Hit(std::vector<Intersection> const& intersections) {  // WARNING : a dï¿½placer dans Intersection ?
     if (intersections.empty()) {
-        return Intersection(); // Retourne un objet par défaut ou un indicateur d'absence
+        return Intersection(); // Retourne un objet par dï¿½faut ou un indicateur d'absence
     }
 
     for (int i = 0; i < intersections.size(); i++) {
@@ -119,7 +122,7 @@ Intersection Scene::Hit(std::vector<Intersection> const& intersections) {  // WA
             return intersections[i];
         }
     }
-    return Intersection(); // Aucune intersection valide trouvée
+    return Intersection(); // Aucune intersection valide trouvï¿½e
 }
 
 Ray Scene::RayForPixel(Camera const& camera, int x, int y) {
@@ -259,7 +262,7 @@ Canvas Scene::Render(Camera const& camera, int remaining) {
             Color pixelColor = ColorAt(temp, remaining);
             canvas.setPixel(x, y, pixelColor);
         }
-        // affiche le pourcentage de progression de la génération de l'image
+        // affiche le pourcentage de progression de la gï¿½nï¿½ration de l'image
         std::cout << "y progression = " << ((static_cast<double>(y) + 1.0) / static_cast<double>(camera.GetVSize()) * 100) << "%" << std::endl;
     }
     std::cout << "Rendering done !" << std::endl;

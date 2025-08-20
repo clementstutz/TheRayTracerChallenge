@@ -3,7 +3,7 @@
 
 #include "Mat4.h"
 #include "Utils.h"
-#include "Mat2.h"
+//#include "Mat2.h"
 
 // Constructors
 Mat4::Mat4(double m00, double m01, double m02, double m03,
@@ -74,7 +74,7 @@ Mat4::Mat4(Mat4&& other) noexcept {
 	m_mat[3][2] = std::move(other.m_mat[3][2]);
 	m_mat[3][3] = std::move(other.m_mat[3][3]);
 
-	// Reset source object pour éviter des doublons
+	// Reset source object pour ï¿½viter des doublons
 	other = Mat4();
 }
 
@@ -282,7 +282,7 @@ Mat4& Mat4::operator*=(Mat4 const& other) {
     return *this;
 
 	//Strassen algorithm
-	// Décomposition en sous-matrices 2x2
+	// Dï¿½composition en sous-matrices 2x2
 	//Mat2 a1(m_mat[0][0], m_mat[0][1], m_mat[1][0], m_mat[1][1]);
 	//Mat2 a2(m_mat[0][2], m_mat[0][3], m_mat[1][2], m_mat[1][3]);
 	//Mat2 a3(m_mat[2][0], m_mat[2][1], m_mat[3][0], m_mat[3][1]);
@@ -302,13 +302,13 @@ Mat4& Mat4::operator*=(Mat4 const& other) {
 	//Mat2 p6 = (a3 - a1) * (b1 + b2);	// P6 = (A3 - A1)(B1 + B2)
 	//Mat2 p7 = (a2 - a4) * (b3 + b4);	// P7 = (A2 - A4)(B3 + B4)
 
-	//// Calcul des sous-blocs de la matrice résultat
+	//// Calcul des sous-blocs de la matrice rï¿½sultat
 	//Mat2 c1 = p1 + p4 - p5 + p7;        // C1 = P1 + P4 - P5 + P7
 	//Mat2 c2 = p3 + p5;                  // C2 = P3 + P5
 	//Mat2 c3 = p2 + p4;                  // C3 = P2 + P4
 	//Mat2 c4 = p1 - p2 + p3 + p6;        // C4 = P1 - P2 + P3 + P6
 
-	//// Reconstruction de la matrice 4x4 à partir des sous-matrices
+	//// Reconstruction de la matrice 4x4 ï¿½ partir des sous-matrices
 	//m_mat[0][0] = c1[0][0]; m_mat[0][1] = c1[0][1];
 	//m_mat[0][2] = c2[0][0]; m_mat[0][3] = c2[0][1];
 
@@ -330,12 +330,12 @@ std::ostream& operator<<(std::ostream& flux, const Mat4& mat) {
 }
 
 void Mat4::afficher(std::ostream& flux) const {
-	//flux << std::fixed << std::setprecision(2); // Fixer l'affichage des floats avec 2 chiffres après la virgule
+	//flux << std::fixed << std::setprecision(2); // Fixer l'affichage des floats avec 2 chiffres aprï¿½s la virgule
 	flux << "[[" << m_mat[0][0] << ", " << m_mat[0][1] << ", " << m_mat[0][2] << ", " << m_mat[0][3] << "], "
 		<< "[" << m_mat[1][0] << ", " << m_mat[1][1] << ", " << m_mat[1][2] << ", " << m_mat[1][3] << "], "
 		<< "[" << m_mat[2][0] << ", " << m_mat[2][1] << ", " << m_mat[2][2] << ", " << m_mat[2][3] << "], "
 		<< "[" << m_mat[3][0] << ", " << m_mat[3][1] << ", " << m_mat[3][2] << ", " << m_mat[3][3] << "]]";
-	//flux << std::defaultfloat; // Restaurer le formatage par défaut après l'affichage
+	//flux << std::defaultfloat; // Restaurer le formatage par dï¿½faut aprï¿½s l'affichage
 }
 
 Mat4& Mat4::transpose() {
@@ -380,7 +380,7 @@ Mat4& Mat4::invert() {
 	double invDet = 1.0;
 	invDet = 1.0 / det;
 
-	// Pré-calcul des termes communs pour les mineurs
+	// Prï¿½-calcul des termes communs pour les mineurs
 	double minor0 = m_mat[2][2] * m_mat[3][3] - m_mat[2][3] * m_mat[3][2];
 	double minor1 = m_mat[2][1] * m_mat[3][3] - m_mat[2][3] * m_mat[3][1];
 	double minor2 = m_mat[2][1] * m_mat[3][2] - m_mat[2][2] * m_mat[3][1];
@@ -423,7 +423,7 @@ Mat4& Mat4::invert() {
 	double a32 = -(m_mat[0][0] * minor13 - m_mat[0][1] * minor15 + m_mat[0][3] * minor17) * invDet;
 	double a33 =  (m_mat[0][0] * minor14 - m_mat[0][1] * minor16 + m_mat[0][2] * minor17) * invDet;
 
-	// Mise à jour de la matrice
+	// Mise ï¿½ jour de la matrice
 	m_mat[0][0] = a00; m_mat[0][1] = a10; m_mat[0][2] = a20; m_mat[0][3] = a30;
 	m_mat[1][0] = a01; m_mat[1][1] = a11; m_mat[1][2] = a21; m_mat[1][3] = a31;
 	m_mat[2][0] = a02; m_mat[2][1] = a12; m_mat[2][2] = a22; m_mat[2][3] = a32;
@@ -522,7 +522,7 @@ Mat4& Mat4::Scale(Vector v) {
 }
 
 Mat4 Mat4::RotateMatrix(double x, double y, double z) {
-	// Ces rotations sont par rapport au repere globale qui rest inchangé par les rotations!!
+	// Ces rotations sont par rapport au repere globale qui rest inchangï¿½ par les rotations!!
 	// on tourne dabord au tour de X, puis de Y puis de Z !!
 	Mat4 tempX = Mat4::RotateXMatrix(x);
 	Mat4 tempY = Mat4::RotateYMatrix(y);

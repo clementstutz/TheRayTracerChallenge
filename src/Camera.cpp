@@ -1,3 +1,5 @@
+#include <cmath>  // for std::tan and std::isnan
+
 #include "Camera.h"
 
 // Constructors

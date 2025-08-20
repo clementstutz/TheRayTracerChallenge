@@ -1,4 +1,6 @@
 #pragma once
+#include <memory>	//for std::shared_ptr
+
 #include "Point.h"
 #include "Mat4.h"
 #include "Color.h"

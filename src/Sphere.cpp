@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "Sphere.h"
 #include "Point.h"
 #include "Vector.h"
@@ -13,16 +15,16 @@ Sphere::Sphere(Sphere&& other) noexcept : RayObject(std::move(other)) {}
 // Member functions
 Sphere& Sphere::operator=(Sphere const& other) {
     if (this != &other) {
-        RayObject::operator=(other); // Appelle l'opérateur d'affectation par copie de la classe mère
-        // Copiez ici des membres spécifiques à Sphere si nécessaire
+        RayObject::operator=(other); // Appelle l'opï¿½rateur d'affectation par copie de la classe mï¿½re
+        // Copiez ici des membres spï¿½cifiques ï¿½ Sphere si nï¿½cessaire
     }
     return *this;
 }
 
 Sphere& Sphere::operator=(Sphere&& other) noexcept {
-    if (this != &other) { // Vérification d'auto-affectation
-        RayObject::operator=(std::move(other)); // Appelle l'opérateur d'affectation par déplacement de la classe mère
-        // Déplacez ici des membres spécifiques à Sphere si nécessaire
+    if (this != &other) { // Vï¿½rification d'auto-affectation
+        RayObject::operator=(std::move(other)); // Appelle l'opï¿½rateur d'affectation par dï¿½placement de la classe mï¿½re
+        // Dï¿½placez ici des membres spï¿½cifiques ï¿½ Sphere si nï¿½cessaire
     }
     return *this;
 }
@@ -42,18 +44,18 @@ std::vector<Intersection> Sphere::Intersect(Ray const& ray) {
 	Ray transRay = RayToObjectSpace(ray);
 
     Vector sphereToRay = (transRay.getOrigin() - Point());
-    double a = transRay.getDirection().Dot(transRay.getDirection());   //Should always be 1.0 NOTE: normaliser la direction pour éviter ce calcult et les erreur d'arondie!
+    double a = transRay.getDirection().Dot(transRay.getDirection());   //Should always be 1.0 NOTE: normaliser la direction pour ï¿½viter ce calcult et les erreur d'arondie!
     double b = 2.0 * transRay.getDirection().Dot(sphereToRay);
     double c = sphereToRay.Dot(sphereToRay) - 1.0;
     double discriminant = b * b - 4.0 * a * c;
     if (discriminant < 0)   // Miss.
-        return intersectionPoints; //NOTE: pour optimiser on peut peut-être essayer de ne pas renvoyer de liste vide comme c'est le cas ici...
+        return intersectionPoints; //NOTE: pour optimiser on peut peut-ï¿½tre essayer de ne pas renvoyer de liste vide comme c'est le cas ici...
 
-    double t1 = (-b - sqrt(discriminant)) / (2.0 * a);
-    double t2 = (-b + sqrt(discriminant)) / (2.0 * a);
+    double t1 = (-b - std::sqrt(discriminant)) / (2.0 * a);
+    double t2 = (-b + std::sqrt(discriminant)) / (2.0 * a);
 
     // NOTE: pour optimiser encore on pourrait regarder le signe de t1 et t2 et ne renvoyer que les valeur positiver
-    // les valeurs négatives sont des intersection qui on lieu derrière la camera (normalement...)
+    // les valeurs nï¿½gatives sont des intersection qui on lieu derriï¿½re la camera (normalement...)
     intersectionPoints.push_back(Intersection(*this, t1));
     intersectionPoints.push_back(Intersection(*this, t2));
 

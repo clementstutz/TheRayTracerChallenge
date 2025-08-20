@@ -1,5 +1,4 @@
 #pragma once
-#include <memory> // Pour std::shared_ptr
 
 #include "Pattern.h"
 

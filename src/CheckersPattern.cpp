@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "CheckersPattern.h"
 #include "SolidColorPattern.h"
 #include "Utils.h"
@@ -22,7 +24,7 @@ CheckersPattern::CheckersPattern(CheckersPattern&& other) noexcept :
 	Pattern(std::move(other)),
 	m_patternA(std::move(other.m_patternA)),
 	m_patternB(std::move(other.m_patternB)) {
-	// Reset source object pour éviter des doublons
+	// Reset source object pour ï¿½viter des doublons
 	other.m_patternA = std::make_shared<SolidColorPattern>(Color::white);
 	other.m_patternB = std::make_shared<SolidColorPattern>(Color::black);
 }
@@ -30,7 +32,7 @@ CheckersPattern::CheckersPattern(CheckersPattern&& other) noexcept :
 
 // Member functions
 bool CheckersPattern::equals(Pattern const& other) const {
-	// Cast sécurisé car operator== vérifie déjà le type
+	// Cast sï¿½curisï¿½ car operator== vï¿½rifie dï¿½jï¿½ le type
 	auto& typedOther = static_cast<const CheckersPattern&>(other);
 	return Pattern::equals(other) &&
 		*m_patternA == *typedOther.m_patternA &&
