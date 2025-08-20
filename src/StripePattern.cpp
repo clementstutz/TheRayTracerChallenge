@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "StripePattern.h"
 #include "SolidColorPattern.h"
 #include "Utils.h"

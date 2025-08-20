@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <memory>
+
 #include "Ray.h"
 #include "Light.h"
 #include "RayObject.h"
@@ -36,7 +36,7 @@ public:
 	// Member functions
 	friend std::ostream& operator<<(std::ostream& flux, Scene const& scene);
 	void DefaultScene();
-	static void ResetCurrentScene(); // Détruit l'ancienne instance
+	static void ResetCurrentScene(); // Dï¿½truit l'ancienne instance
 	void ClearLights();
 	void ClearRayObjects();
 	void Clear();
@@ -55,4 +55,3 @@ public:
 	double Schlick(Computations const& c);
 	Canvas Render(Camera const& camera, int remaining = 1);
 };
-
