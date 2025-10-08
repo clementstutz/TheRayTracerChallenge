@@ -18,7 +18,7 @@ TEST(PlaneTest, constructor_default) {
     EXPECT_EQ(plane.CanReceiveShadows(), true);
     EXPECT_EQ(plane.CanCastShadows(), true);
     EXPECT_EQ(plane.GetNormal(Point(0, 0, 0), Intersection()), Vector(0, 1, 0));
-    
+
 }
 
 TEST(PlaneTest, constructor_copy) {
@@ -200,11 +200,11 @@ TEST(PlaneTest, intersect) {
     EXPECT_FLOAT_EQ(2.0, intersections[0].getLength());
 
     // At an angle
-    ray = Ray(Point(0, 1, 0), Vector(0, -1, 1));
+    ray = Ray(Point(0, 1, 0), Vector(0, -1, 1).Normalize());
     intersections = plane.Intersect(ray);
     EXPECT_EQ(1, intersections.size());
     EXPECT_FLOAT_EQ(std::sqrt(2), intersections[0].getLength());
-    
+
     // Parallel
     ray = Ray(Point(1, 2, 3), Vector(0, 0, 1));
     intersections = plane.Intersect(ray);
@@ -216,15 +216,14 @@ TEST(PlaneTest, intersect) {
     EXPECT_EQ(0, intersections.size());
 
     // On the plane
-    ray = Ray(Point(0, 0, 0), Vector(0, -1, 1));
+    ray = Ray(Point(0, 0, 0), Vector(0, -1, 1).Normalize());
     intersections = plane.Intersect(ray);
     EXPECT_EQ(1, intersections.size());
     EXPECT_FLOAT_EQ(0, intersections[0].getLength());
 
     // Behind
-    ray = Ray(Point(0, 0, 0), Vector(0, 1, 1));
+    ray = Ray(Point(0, 0, 0), Vector(0, 1, 1).Normalize());
     intersections = plane.Intersect(ray);
     EXPECT_EQ(1, intersections.size());
     EXPECT_FLOAT_EQ(0, intersections[0].getLength());
 }
-
