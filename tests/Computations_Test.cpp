@@ -148,7 +148,7 @@ TEST(ComputationsTests, AvoidInfinitRecursion) {
     Color color_upper(plane_upper.GetMaterial().GetColor() * factor_upper);
     double factor_lower = plane_lower.GetMaterial().GetAmbient() + plane_lower.GetMaterial().GetDiffuse() + plane_lower.GetMaterial().GetSpecular();
     Color color_lower(plane_lower.GetMaterial().GetColor() * factor_lower);
-    
+
     int recursion = 1;
     Color color_ref = color_upper * ((recursion + 2) / 2) + color_upper * ((recursion + 1) / 2);
     Color color = scene.ColorAt(ray, recursion);
@@ -206,7 +206,7 @@ TEST(ComputationsTests, NIntersections) {
     Ray ray(Point(0, 0, -4), Vector(0, 0, 1));
 
     std::vector<Intersection> i = scene.Intersections(ray);
-    
+
     Computations comp = Computations::Prepare(i[0], ray, &i);
     EXPECT_FLOAT_EQ(1.0, comp.GetN1());
     EXPECT_FLOAT_EQ(1.5, comp.GetN2());

@@ -189,7 +189,7 @@ TEST(VectorTests, scalar_multiplication) {
 	EXPECT_FLOAT_EQ(v1.getY(), ref1.getY());
 	EXPECT_FLOAT_EQ(v1.getZ(), ref1.getZ());
 	EXPECT_FLOAT_EQ(v1.getW(), 0.0);
-	
+
 	v2 *= s2;
 	EXPECT_EQ(typeid(v2).name(), typeid(Vector).name());
 	EXPECT_TRUE(v2 == ref2);

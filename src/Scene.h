@@ -30,7 +30,7 @@ public:
 	//Accessors
 	static Scene* GetCurrentScene(); // Renvoie l'instance actuelle
 	std::vector<Light*> GetLights();
-	std::vector<RayObject*> GetRayObjects();	
+	std::vector<RayObject*> GetRayObjects();
 
 
 	// Member functions

@@ -226,7 +226,7 @@ TEST(BlendPatternTests, integration) {
     EXPECT_EQ(c6, Color(0.5, 0.5, 1));
     EXPECT_EQ(c7, Color(1, 0.5, 0.5));
     EXPECT_EQ(c8, Color(0.5, 0.5, 0));
-    
+
 }
 
 TEST(BlendPatternTests, transformation) {

@@ -3,7 +3,7 @@
 #include "Camera.h"
 
 // Constructors
-Camera::Camera(int hSize, int vSize, double fieldOfView) : 
+Camera::Camera(int hSize, int vSize, double fieldOfView) :
     m_hSize(hSize),
     m_vSize(vSize),
     m_fov(fieldOfView),

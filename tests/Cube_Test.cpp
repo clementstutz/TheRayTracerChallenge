@@ -110,7 +110,7 @@ TEST(CubeTests, intersect) {
     Cube cube;
 
     // Form the right
-    Ray ray(Point(5, 0.5, 0), Vector(-1, 0, 0));    
+    Ray ray(Point(5, 0.5, 0), Vector(-1, 0, 0));
     std::vector<Intersection> intersections = cube.Intersect(ray);
     EXPECT_EQ(2, intersections.size());
     EXPECT_FLOAT_EQ(4.0, intersections[0].getLength());

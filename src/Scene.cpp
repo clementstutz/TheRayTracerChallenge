@@ -247,7 +247,7 @@ double Scene::Schlick(Computations const& c)   // An approximation of the Fresne
 
 Canvas Scene::Render(Camera const& camera, int remaining) {
     Canvas canvas(camera.GetHSize(), camera.GetVSize());
-    
+
     if (m_lights.size() == 0) {
         std::cout << "No lights in scene, this will always produce a black image." << std::endl;
         return canvas;

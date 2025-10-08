@@ -412,7 +412,7 @@ TEST(Mat4Tests, rotate_X_matrix) {
     EXPECT_FLOAT_EQ(fullQuarter[1][2], -sin(Utils::GetPI() / 2.0));
     EXPECT_FLOAT_EQ(fullQuarter[2][1], sin(Utils::GetPI() / 2.0));
     EXPECT_FLOAT_EQ(fullQuarter[2][2], cos(Utils::GetPI() / 2.0));
-    
+
     // Points
     // Rotate a point by pi/4
     Point pOrigine(0, 1, 0);
@@ -757,10 +757,10 @@ TEST(Mat4Tests, chaining_transforms_1) {
 TEST(Mat4Tests, chaining_transforms_2) {
     Mat4 mat;
     mat = Mat4::TranslateMatrix(1.5, 0.5, -0.5) * Mat4::ScaleMatrix(0.5, 0.5, 0.5);
-    Mat4 ref(0.5, 0, 0, 1.5, 
+    Mat4 ref(0.5, 0, 0, 1.5,
         0, 0.5, 0, 0.5,
         0, 0, 0.5, -0.5,
         0, 0, 0, 1);
-    
+
     EXPECT_EQ(ref, mat);
 }
