@@ -29,7 +29,7 @@ add_executable(TheRayTracerChallenge_Tests
 	SolidColorPattern_Test.cpp
 	StripePattern_Test.cpp
 	Cone_Test.cpp
-	Cylinder_test.cpp
+	Cylinder_Test.cpp
 )
 
 # Lier les bibliothèques nécessaires
