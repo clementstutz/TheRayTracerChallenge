@@ -244,29 +244,42 @@ TEST(ConeTests, intersect) {
 }
 
 TEST(ConeTests, get_normal) {
-    Cone cone;
+    Cone cone_open;
+    Cone cone_close(-1, 1, true);
 
     // Untransformed cone
-    Vector normal = cone.GetNormal(Point(0, 0, 0), Intersection());
+    Vector normal = cone_open.GetNormal(Point(0, 0, 0), Intersection());
     //EXPECT_EQ(Vector(0, 0, 0), normal);
 
-    normal = cone.GetNormal(Point(1, 1, 1), Intersection());
-    EXPECT_EQ(Vector(1, -std::sqrt(2), 1).Normalize(), normal);
+    normal = cone_open.GetNormal(Point(1, 1, 0), Intersection());
+    EXPECT_EQ(Vector(1, -1, 0).Normalize(), normal);
 
-    normal = cone.GetNormal(Point(-1, -1, 0), Intersection());
+    normal = cone_open.GetNormal(Point(-1, -1, 0), Intersection());
     EXPECT_EQ(Vector(-1, 1, 0).Normalize(), normal);
 
-    normal = cone.GetNormal(Point(-1, -1, -1), Intersection());
+    normal = cone_open.GetNormal(Point(1, 1, 1), Intersection());
+    EXPECT_EQ(Vector(1, -std::sqrt(2), 1).Normalize(), normal);
+
+    normal = cone_open.GetNormal(Point(-1, -1, -1), Intersection());
     EXPECT_EQ(Vector(-1, std::sqrt(2), -1).Normalize(), normal);
 
+    normal = cone_close.GetNormal(Point(0.5, 1, 0.2), Intersection());
+    EXPECT_EQ(Vector(0, 1, 0).Normalize(), normal);
+
+    normal = cone_close.GetNormal(Point(0.5, 2, 0.2), Intersection());
+    EXPECT_EQ(Vector(0, 1, 0).Normalize(), normal);
+
+    normal = cone_close.GetNormal(Point(0.5, -1, 0.2), Intersection());
+    EXPECT_EQ(Vector(0, -1, 0).Normalize(), normal);
+
     // Transformed cone
-    cone.SetMatrix(Mat4::TranslateMatrix(0, 1, 0) *
+    cone_open.SetMatrix(Mat4::TranslateMatrix(0, 1, 0) *
         Mat4::RotateZMatrix(Utils::GetPI() / 4.0));
-    normal = cone.GetNormal(Point(-0.5, 0, 0), Intersection());
+    normal = cone_open.GetNormal(Point(-0.5, 0, 0), Intersection());
     EXPECT_EQ(Vector(-1, 0, 0), normal);
 
-    cone.SetMatrix(Mat4::TranslateMatrix(0, 1, 0) *
+    cone_open.SetMatrix(Mat4::TranslateMatrix(0, 1, 0) *
         Mat4::RotateZMatrix(Utils::GetPI() / 4.0));
-    normal = cone.GetNormal(Point(-0.5, 1, 0), Intersection());
+    normal = cone_open.GetNormal(Point(-0.5, 1, 0), Intersection());
     EXPECT_EQ(Vector(0, -1, 0), normal);
 }
