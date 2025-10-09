@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "pch.h"
 #include "Cylinder.h"
 #include "Ray.h"
@@ -185,7 +187,7 @@ TEST(CylinderTests, intersect) {
     EXPECT_FLOAT_EQ(6.80798, intersections[0].getLength());
     EXPECT_FLOAT_EQ(7.0887237, intersections[1].getLength());
 
-    ray = Ray(Point(2, 0, -2), Vector(-1, 0, 1).Normalize());   // TODO : Why do I NEED to normalize to make it works ?
+    ray = Ray(Point(2, 0, -2), Vector(-1, 0, 1).Normalize());
     intersections = cylinder_open.Intersect(ray);
     EXPECT_EQ(2, intersections.size());
     EXPECT_FLOAT_EQ(2.0 * std::sqrt(2) - 1, intersections[0].getLength());
