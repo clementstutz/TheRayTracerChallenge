@@ -113,6 +113,8 @@ std::vector<Intersection> Cylinder::Intersect(Ray const& ray) {
 
     IntersectCaps(transRay, hits); // ref hits
 
+    Intersection::SortIntersections(hits);
+
     return hits;
 }
 
