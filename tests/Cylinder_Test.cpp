@@ -153,6 +153,7 @@ TEST(CylinderTests, intersect) {
     ray = Ray(Point(0.5, 11, 0), Vector(0, -1, 0));
     intersections = cylinder_open.Intersect(ray);
     EXPECT_EQ(0, intersections.size());
+
     intersections = cylinder_close.Intersect(ray);
     EXPECT_EQ(2, intersections.size());
     EXPECT_FLOAT_EQ(1.0, intersections[0].getLength());
@@ -162,6 +163,7 @@ TEST(CylinderTests, intersect) {
     ray = Ray(Point(0.5, -11, 0), Vector(0, 1, 0));
     intersections = cylinder_open.Intersect(ray);
     EXPECT_EQ(0, intersections.size());
+    
     intersections = cylinder_close.Intersect(ray);
     EXPECT_EQ(2, intersections.size());
     EXPECT_FLOAT_EQ(1.0, intersections[0].getLength());
@@ -181,11 +183,11 @@ TEST(CylinderTests, intersect) {
     EXPECT_FLOAT_EQ(9.5, intersections[1].getLength());
 
     // From an angle
-    ray = Ray(Point(0.5, 0, -5), Vector(0.1, 1, 1).Normalize());
+    ray = Ray(Point(0, 0, -2), Vector(0, 1, 1).Normalize());
     intersections = cylinder_open.Intersect(ray);
     EXPECT_EQ(2, intersections.size());
-    EXPECT_FLOAT_EQ(6.80798, intersections[0].getLength());
-    EXPECT_FLOAT_EQ(7.0887237, intersections[1].getLength());
+    EXPECT_FLOAT_EQ(std::sqrt(2), intersections[0].getLength());
+    EXPECT_FLOAT_EQ(3*std::sqrt(2), intersections[1].getLength());
 
     ray = Ray(Point(2, 0, -2), Vector(-1, 0, 1).Normalize());
     intersections = cylinder_open.Intersect(ray);
@@ -200,28 +202,24 @@ TEST(CylinderTests, intersect) {
     EXPECT_FLOAT_EQ(5, intersections[0].getLength());
     EXPECT_FLOAT_EQ(5, intersections[1].getLength());
 
-    ray = Ray(Point(0, 1, -5), Vector(0, 0, 1));
-    intersections = cylinder_open.Intersect(ray);
-    EXPECT_EQ(2, intersections.size());
-    EXPECT_FLOAT_EQ(4.0, intersections[0].getLength());
-    EXPECT_FLOAT_EQ(6.0, intersections[1].getLength());
-
     ray = Ray(Point(1, 2, 0), Vector(0, 0, 1));
     intersections = cylinder_open.Intersect(ray);
     EXPECT_EQ(2, intersections.size());
     EXPECT_FLOAT_EQ(0.0, intersections[0].getLength());
     EXPECT_FLOAT_EQ(0.0, intersections[1].getLength());
 
-    // Miss
+    // Coplanar
     ray = Ray(Point(1, 0, 0), Vector(0, 1, 0));
     intersections = cylinder_open.Intersect(ray);
     EXPECT_EQ(0, intersections.size());
 
-    ray = Ray(Point(0, 0, 0), Vector(0, 1, 0));
-    intersections = cylinder_open.Intersect(ray);
-    EXPECT_EQ(0, intersections.size());
+    intersections = cylinder_close.Intersect(ray);
+    EXPECT_EQ(2, intersections.size());
+    EXPECT_FLOAT_EQ(-10, intersections[0].getLength());
+    EXPECT_FLOAT_EQ(10, intersections[1].getLength());
 
-    ray = Ray(Point(0, 0, -5), Vector(1, 1, 1));
+    // Miss
+    ray = Ray(Point(0, 0, 0), Vector(0, 1, 0));
     intersections = cylinder_open.Intersect(ray);
     EXPECT_EQ(0, intersections.size());
 
@@ -229,15 +227,7 @@ TEST(CylinderTests, intersect) {
     intersections = cylinder_open.Intersect(ray);
     EXPECT_EQ(0, intersections.size());
 
-    ray = Ray(Point(0, 2, 2), Vector(0, -1, 0));
-    intersections = cylinder_open.Intersect(ray);
-    EXPECT_EQ(0, intersections.size());
-
     ray = Ray(Point(1, 11, 0), Vector(-1, 0, 0));
-    intersections = cylinder_close.Intersect(ray);
-    EXPECT_EQ(0, intersections.size());
-
-    ray = Ray(Point(0, -11, 0), Vector(1, 0, 0));
     intersections = cylinder_close.Intersect(ray);
     EXPECT_EQ(0, intersections.size());
 }

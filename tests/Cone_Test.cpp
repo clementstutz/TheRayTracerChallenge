@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "pch.h"
 #include "Cone.h"
 #include "Ray.h"
@@ -117,6 +119,8 @@ TEST(ConeTests, transformations) {
 
 TEST(ConeTests, intersect) {
     Cone cone;
+    Cone cone_open(-5, 5);
+    Cone cone_close(-5, 5, true);
 
     Ray ray(Point(0, 0, -5), Vector(0, 0, 1));
     std::vector<Intersection> intersections = cone.Intersect(ray);
@@ -137,89 +141,106 @@ TEST(ConeTests, intersect) {
     EXPECT_FLOAT_EQ(49.44994, intersections[1].getLength());
 
     // Form the right
-    /*Ray ray(Point(5, 0.5, 0), Vector(-1, 0, 0));
-    std::vector<Intersection> intersections = cone.Intersect(ray);
+    ray = Ray(Point(5, 0.5, 0), Vector(-1, 0, 0));
+    intersections = cone.Intersect(ray);
     EXPECT_EQ(2, intersections.size());
-    EXPECT_FLOAT_EQ(4.8660254037, intersections[0].getLength());
-    EXPECT_FLOAT_EQ(6.1339745963, intersections[1].getLength());*/
+    EXPECT_FLOAT_EQ(4.5, intersections[0].getLength());
+    EXPECT_FLOAT_EQ(5.5, intersections[1].getLength());
 
-    //// Form the left
-    //ray = Ray(Point(-5, 0.5, 0), Vector(1, 0, 0));
-    //intersections = cone.Intersect(ray);
-    //EXPECT_EQ(2, intersections.size());
-    //EXPECT_FLOAT_EQ(4.0, intersections[0].getLength());
-    //EXPECT_FLOAT_EQ(6.0, intersections[1].getLength());
+    // Form the left
+    ray = Ray(Point(-5, 0.5, 0), Vector(1, 0, 0));
+    intersections = cone.Intersect(ray);
+    EXPECT_EQ(2, intersections.size());
+    EXPECT_FLOAT_EQ(4.5, intersections[0].getLength());
+    EXPECT_FLOAT_EQ(5.5, intersections[1].getLength());
 
-    //// Form the top
-    //ray = Ray(Point(0.5, 5, 0), Vector(0, -1, 0));
-    //intersections = cone.Intersect(ray);
-    //EXPECT_EQ(2, intersections.size());
-    //EXPECT_FLOAT_EQ(4.0, intersections[0].getLength());
-    //EXPECT_FLOAT_EQ(6.0, intersections[1].getLength());
+    // Form the top
+    ray = Ray(Point(10, 11, 0), Vector(0, -1, 0));
+    intersections = cone.Intersect(ray);
+    EXPECT_EQ(2, intersections.size());
+    EXPECT_FLOAT_EQ(1, intersections[0].getLength());
+    EXPECT_FLOAT_EQ(21, intersections[1].getLength());
 
-    //// Form the bottom
-    //ray = Ray(Point(0.5, -5, 0), Vector(0, 1, 0));
-    //intersections = cone.Intersect(ray);
-    //EXPECT_EQ(2, intersections.size());
-    //EXPECT_FLOAT_EQ(4.0, intersections[0].getLength());
-    //EXPECT_FLOAT_EQ(6.0, intersections[1].getLength());
+    ray = Ray(Point(0.5, 10, 0), Vector(0, -1, 0));
+    intersections = cone_open.Intersect(ray);
+    EXPECT_EQ(2, intersections.size());
+    EXPECT_FLOAT_EQ(9.5, intersections[0].getLength());
+    EXPECT_FLOAT_EQ(10.5, intersections[1].getLength());
 
-    //// Form the back
-    //ray = Ray(Point(0.5, 0, 5), Vector(0, 0, -1));
-    //intersections = cone.Intersect(ray);
-    //EXPECT_EQ(2, intersections.size());
-    //EXPECT_FLOAT_EQ(4.0, intersections[0].getLength());
-    //EXPECT_FLOAT_EQ(6.0, intersections[1].getLength());
+    intersections = cone_close.Intersect(ray);
+    EXPECT_EQ(4, intersections.size());
+    EXPECT_FLOAT_EQ(5.0, intersections[0].getLength());
+    EXPECT_FLOAT_EQ(9.5, intersections[1].getLength());
+    EXPECT_FLOAT_EQ(10.5, intersections[2].getLength());
+    EXPECT_FLOAT_EQ(15.0, intersections[3].getLength());
 
-    //// Form the front
-    //ray = Ray(Point(0.5, 0, -5), Vector(0, 0, 1));
-    //intersections = cone.Intersect(ray);
-    //EXPECT_EQ(2, intersections.size());
-    //EXPECT_FLOAT_EQ(4.0, intersections[0].getLength());
-    //EXPECT_FLOAT_EQ(6.0, intersections[1].getLength());
+    // Form the bottom
+    ray = Ray(Point(0.5, -10, 0), Vector(0, 1, 0));
+    intersections = cone_open.Intersect(ray);
+    EXPECT_EQ(2, intersections.size());
+    EXPECT_FLOAT_EQ(9.5, intersections[0].getLength());
+    EXPECT_FLOAT_EQ(10.5, intersections[1].getLength());
 
-    //// Form the inside
-    //ray = Ray(Point(0, 0.5, 0), Vector(0, 0, 1));
-    //intersections = cone.Intersect(ray);
-    //EXPECT_EQ(2, intersections.size());
-    //EXPECT_FLOAT_EQ(-1.0, intersections[0].getLength());
-    //EXPECT_FLOAT_EQ(1.0, intersections[1].getLength());
+    intersections = cone_close.Intersect(ray);
+    EXPECT_EQ(4, intersections.size());
+    EXPECT_FLOAT_EQ(5.0, intersections[0].getLength());
+    EXPECT_FLOAT_EQ(9.5, intersections[1].getLength());
+    EXPECT_FLOAT_EQ(10.5, intersections[2].getLength());
+    EXPECT_FLOAT_EQ(15.0, intersections[3].getLength());
 
-    //// Tangent
-    //ray = Ray(Point(0, 1, -5), Vector(0, 0, 1));
-    //intersections = cone.Intersect(ray);
-    //EXPECT_EQ(2, intersections.size());
-    //EXPECT_FLOAT_EQ(4.0, intersections[0].getLength());
-    //EXPECT_FLOAT_EQ(6.0, intersections[1].getLength());
+    // Form the back
+    ray = Ray(Point(0, 1, 5), Vector(0, 0, -1));
+    intersections = cone.Intersect(ray);
+    EXPECT_EQ(2, intersections.size());
+    EXPECT_FLOAT_EQ(4.0, intersections[0].getLength());
+    EXPECT_FLOAT_EQ(6.0, intersections[1].getLength());
 
-    //// Miss
-    //ray = Ray(Point(-2, 0, 0), Vector(0.2673, 0.5345, 0.8018));
-    //intersections = cone.Intersect(ray);
-    //EXPECT_EQ(0, intersections.size());
+    // Form the front
+    ray = Ray(Point(0, 1, -5), Vector(0, 0, 1));
+    intersections = cone.Intersect(ray);
+    EXPECT_EQ(2, intersections.size());
+    EXPECT_FLOAT_EQ(4.0, intersections[0].getLength());
+    EXPECT_FLOAT_EQ(6.0, intersections[1].getLength());
 
-    //ray = Ray(Point(0, -2, 0), Vector(0.8018, 0.2673, 0.5345));
-    //intersections = cone.Intersect(ray);
-    //EXPECT_EQ(0, intersections.size());
+    // Form the inside
+    ray = Ray(Point(0, 0.5, 0), Vector(0, 0, 1));
+    intersections = cone_open.Intersect(ray);
+    EXPECT_EQ(2, intersections.size());
+    EXPECT_FLOAT_EQ(-0.5, intersections[0].getLength());
+    EXPECT_FLOAT_EQ(0.5, intersections[1].getLength());
 
-    //ray = Ray(Point(0, 0, -2), Vector(0.5345, 0.8018, 0.2673));
-    //intersections = cone.Intersect(ray);
-    //EXPECT_EQ(0, intersections.size());
+    ray = Ray(Point(0, 0.5, 0), Vector(0, 1, 0));
+    intersections = cone_open.Intersect(ray);
+    EXPECT_EQ(2, intersections.size());
+    EXPECT_FLOAT_EQ(-0.5, intersections[0].getLength());
+    EXPECT_FLOAT_EQ(-0.5, intersections[1].getLength());
 
-    //ray = Ray(Point(2, 0, 2), Vector(0, 0, -1));
-    //intersections = cone.Intersect(ray);
-    //EXPECT_EQ(0, intersections.size());
+    intersections = cone_close.Intersect(ray);
+    EXPECT_EQ(4, intersections.size());
+    EXPECT_FLOAT_EQ(-5.5, intersections[0].getLength());
+    EXPECT_FLOAT_EQ(-0.5, intersections[1].getLength());
+    EXPECT_FLOAT_EQ(-0.5, intersections[2].getLength());
+    EXPECT_FLOAT_EQ(4.5, intersections[3].getLength());
 
-    //ray = Ray(Point(0, 2, 2), Vector(0, -1, 0));
-    //intersections = cone.Intersect(ray);
-    //EXPECT_EQ(0, intersections.size());
+    // Tangent
+    ray = Ray(Point(1, 1, -5), Vector(0, 0, 1));
+    intersections = cone.Intersect(ray);
+    EXPECT_EQ(2, intersections.size());
+    EXPECT_FLOAT_EQ(5.0, intersections[0].getLength());
+    EXPECT_FLOAT_EQ(5.0, intersections[1].getLength());
 
-    //ray = Ray(Point(2, 2, 0), Vector(-1, 0, 0));
-    //intersections = cone.Intersect(ray);
-    //EXPECT_EQ(0, intersections.size());
+    // Miss
+    ray = Ray(Point(-1, 0.5, 0), Vector(0, 0, 1));
+    intersections = cone.Intersect(ray);
+    EXPECT_EQ(0, intersections.size());
 
-    //ray = Ray(Point(0, 3, -5), Vector(0, 0, 1));
-    //intersections = cone.Intersect(ray);
-    //EXPECT_EQ(0, intersections.size());
+    ray = Ray(Point(0, 10, 0), Vector(0, 0, 1));
+    intersections = cone_open.Intersect(ray);
+    EXPECT_EQ(0, intersections.size());
+
+    ray = Ray(Point(10, 10, 0), Vector(0, -1, 0));
+    intersections = cone_open.Intersect(ray);
+    EXPECT_EQ(0, intersections.size());
 }
 
 TEST(ConeTests, get_normal) {

@@ -1,3 +1,6 @@
+#include <cmath>
+#include <limits>  // for std::numeric_limits
+
 #include "Cylinder.h"
 #include "Utils.h"
 
@@ -34,7 +37,7 @@ Cylinder::Cylinder(Cylinder&& other) noexcept :
 // Member functions
 Cylinder& Cylinder::operator=(Cylinder const& other) {
     if (this != &other) {
-        RayObject::operator=(other); // Appelle l'opérateur d'affectation par copie de la classe mère
+        RayObject::operator=(other); // Appelle l'opï¿½rateur d'affectation par copie de la classe mï¿½re
         m_minimum = std::move(other.m_minimum);
         m_maximum = std::move(other.m_maximum);
         m_isClosed = std::move(other.m_isClosed);
@@ -43,8 +46,8 @@ Cylinder& Cylinder::operator=(Cylinder const& other) {
 }
 
 Cylinder& Cylinder::operator=(Cylinder&& other) noexcept {
-    if (this != &other) { // Vérification d'auto-affectation
-        RayObject::operator=(std::move(other)); // Appelle l'opérateur d'affectation par déplacement de la classe mère
+    if (this != &other) { // Vï¿½rification d'auto-affectation
+        RayObject::operator=(std::move(other)); // Appelle l'opï¿½rateur d'affectation par dï¿½placement de la classe mï¿½re
         m_minimum = other.m_minimum;
         m_maximum = other.m_maximum;
         m_isClosed = other.m_isClosed;

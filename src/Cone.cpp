@@ -1,3 +1,6 @@
+#include <cmath>
+#include <limits>  // for std::numeric_limits
+
 #include "Cone.h"
 #include "Utils.h"
 
@@ -34,7 +37,7 @@ Cone::Cone(Cone&& other) noexcept :
 // Member functions
 Cone& Cone::operator=(Cone const& other) {
     if (this != &other) {
-        RayObject::operator=(other); // Appelle l'opérateur d'affectation par copie de la classe mère
+        RayObject::operator=(other); // Appelle l'opï¿½rateur d'affectation par copie de la classe mï¿½re
         m_minimum = std::move(other.m_minimum);
         m_maximum = std::move(other.m_maximum);
         m_isClosed = std::move(other.m_isClosed);
@@ -43,8 +46,8 @@ Cone& Cone::operator=(Cone const& other) {
 }
 
 Cone& Cone::operator=(Cone&& other) noexcept {
-    if (this != &other) { // Vérification d'auto-affectation
-        RayObject::operator=(std::move(other)); // Appelle l'opérateur d'affectation par déplacement de la classe mère
+    if (this != &other) { // Vï¿½rification d'auto-affectation
+        RayObject::operator=(std::move(other)); // Appelle l'opï¿½rateur d'affectation par dï¿½placement de la classe mï¿½re
         m_minimum = other.m_minimum;
         m_maximum = other.m_maximum;
         m_isClosed = other.m_isClosed;
@@ -85,6 +88,8 @@ std::vector<Intersection> Cone::Intersect(Ray const& ray) {
         }
 
         // b is not zero, have a single point of intersection.
+        // Configuration possible seulement si le ray est Ã  l'interieur du cone.
+        // TODO: VÃ©rifier si ce cas correspond bien Ã§ une situation avec ray Ã  l'interieur !
         hits.push_back(Intersection(*this, -c / (2 * b)));
     }
 
@@ -94,6 +99,7 @@ std::vector<Intersection> Cone::Intersect(Ray const& ray) {
     double discriminant = b * b - 4 * a * c;
 
     if (discriminant < 0)
+        // TODO: VÃ©rifier a quelle situation correspond ce cas ?
         return hits;
 
     double t0 = (-b - std::sqrt(discriminant)) / (2 * a);
@@ -119,6 +125,8 @@ std::vector<Intersection> Cone::Intersect(Ray const& ray) {
 
     IntersectCaps(transRay, hits); // ref hits
 
+    Intersection::SortIntersections(hits);
+    
     return hits;
 }
 
@@ -162,7 +170,7 @@ Vector Cone::CalculateLocalNormal(Point const& localPoint, Intersection const& i
     }
 
     else {
-        double y = std::sqrt(localPoint.getX() * localPoint.getX() + localPoint.getZ() * localPoint.getZ());
+        double y = std::sqrt(distance);
         if (localPoint.getY() > 0) {
             y = -y;
         }
