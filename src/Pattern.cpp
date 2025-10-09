@@ -10,7 +10,7 @@ Pattern::Pattern(Pattern const& other) :
 
 Pattern::Pattern(Pattern&& other) noexcept :
 	m_matrix(std::move(other.m_matrix)) {
-	// Reset source object pour éviter des doublons
+	// Reset source object pour ï¿½viter des doublons
 	other.m_matrix = Mat4();
 }
 
@@ -27,7 +27,7 @@ bool Pattern::equals(Pattern const& other) const {
 }
 
 bool Pattern::operator==(Pattern const& other) const {
-	// Vérification de type avec typeid
+	// Vï¿½rification de type avec typeid
 	if (typeid(*this) != typeid(other)) return false;
 	return equals(other);
 }
@@ -49,8 +49,8 @@ Pattern& Pattern::operator=(Pattern&& other) noexcept {
 }
 
 Color Pattern::PatternAtObject(Point const& objectPoint) const {
-	// à déplacer dans patternAt pour que les transformations de chaque sous-pattern soient aussi prises en compte.
-	// Le point est déjà converti de l'espace global vers l'espace local de l'objet.
+	// ï¿½ dï¿½placer dans patternAt pour que les transformations de chaque sous-pattern soient aussi prises en compte.
+	// Le point est dï¿½jï¿½ converti de l'espace global vers l'espace local de l'objet.
 	 /*Point patternPoint = m_matrix.inverted() * objectPoint;*/
 	// Appelle le PatternAt virtuel
     return patternAt(objectPoint);

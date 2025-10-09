@@ -78,7 +78,7 @@ void static Chapter_4_TransformChallenge() {//drawCircle
     Point currentLocation;
 
     // Offset 1/3 distance of canvas size.
-    currentLocation = Mat4::TranslateMatrix(canvas.getWidth() * 0.3, 0.0, 0.0) * currentLocation;   // Rayon du cadrent de l'horloge par rapport à la taille du canvas.
+    currentLocation = Mat4::TranslateMatrix(canvas.getWidth() * 0.3, 0.0, 0.0) * currentLocation;   // Rayon du cadrent de l'horloge par rapport ï¿½ la taille du canvas.
 
     // Rotate loop.
     int maxIterations = 12;
@@ -843,84 +843,84 @@ int main() {
     Chapter_5_Challenge();
     fin = std::chrono::high_resolution_clock::now();
     duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
-    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+    std::cout << "Durï¿½e d'exï¿½cution : " << duree.count() << " ms" << std::endl;*/
 
     /*debut = std::chrono::high_resolution_clock::now();
     Chapter_6_Challenge();
     fin = std::chrono::high_resolution_clock::now();
     duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
-    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+    std::cout << "Durï¿½e d'exï¿½cution : " << duree.count() << " ms" << std::endl;*/
 
     /*debut = std::chrono::high_resolution_clock::now();
     Chapter_7_Challenge();
     fin = std::chrono::high_resolution_clock::now();
     duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
-    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+    std::cout << "Durï¿½e d'exï¿½cution : " << duree.count() << " ms" << std::endl;*/
 
     /*debut = std::chrono::high_resolution_clock::now();
     Chapter_8_Challenge();
     fin = std::chrono::high_resolution_clock::now();
     duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
-    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+    std::cout << "Durï¿½e d'exï¿½cution : " << duree.count() << " ms" << std::endl;*/
 
     /*debut = std::chrono::high_resolution_clock::now();
     Chapter_9_Challenge();
     fin = std::chrono::high_resolution_clock::now();
     duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
-    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+    std::cout << "Durï¿½e d'exï¿½cution : " << duree.count() << " ms" << std::endl;*/
 
     /*debut = std::chrono::high_resolution_clock::now();
     Chapter_10_1_Challenge();
     fin = std::chrono::high_resolution_clock::now();
     duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
-    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+    std::cout << "Durï¿½e d'exï¿½cution : " << duree.count() << " ms" << std::endl;*/
 
     /*debut = std::chrono::high_resolution_clock::now();
     Chapter_10_2_Challenge();
     fin = std::chrono::high_resolution_clock::now();
     duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
-    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+    std::cout << "Durï¿½e d'exï¿½cution : " << duree.count() << " ms" << std::endl;*/
 
     /*debut = std::chrono::high_resolution_clock::now();
     Chapter_10_3_Challenge();
     fin = std::chrono::high_resolution_clock::now();
     duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
-    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+    std::cout << "Durï¿½e d'exï¿½cution : " << duree.count() << " ms" << std::endl;*/
 
     /*debut = std::chrono::high_resolution_clock::now();
     Chapter_10_4_Challenge();
     fin = std::chrono::high_resolution_clock::now();
     duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
-    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+    std::cout << "Durï¿½e d'exï¿½cution : " << duree.count() << " ms" << std::endl;*/
 
     //There is noise in the reflections.
     /*debut = std::chrono::high_resolution_clock::now();
     Chapter_11_Challenge_Reflection();
     fin = std::chrono::high_resolution_clock::now();
     duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
-    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+    std::cout << "Durï¿½e d'exï¿½cution : " << duree.count() << " ms" << std::endl;*/
 
     /*debut = std::chrono::high_resolution_clock::now();
     Chapter_11_Challenge_Transparency();
     fin = std::chrono::high_resolution_clock::now();
     duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
-    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+    std::cout << "Durï¿½e d'exï¿½cution : " << duree.count() << " ms" << std::endl;*/
 
     /*debut = std::chrono::high_resolution_clock::now();
     Chapter_11_Challenge_UnderwaterScene();
     fin = std::chrono::high_resolution_clock::now();
     duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
-    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+    std::cout << "Durï¿½e d'exï¿½cution : " << duree.count() << " ms" << std::endl;*/
 
     /*debut = std::chrono::high_resolution_clock::now();
     Chapter_12_Challenge_Cube_with_pattern();
     fin = std::chrono::high_resolution_clock::now();
     duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
-    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+    std::cout << "Durï¿½e d'exï¿½cution : " << duree.count() << " ms" << std::endl;*/
 
     /*debut = std::chrono::high_resolution_clock::now();
     Chapter_12_Challenge_CubeRoom();
     fin = std::chrono::high_resolution_clock::now();
     duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
-    std::cout << "Durée d'exécution : " << duree.count() << " ms" << std::endl;*/
+    std::cout << "Durï¿½e d'exï¿½cution : " << duree.count() << " ms" << std::endl;*/
 }

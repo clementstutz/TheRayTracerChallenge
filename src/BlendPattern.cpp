@@ -26,7 +26,7 @@ BlendPattern::BlendPattern(BlendPattern&& other) noexcept :
 	m_patternA(std::move(other.m_patternA)),
 	m_patternB(std::move(other.m_patternB)),
 	m_mixingValue(std::move(other.m_mixingValue)) {
-	// Reset source object pour éviter des doublons
+	// Reset source object pour ï¿½viter des doublons
 	other.m_patternA = std::make_shared<SolidColorPattern>(Color::white);
 	other.m_patternB = std::make_shared<SolidColorPattern>(Color::black);
 	other.m_mixingValue = 0.0;
@@ -39,7 +39,7 @@ double BlendPattern::GetMixingValue() const { return m_mixingValue; }
 
 // Member functions
 bool BlendPattern::equals(Pattern const& other) const {
-	// Cast sécurisé car operator== vérifie déjà le type
+	// Cast sï¿½curisï¿½ car operator== vï¿½rifie dï¿½jï¿½ le type
 	auto& typedOther = static_cast<const BlendPattern&>(other);
 	return Pattern::equals(other) &&
 		*m_patternA == *typedOther.m_patternA &&
