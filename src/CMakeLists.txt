@@ -14,8 +14,8 @@ add_library(TheRayTracerChallenge
 	Light.cpp
 	Material.cpp
 	Ray.cpp
-	RayObject.cpp
-	RayObject_for_Test.cpp
+	Shape.cpp
+	Shape_for_Test.cpp
 	Scene.cpp
 	Sphere.cpp
 	BlendPattern.cpp

@@ -1,12 +1,12 @@
 #include <cmath>
 
-#include "RayObject.h"
+#include "Shape.h"
 #include "Scene.h"
 
-int RayObject::m_currentId = 0;
+int Shape::m_currentId = 0;
 
 // Constructors
-RayObject::RayObject() :
+Shape::Shape() :
 	m_id(++m_currentId),
 	m_matrix(Mat4()),
 	m_invertMat(Mat4()),
@@ -15,11 +15,11 @@ RayObject::RayObject() :
 	m_canCastShadows(true) {
 	if (Scene::GetCurrentScene() != nullptr) {
 		//this.SetParent(Scene::GetCurrentScene().root);
-		Scene::GetCurrentScene()->AddRayObject(*this);
+		Scene::GetCurrentScene()->AddShape(*this);
 	}
 }
 
-RayObject::RayObject(RayObject const& other) :
+Shape::Shape(Shape const& other) :
 	m_id(++m_currentId),
 	m_matrix(other.m_matrix),
 	m_invertMat(other.m_invertMat),
@@ -28,19 +28,19 @@ RayObject::RayObject(RayObject const& other) :
 	m_canCastShadows(other.m_canCastShadows) {
 	if (Scene::GetCurrentScene() != nullptr) {
 		//this.SetParent(Scene::GetCurrentScene().root);
-		Scene::GetCurrentScene()->AddRayObject(*this);
+		Scene::GetCurrentScene()->AddShape(*this);
 	}
 }
 
-RayObject::RayObject(RayObject&& other) noexcept :
+Shape::Shape(Shape&& other) noexcept :
 	m_id(std::move(other.m_id)),
 	m_matrix(std::move(other.m_matrix)),
 	m_invertMat(std::move(other.m_invertMat)),
 	m_material(std::move(other.m_material)),
 	m_canReceiveShadows(std::move(other.m_canReceiveShadows)),
 	m_canCastShadows(std::move(other.m_canCastShadows)) {
-	// Reset source object pour éviter des doublons
-	other.m_id = 0; // Réinitialise l'ID de l'objet source
+	// Reset source object pour ï¿½viter des doublons
+	other.m_id = 0; // Rï¿½initialise l'ID de l'objet source
 	other.m_matrix = Mat4();
 	other.m_invertMat = Mat4();
 	other.m_material = Material();
@@ -48,57 +48,57 @@ RayObject::RayObject(RayObject&& other) noexcept :
 	other.m_canCastShadows = false;
 	if (Scene::GetCurrentScene() != nullptr) {
 		//this.SetParent(Scene::GetCurrentScene().root);
-		Scene::GetCurrentScene()->AddRayObject(*this);
+		Scene::GetCurrentScene()->AddShape(*this);
 	}
 }
 
 
 // Destructor
-RayObject::~RayObject() {
+Shape::~Shape() {
 	if (Scene::GetCurrentScene() != nullptr) {
 		//this.SetParent(Scene::GetCurrentScene().root);
-		Scene::GetCurrentScene()->RemoveRayObject(*this);
+		Scene::GetCurrentScene()->RemoveShape(*this);
 	}
 }
 
 
 // Accessors
-int RayObject::getNbInstances() {return m_currentId;}
+int Shape::getNbInstances() {return m_currentId;}
 
-int RayObject::GetId() const {return m_id;}
+int Shape::GetId() const {return m_id;}
 
-Mat4 RayObject::GetMatrix() const {return m_matrix;}
+Mat4 Shape::GetMatrix() const {return m_matrix;}
 
-Mat4 RayObject::GetInvertMatrix() const { return m_matrix.inverted(); }
+Mat4 Shape::GetInvertMatrix() const { return m_matrix.inverted(); }
 
-Point RayObject::GetPosition() const {
+Point Shape::GetPosition() const {
 	return Point(m_matrix[0][3], m_matrix[1][3], m_matrix[2][3]);
 }
 
-Material RayObject::GetMaterial() const { return m_material; }
+Material Shape::GetMaterial() const { return m_material; }
 
-bool RayObject::CanReceiveShadows() const { return m_canReceiveShadows; }
+bool Shape::CanReceiveShadows() const { return m_canReceiveShadows; }
 
-bool RayObject::CanCastShadows() const { return m_canCastShadows; }
+bool Shape::CanCastShadows() const { return m_canCastShadows; }
 
-void RayObject::SetMatrix(Mat4 const& mat) {m_matrix = mat;}
+void Shape::SetMatrix(Mat4 const& mat) {m_matrix = mat;}
 
-void RayObject::SetPosition(Point const& p) {
+void Shape::SetPosition(Point const& p) {
 	m_matrix[0][3] = p.getX();
 	m_matrix[1][3] = p.getY();
 	m_matrix[2][3] = p.getZ();
 }
 
-void RayObject::SetMaterial(Material const& material) {m_material = material;}
+void Shape::SetMaterial(Material const& material) {m_material = material;}
 
-void RayObject::SetCanReceiveShadows(bool const& canReceiveShadows) { m_canReceiveShadows = canReceiveShadows; }
+void Shape::SetCanReceiveShadows(bool const& canReceiveShadows) { m_canReceiveShadows = canReceiveShadows; }
 
-void RayObject::SetCanCastShadows(bool const& canCastShadows) { m_canCastShadows = canCastShadows; }
+void Shape::SetCanCastShadows(bool const& canCastShadows) { m_canCastShadows = canCastShadows; }
 
 
 // Member functions
-RayObject& RayObject::operator=(RayObject const& other) {
-	if (this != &other) {//On vérifie que l'objet n'est pas le même que celui reçu en argument
+Shape& Shape::operator=(Shape const& other) {
+	if (this != &other) {//On vï¿½rifie que l'objet n'est pas le mï¿½me que celui reï¿½u en argument
 		m_matrix = other.m_matrix;
 		m_invertMat = other.m_invertMat;
 		m_material = other.m_material;
@@ -108,7 +108,7 @@ RayObject& RayObject::operator=(RayObject const& other) {
 	return *this;
 }
 
-RayObject& RayObject::operator=(RayObject&& other) noexcept {
+Shape& Shape::operator=(Shape&& other) noexcept {
 	if (this != &other) {
 		m_matrix = std::move(other.m_matrix);
 		m_invertMat = std::move(other.m_invertMat);
@@ -125,27 +125,27 @@ RayObject& RayObject::operator=(RayObject&& other) noexcept {
 	return *this;
 }
 
-bool RayObject::operator==(RayObject const& other) const {
+bool Shape::operator==(Shape const& other) const {
 	return (m_id == other.m_id) &&
 		   (m_matrix == other.m_matrix) &&
 		   (m_canReceiveShadows == other.m_canReceiveShadows) &&
 		   (m_canCastShadows == other.m_canCastShadows);
 }
 
-std::ostream& operator<<(std::ostream& flux, RayObject const& rayObject) {
-	rayObject.afficher(flux);
+std::ostream& operator<<(std::ostream& flux, Shape const& shape) {
+	shape.afficher(flux);
 	return flux;
 }
 
-void RayObject::afficher(std::ostream& flux) const {
-	flux << "RayObject (id: " << m_id << ")";
+void Shape::afficher(std::ostream& flux) const {
+	flux << "Shape (id: " << m_id << ")";
 }
 
-Ray RayObject::RayToObjectSpace(Ray const& ray) const {
+Ray Shape::RayToObjectSpace(Ray const& ray) const {
 	return GetInvertMatrix() * ray;
 }
 
-Point RayObject::WorldToObject(Point const &worldPoint) const {
+Point Shape::WorldToObject(Point const &worldPoint) const {
 	/*if (this->GetParent() != null)
 	{
 		worldPoint = this->GetParent().WorldToObject(worldPoint);
@@ -153,7 +153,7 @@ Point RayObject::WorldToObject(Point const &worldPoint) const {
 	return GetInvertMatrix() * worldPoint;
 }
 
-Vector RayObject::NormalToWorld(Vector const&localNormal) const  {
+Vector Shape::NormalToWorld(Vector const&localNormal) const  {
 	Vector temp = GetInvertMatrix().transposed() * localNormal;
 	Vector worldNormal;
 	worldNormal = temp;	// WARNING : I must do that cause otherwise w is not 0.
@@ -165,7 +165,7 @@ Vector RayObject::NormalToWorld(Vector const&localNormal) const  {
 	return worldNormal;
 }
 
-Color RayObject::Lighting(Point const&position, Light const& light, Vector const& eye, Vector const& normal, bool inShadow) const
+Color Shape::Lighting(Point const&position, Light const& light, Vector const& eye, Vector const& normal, bool inShadow) const
 {
 	Color temp = m_material.GetColor();
 	if (m_material.GetPattern() != nullptr) {

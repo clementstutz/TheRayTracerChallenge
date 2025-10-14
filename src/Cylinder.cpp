@@ -6,25 +6,25 @@
 
 // Constructors
 Cylinder::Cylinder() :
-    RayObject(),
+    Shape(),
     m_minimum(-std::numeric_limits<double>::infinity()),
     m_maximum(std::numeric_limits<double>::infinity()),
     m_isClosed(false) {}
 
 Cylinder::Cylinder(float min, float max, bool isClose) :
-    RayObject(),
+    Shape(),
     m_minimum(min),
     m_maximum(max),
     m_isClosed(isClose) {}
 
 Cylinder::Cylinder(Cylinder const& other) :
-    RayObject(other),
+    Shape(other),
     m_minimum(other.m_minimum),
     m_maximum(other.m_maximum),
     m_isClosed(other.m_isClosed) {}
 
 Cylinder::Cylinder(Cylinder&& other) noexcept :
-    RayObject(std::move(other)),
+    Shape(std::move(other)),
     m_minimum(std::move(other.m_minimum)),
     m_maximum(std::move(other.m_maximum)),
     m_isClosed(std::move(other.m_isClosed)) {
@@ -37,7 +37,7 @@ Cylinder::Cylinder(Cylinder&& other) noexcept :
 // Member functions
 Cylinder& Cylinder::operator=(Cylinder const& other) {
     if (this != &other) {
-        RayObject::operator=(other); // Appelle l'op�rateur d'affectation par copie de la classe m�re
+        Shape::operator=(other); // Appelle l'op�rateur d'affectation par copie de la classe m�re
         m_minimum = std::move(other.m_minimum);
         m_maximum = std::move(other.m_maximum);
         m_isClosed = std::move(other.m_isClosed);
@@ -47,7 +47,7 @@ Cylinder& Cylinder::operator=(Cylinder const& other) {
 
 Cylinder& Cylinder::operator=(Cylinder&& other) noexcept {
     if (this != &other) { // V�rification d'auto-affectation
-        RayObject::operator=(std::move(other)); // Appelle l'op�rateur d'affectation par d�placement de la classe m�re
+        Shape::operator=(std::move(other)); // Appelle l'op�rateur d'affectation par d�placement de la classe m�re
         m_minimum = other.m_minimum;
         m_maximum = other.m_maximum;
         m_isClosed = other.m_isClosed;
@@ -131,7 +131,7 @@ void Cylinder::IntersectCaps(const Ray& transRay, std::vector<Intersection>& hit
         if (CheckCap(transRay, t0)) {
             hits.push_back(Intersection(*this, t0));
         }
-        
+
         if (CheckCap(transRay, t1)) {
             hits.push_back(Intersection(*this, t1));
         }

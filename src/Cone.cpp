@@ -6,25 +6,25 @@
 
 // Constructors
 Cone::Cone() :
-    RayObject(),
+    Shape(),
     m_minimum(-std::numeric_limits<double>::infinity()),
     m_maximum(std::numeric_limits<double>::infinity()),
     m_isClosed(false) {}
 
 Cone::Cone(float min, float max, bool isClose) :
-    RayObject(),
+    Shape(),
     m_minimum(min),
     m_maximum(max),
     m_isClosed(isClose) {}
 
 Cone::Cone(Cone const& other) :
-    RayObject(other),
+    Shape(other),
     m_minimum(other.m_minimum),
     m_maximum(other.m_maximum),
     m_isClosed(other.m_isClosed) {}
 
 Cone::Cone(Cone&& other) noexcept :
-    RayObject(std::move(other)),
+    Shape(std::move(other)),
     m_minimum(std::move(other.m_minimum)),
     m_maximum(std::move(other.m_maximum)),
     m_isClosed(std::move(other.m_isClosed)) {
@@ -37,7 +37,7 @@ Cone::Cone(Cone&& other) noexcept :
 // Member functions
 Cone& Cone::operator=(Cone const& other) {
     if (this != &other) {
-        RayObject::operator=(other); // Appelle l'op�rateur d'affectation par copie de la classe m�re
+        Shape::operator=(other); // Appelle l'op�rateur d'affectation par copie de la classe m�re
         m_minimum = std::move(other.m_minimum);
         m_maximum = std::move(other.m_maximum);
         m_isClosed = std::move(other.m_isClosed);
@@ -47,7 +47,7 @@ Cone& Cone::operator=(Cone const& other) {
 
 Cone& Cone::operator=(Cone&& other) noexcept {
     if (this != &other) { // V�rification d'auto-affectation
-        RayObject::operator=(std::move(other)); // Appelle l'op�rateur d'affectation par d�placement de la classe m�re
+        Shape::operator=(std::move(other)); // Appelle l'op�rateur d'affectation par d�placement de la classe m�re
         m_minimum = other.m_minimum;
         m_maximum = other.m_maximum;
         m_isClosed = other.m_isClosed;
@@ -126,7 +126,7 @@ std::vector<Intersection> Cone::Intersect(Ray const& ray) {
     IntersectCaps(transRay, hits); // ref hits
 
     Intersection::SortIntersections(hits);
-    
+
     return hits;
 }
 

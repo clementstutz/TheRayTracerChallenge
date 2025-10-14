@@ -3,35 +3,35 @@
 #include <algorithm> // Pour std::sort
 
 #include "Intersection.h"
-#include "RayObject.h"
+#include "Shape.h"
 
 // Constructors
-Intersection::Intersection() : m_rayObject(nullptr), m_length(0.0) {}
+Intersection::Intersection() : m_shape(nullptr), m_length(0.0) {}
 
-Intersection::Intersection(const RayObject& obj, double const& length) :
-    m_rayObject(&obj),
+Intersection::Intersection(const Shape& obj, double const& length) :
+    m_shape(&obj),
     m_length(length) {}
 
 Intersection::Intersection(Intersection const& other) :
-    m_rayObject(other.m_rayObject),
+    m_shape(other.m_shape),
     m_length(other.m_length) {}
 
 Intersection::Intersection(Intersection&& other) noexcept :
-    m_rayObject(std::exchange(other.m_rayObject, nullptr)),
+    m_shape(std::exchange(other.m_shape, nullptr)),
     m_length(std::move(other.m_length)) {
-    // Reset source object pour éviter des doublons
+    // Reset source object pour ï¿½viter des doublons
     other.m_length = 0.0;
 }
 
 
 // Accessors
-const RayObject* Intersection::getObjPtr() const { return m_rayObject; }
+const Shape* Intersection::getObjPtr() const { return m_shape; }
 
-const RayObject& Intersection::getObj() const {
-    if (!m_rayObject) {
-        throw std::runtime_error("m_rayObject is null. Invalid access.");
+const Shape& Intersection::getObj() const {
+    if (!m_shape) {
+        throw std::runtime_error("m_shape is null. Invalid access.");
     }
-    return *m_rayObject;
+    return *m_shape;
 }
 
 double Intersection::getLength() const { return m_length; }
@@ -40,7 +40,7 @@ double Intersection::getLength() const { return m_length; }
 // Member functions
 Intersection& Intersection::operator=(const Intersection& other) {
     if (this != &other) {
-        m_rayObject = other.m_rayObject;
+        m_shape = other.m_shape;
         m_length = other.m_length;
     }
     return *this;
@@ -48,7 +48,7 @@ Intersection& Intersection::operator=(const Intersection& other) {
 
 Intersection& Intersection::operator=(Intersection&& other) noexcept {
     if (this != &other) {
-        m_rayObject = std::exchange(other.m_rayObject, nullptr);
+        m_shape = std::exchange(other.m_shape, nullptr);
         m_length = std::move(other.m_length);
         other.m_length = 0.0;
     }
@@ -56,7 +56,7 @@ Intersection& Intersection::operator=(Intersection&& other) noexcept {
 }
 
 bool Intersection::operator==(Intersection const& other) const {
-    return (m_rayObject == other.m_rayObject) && (m_length == other.m_length);
+    return (m_shape == other.m_shape) && (m_length == other.m_length);
 }
 
 std::ostream& operator<<(std::ostream& flux, Intersection const& intersection) {
@@ -65,7 +65,7 @@ std::ostream& operator<<(std::ostream& flux, Intersection const& intersection) {
 }
 
 void Intersection::afficher(std::ostream& flux) const {
-	flux << "Intersection (objId: " << m_rayObject->GetId() << ", value : " << m_length << ")";
+	flux << "Intersection (objId: " << m_shape->GetId() << ", value : " << m_length << ")";
 }
 
 std::vector<Intersection>& Intersection::SortIntersections(std::vector<Intersection>& intersections) {
@@ -81,5 +81,5 @@ std::vector<Intersection>& Intersection::SortIntersections(std::vector<Intersect
 }
 
 bool Intersection::IsEmpty() const {
-    return (m_rayObject == nullptr && m_length == 0.0);
+    return (m_shape == nullptr && m_length == 0.0);
 }

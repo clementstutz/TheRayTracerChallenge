@@ -7,10 +7,10 @@
 #include "Material.h"
 #include "Light.h"
 
-// Déclaration anticipée de classes
+// Dï¿½claration anticipï¿½e de classes
 class Intersection;
 
-class RayObject
+class Shape
 {
 protected:
 	static int m_currentId;
@@ -18,19 +18,19 @@ protected:
 	Mat4 m_matrix;
 	Mat4 m_invertMat;	//NOTE : Useless because I would have to recalculate the inverse for EACH modification of the matrix
 	Material m_material;
-	bool m_canReceiveShadows;   // WARNING : A déplacer dans materiaux, car sinon je ne peux pas définir un mtx Glassy() qui ne peux caster des ombres !
-	bool m_canCastShadows;      // WARNING : A déplacer dans materiaux
+	bool m_canReceiveShadows;   // WARNING : A dï¿½placer dans materiaux, car sinon je ne peux pas dï¿½finir un mtx Glassy() qui ne peux caster des ombres !
+	bool m_canCastShadows;      // WARNING : A dï¿½placer dans materiaux
 
 	virtual void afficher(std::ostream& flux) const;
 
 public:
 	// Constructors
-	RayObject();
-	RayObject(RayObject const& other);
-	RayObject(RayObject&& other) noexcept;
+	Shape();
+	Shape(Shape const& other);
+	Shape(Shape&& other) noexcept;
 
 	// Destructor
-	virtual ~RayObject();// = default;
+	virtual ~Shape();// = default;
 
 	// Accessors
 	int static getNbInstances() ;
@@ -46,12 +46,12 @@ public:
 	void SetMaterial(Material const& material);
 	void SetCanReceiveShadows(bool const& canReceiveShadows);
 	void SetCanCastShadows(bool const& canCastShadows);
-	
+
 	// Member functions
-	RayObject& operator=(RayObject const& other);
-	RayObject& operator=(RayObject&& other) noexcept;
-	bool operator==(RayObject const& other) const;
-	friend std::ostream& operator<<(std::ostream& flux, RayObject const& rayObject);
+	Shape& operator=(Shape const& other);
+	Shape& operator=(Shape&& other) noexcept;
+	bool operator==(Shape const& other) const;
+	friend std::ostream& operator<<(std::ostream& flux, Shape const& shape);
 	Ray RayToObjectSpace(Ray const& ray) const;
 	virtual std::vector<Intersection> Intersect(Ray const& ray) = 0;
 	virtual Vector GetNormal(Point const& worldPoint, Intersection const& i) const = 0;

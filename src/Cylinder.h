@@ -1,9 +1,9 @@
 #pragma once
 
-#include "RayObject.h"
+#include "Shape.h"
 #include "Intersection.h"
 
-class Cylinder : public RayObject
+class Cylinder : public Shape
 {
 protected:
 	double m_minimum;
@@ -31,4 +31,3 @@ public:
 	Vector GetNormal(Point const& worldPoint, Intersection const& i) const override;
 	Vector CalculateLocalNormal(Point const& localPoint, Intersection const& i) const override;
 };
-

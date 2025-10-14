@@ -6,10 +6,10 @@
 #include "Utils.h"
 
 TEST(CylinderTests, constructor_default) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Cylinder cylinder;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cylinder.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cylinder.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(cylinder.GetMatrix(), Mat4());
@@ -17,10 +17,10 @@ TEST(CylinderTests, constructor_default) {
 }
 
 TEST(CylinderTests, constructor_values) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Cylinder cylinder(-1, 1);
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cylinder.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cylinder.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(cylinder.GetMatrix(), Mat4());
@@ -28,20 +28,20 @@ TEST(CylinderTests, constructor_values) {
 }
 
 TEST(CylinderTests, constructor_copy) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Cylinder cylinder_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
 
     Cylinder cylinder_2(cylinder_1);
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cylinder_2.GetId() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cylinder_2.GetPosition(), cylinder_1.GetPosition());
     EXPECT_EQ(cylinder_2.GetMatrix(), cylinder_1.GetMatrix());
     EXPECT_EQ(cylinder_2.GetInvertMatrix(), cylinder_1.GetInvertMatrix());
 
     Cylinder cylinder_3 = cylinder_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 3);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 3);
     EXPECT_EQ(cylinder_3.GetId() - nbInstanceAlreadyExisting, 3);
     EXPECT_EQ(cylinder_3.GetPosition(), cylinder_1.GetPosition());
     EXPECT_EQ(cylinder_3.GetMatrix(), cylinder_1.GetMatrix());
@@ -49,18 +49,18 @@ TEST(CylinderTests, constructor_copy) {
 }
 
 TEST(CylinderTests, constructor_move) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
     std::cout << nbInstanceAlreadyExisting << std::endl;
 
     Cylinder cylinder_1(std::move(Cylinder()));
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cylinder_1.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cylinder_1.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(cylinder_1.GetMatrix(), Mat4());
     EXPECT_EQ(cylinder_1.GetInvertMatrix(), Mat4());
 
     Cylinder cylinder_2{ Cylinder() };
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cylinder_2.GetId() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cylinder_2.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(cylinder_2.GetMatrix(), Mat4());
@@ -68,14 +68,14 @@ TEST(CylinderTests, constructor_move) {
 }
 
 TEST(CylinderTests, affectation_copy) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Cylinder cylinder_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
 
     Cylinder cylinder_2;
     cylinder_2 = cylinder_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
 
     EXPECT_EQ(cylinder_2.GetId() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cylinder_2.GetPosition(), cylinder_1.GetPosition());
@@ -84,14 +84,14 @@ TEST(CylinderTests, affectation_copy) {
 }
 
 TEST(CylinderTests, affectation_move) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Cylinder cylinder;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cylinder.GetId() - nbInstanceAlreadyExisting, 1);
 
     cylinder = Cylinder();
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cylinder.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cylinder.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(cylinder.GetMatrix(), Mat4());
@@ -127,7 +127,7 @@ TEST(CylinderTests, intersect) {
     EXPECT_EQ(2, intersections.size());
     EXPECT_FLOAT_EQ(1.0, intersections[0].getLength());
     EXPECT_FLOAT_EQ(3.0, intersections[1].getLength());
-    
+
     // Form the left
     ray = Ray(Point(-2, 2, 0), Vector(1, 0, 0));
     intersections = cylinder_open.Intersect(ray);
@@ -163,12 +163,12 @@ TEST(CylinderTests, intersect) {
     ray = Ray(Point(0.5, -11, 0), Vector(0, 1, 0));
     intersections = cylinder_open.Intersect(ray);
     EXPECT_EQ(0, intersections.size());
-    
+
     intersections = cylinder_close.Intersect(ray);
     EXPECT_EQ(2, intersections.size());
     EXPECT_FLOAT_EQ(1.0, intersections[0].getLength());
     EXPECT_FLOAT_EQ(21.0, intersections[1].getLength());
-    
+
     // Form the inside
     ray = Ray(Point(0.5, 0.5, 0), Vector(1, 0, 0));
     intersections = cylinder_open.Intersect(ray);

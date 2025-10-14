@@ -6,10 +6,10 @@
 #include "Utils.h"
 
 TEST(SphereTests, constructor_default) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Sphere sphere;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(sphere.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(sphere.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(sphere.GetMatrix(), Mat4());
@@ -17,20 +17,20 @@ TEST(SphereTests, constructor_default) {
 }
 
 TEST(SphereTests, constructor_copy) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Sphere sphere_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
 
     Sphere sphere_2(sphere_1);
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(sphere_2.GetId() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(sphere_2.GetPosition(), sphere_1.GetPosition());
     EXPECT_EQ(sphere_2.GetMatrix(), sphere_1.GetMatrix());
     EXPECT_EQ(sphere_2.GetInvertMatrix(), sphere_1.GetInvertMatrix());
 
     Sphere sphere_3 = sphere_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 3);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 3);
     EXPECT_EQ(sphere_3.GetId() - nbInstanceAlreadyExisting, 3);
     EXPECT_EQ(sphere_3.GetPosition(), sphere_1.GetPosition());
     EXPECT_EQ(sphere_3.GetMatrix(), sphere_1.GetMatrix());
@@ -38,18 +38,18 @@ TEST(SphereTests, constructor_copy) {
 }
 
 TEST(SphereTests, constructor_move) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
     std::cout << nbInstanceAlreadyExisting << std::endl;
 
     Sphere sphere_1(std::move(Sphere()));
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(sphere_1.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(sphere_1.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(sphere_1.GetMatrix(), Mat4());
     EXPECT_EQ(sphere_1.GetInvertMatrix(), Mat4());
 
     Sphere sphere_2{Sphere()};
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(sphere_2.GetId() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(sphere_2.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(sphere_2.GetMatrix(), Mat4());
@@ -57,14 +57,14 @@ TEST(SphereTests, constructor_move) {
 }
 
 TEST(SphereTests, affectation_copy) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Sphere sphere_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
 
     Sphere sphere_2;
     sphere_2 = sphere_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
 
     EXPECT_EQ(sphere_2.GetId() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(sphere_2.GetPosition(), sphere_1.GetPosition());
@@ -73,14 +73,14 @@ TEST(SphereTests, affectation_copy) {
 }
 
 TEST(SphereTests, affectation_move) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Sphere sphere;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(sphere.GetId() - nbInstanceAlreadyExisting, 1);
 
     sphere = Sphere();
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(sphere.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(sphere.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(sphere.GetMatrix(), Mat4());

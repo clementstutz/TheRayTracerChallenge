@@ -1,13 +1,13 @@
 #pragma once
 #include <ostream>
 #include <vector>
-#include "RayObject.h"
+#include "Shape.h"
 #include "Ray.h"
 #include "Intersection.h"
 #include "Point.h"
 #include "Vector.h"
 
-class Plane : public RayObject
+class Plane : public Shape
 {
 private:
 	Vector m_normal;

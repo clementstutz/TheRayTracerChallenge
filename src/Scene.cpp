@@ -13,7 +13,7 @@ Scene* Scene::current = nullptr;
 // Constructors
 Scene::Scene() :
     m_lights(std::vector<Light*>()),
-    m_rayObjects(std::vector<RayObject*>()) {
+    m_shapes(std::vector<Shape*>()) {
     if (Scene::current == nullptr) {
         Scene::current = this;
     }
@@ -33,7 +33,7 @@ Scene::~Scene() {
 //Accessors
 Scene* Scene::GetCurrentScene() { return Scene::current; }
 std::vector<Light*> Scene::GetLights() { return m_lights; }
-std::vector<RayObject*> Scene::GetRayObjects() { return m_rayObjects; }
+std::vector<Shape*> Scene::GetShapes() { return m_shapes; }
 
 
 // Member functions
@@ -68,13 +68,13 @@ void Scene::ClearLights() {
     m_lights.clear();
 }
 
-void Scene::ClearRayObjects() {
-    m_rayObjects.clear();
+void Scene::ClearShapes() {
+    m_shapes.clear();
 }
 
 void Scene::Clear() {
     Scene::ClearLights();
-    Scene::ClearRayObjects();
+    Scene::ClearShapes();
 }
 
 void Scene::RemoveLight(Light const& light) {
@@ -85,25 +85,25 @@ void Scene::RemoveLight(Light const& light) {
     m_lights.erase(it, m_lights.end());
 }
 
-void Scene::RemoveRayObject(RayObject const& rayObject) {
-    // Utilise std::remove pour d�placer les pointeurs non �gaux � &rayObject vers le d�but
-    auto it = std::remove(m_rayObjects.begin(), m_rayObjects.end(), &rayObject);
+void Scene::RemoveShape(Shape const& shape) {
+    // Utilise std::remove pour d�placer les pointeurs non �gaux � &shape vers le d�but
+    auto it = std::remove(m_shapes.begin(), m_shapes.end(), &shape);
 
     // Supprime les �l�ments "supprim�s" de la fin du vecteur
-    m_rayObjects.erase(it, m_rayObjects.end());
+    m_shapes.erase(it, m_shapes.end());
 }
 
 void Scene::AddLight(Light& light) {
     m_lights.push_back(&light);
 }
 
-void Scene::AddRayObject(RayObject& rayObject) {
-    m_rayObjects.push_back(&rayObject);
+void Scene::AddShape(Shape& shape) {
+    m_shapes.push_back(&shape);
 }
 
 std::vector<Intersection> Scene::Intersections(Ray const& ray) {
     std::vector<Intersection> intersections;
-    for (RayObject* rObj : m_rayObjects) {
+    for (Shape* rObj : m_shapes) {
         if (rObj != nullptr) {  // V�rifie que le pointeur n'est pas nul
             std::vector<Intersection> tempList = rObj->Intersect(ray);
             intersections.insert(intersections.end(), tempList.begin(), tempList.end()); //
@@ -149,23 +149,23 @@ Color Scene::ColorAt(Ray const& ray, int remaining) {
 }
 
 Color Scene::ShadeHit(Computations const& c, int remaining) {
-    if (c.GetRayObjectPtr() == nullptr) {
+    if (c.GetShapePtr() == nullptr) {
         return Color::black;
     }
 
     Color surfaceColor;
     for (int i = 0; i < m_lights.size(); i++) {
         // Is this light in shadow?
-        if (c.GetRayObject().CanReceiveShadows()) { // Why do we test for that condition ?
+        if (c.GetShape().CanReceiveShadows()) { // Why do we test for that condition ?
             bool isShadow = IsShadowed(c.GetOverPoint(), *m_lights[i]);
-            surfaceColor += c.GetRayObject().Lighting(c.GetPoint(), *m_lights[i], c.GetEye(), c.GetNormal(), isShadow);
+            surfaceColor += c.GetShape().Lighting(c.GetPoint(), *m_lights[i], c.GetEye(), c.GetNormal(), isShadow);
         }
     }
 
     Color reflected = ReflectedColor(c, remaining);
     Color refracted = RefractedColor(c, remaining);
 
-    if (c.GetRayObject().GetMaterial().GetReflectivity() > 0 && c.GetRayObject().GetMaterial().GetTransparency() > 0) {
+    if (c.GetShape().GetMaterial().GetReflectivity() > 0 && c.GetShape().GetMaterial().GetTransparency() > 0) {
         double reflectance = Schlick(c);
         return surfaceColor + reflected * reflectance + refracted * (1.0 - reflectance);
     }
@@ -191,19 +191,19 @@ bool Scene::IsShadowed(Point const& point, Light const& light) {
 }
 
 Color Scene::ReflectedColor(Computations const& c, int remaining) {
-    if (remaining < 1 || Utils::FE(c.GetRayObject().GetMaterial().GetReflectivity(), 0.0)) {
+    if (remaining < 1 || Utils::FE(c.GetShape().GetMaterial().GetReflectivity(), 0.0)) {
         return Color::black;
     }
 
     Ray reflectionRay(c.GetOverPoint(), c.GetReflectVector());
-    return ColorAt(reflectionRay, remaining - 1) * c.GetRayObject().GetMaterial().GetReflectivity();
+    return ColorAt(reflectionRay, remaining - 1) * c.GetShape().GetMaterial().GetReflectivity();
 }
 
 Color Scene::RefractedColor(Computations const& c, int remaining) {
     // Check the material of the hit object and if the transparency is 0, return black.
     // Return calculated refracted value if it is transparent.
 
-    if (Utils::FE(c.GetRayObject().GetMaterial().GetTransparency(), 0.0) || remaining < 1) {
+    if (Utils::FE(c.GetShape().GetMaterial().GetTransparency(), 0.0) || remaining < 1) {
         return Color::black;
     }
 
@@ -221,7 +221,7 @@ Color Scene::RefractedColor(Computations const& c, int remaining) {
 
     Ray refractRay(c.GetUnderPoint(), direction);
 
-    Color refractedColor = ColorAt(refractRay, remaining - 1) * c.GetRayObject().GetMaterial().GetTransparency();
+    Color refractedColor = ColorAt(refractRay, remaining - 1) * c.GetShape().GetMaterial().GetTransparency();
 
     //Replace later with code for refraction calculations
     return refractedColor;

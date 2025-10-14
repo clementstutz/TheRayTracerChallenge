@@ -6,10 +6,10 @@
 #include "Utils.h"
 
 TEST(ConeTests, constructor_default) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Cone cone;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cone.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cone.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(cone.GetMatrix(), Mat4());
@@ -17,10 +17,10 @@ TEST(ConeTests, constructor_default) {
 }
 
 TEST(ConeTests, constructor_values) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Cone cone(-1, 1);
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cone.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cone.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(cone.GetMatrix(), Mat4());
@@ -28,20 +28,20 @@ TEST(ConeTests, constructor_values) {
 }
 
 TEST(ConeTests, constructor_copy) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Cone cone_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
 
     Cone cone_2(cone_1);
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cone_2.GetId() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cone_2.GetPosition(), cone_1.GetPosition());
     EXPECT_EQ(cone_2.GetMatrix(), cone_1.GetMatrix());
     EXPECT_EQ(cone_2.GetInvertMatrix(), cone_1.GetInvertMatrix());
 
     Cone cone_3 = cone_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 3);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 3);
     EXPECT_EQ(cone_3.GetId() - nbInstanceAlreadyExisting, 3);
     EXPECT_EQ(cone_3.GetPosition(), cone_1.GetPosition());
     EXPECT_EQ(cone_3.GetMatrix(), cone_1.GetMatrix());
@@ -49,18 +49,18 @@ TEST(ConeTests, constructor_copy) {
 }
 
 TEST(ConeTests, constructor_move) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
     std::cout << nbInstanceAlreadyExisting << std::endl;
 
     Cone cone_1(std::move(Cone()));
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cone_1.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cone_1.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(cone_1.GetMatrix(), Mat4());
     EXPECT_EQ(cone_1.GetInvertMatrix(), Mat4());
 
     Cone cone_2{ Cone() };
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cone_2.GetId() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cone_2.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(cone_2.GetMatrix(), Mat4());
@@ -68,14 +68,14 @@ TEST(ConeTests, constructor_move) {
 }
 
 TEST(ConeTests, affectation_copy) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Cone cone_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
 
     Cone cone_2;
     cone_2 = cone_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
 
     EXPECT_EQ(cone_2.GetId() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cone_2.GetPosition(), cone_1.GetPosition());
@@ -84,14 +84,14 @@ TEST(ConeTests, affectation_copy) {
 }
 
 TEST(ConeTests, affectation_move) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Cone cone;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cone.GetId() - nbInstanceAlreadyExisting, 1);
 
     cone = Cone();
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cone.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cone.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(cone.GetMatrix(), Mat4());

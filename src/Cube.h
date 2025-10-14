@@ -1,10 +1,10 @@
 #pragma once
 #include <array>
 
-#include "RayObject.h"
+#include "Shape.h"
 #include "Intersection.h"
 
-class Cube : public RayObject
+class Cube : public Shape
 {
 private:
 	void afficher(std::ostream& flux) const;
@@ -27,4 +27,3 @@ public:
 	Vector GetNormal(Point const& worldPoint, Intersection const& i) const override;
 	Vector CalculateLocalNormal(Point const& localPoint, Intersection const& i) const override;
 };
-

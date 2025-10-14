@@ -3,15 +3,15 @@
 
 // Constructors
 Plane::Plane() :
-    RayObject(),
+    Shape(),
     m_normal(Vector(0, 1, 0)) {}
 
 Plane::Plane(Plane const& other) :
-    RayObject(other),
+    Shape(other),
     m_normal(other.m_normal) {}
 
 Plane::Plane(Plane&& other) noexcept :
-    RayObject(std::move(other)),
+    Shape(std::move(other)),
     m_normal(std::move(other.m_normal)) {
     // Reset source object pour �viter des doublons
     other.m_normal = Vector(0, 1, 0);
@@ -20,13 +20,13 @@ Plane::Plane(Plane&& other) noexcept :
 
 // Member functions
 bool Plane::operator==(Plane const& other) const {
-    return (RayObject::operator==(other)) && 
+    return (Shape::operator==(other)) &&
         (m_normal == other.m_normal);
 }
 
 Plane& Plane::operator=(Plane const& other) {
     if (this != &other) {
-        RayObject::operator=(other); // Appelle l'op�rateur d'affectation par copie de la classe m�re
+        Shape::operator=(other); // Appelle l'op�rateur d'affectation par copie de la classe m�re
         m_normal = other.m_normal;
     }
     return *this;
@@ -34,7 +34,7 @@ Plane& Plane::operator=(Plane const& other) {
 
 Plane& Plane::operator=(Plane&& other) noexcept {
     if (this != &other) {
-        RayObject::operator=(std::move(other)); // Appelle l'op�rateur d'affectation par d�placement de la classe m�re
+        Shape::operator=(std::move(other)); // Appelle l'op�rateur d'affectation par d�placement de la classe m�re
         m_normal = std::move(other.m_normal);
         other.m_normal = Vector(0, 1, 0);
     }

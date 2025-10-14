@@ -8,7 +8,7 @@
 #include "Projectile.h"
 #include "Environment.h"
 #include "Mat4.h"
-#include "RayObject.h"
+#include "Shape.h"
 #include "Sphere.h"
 #include "Intersection.h"
 #include "Scene.h"
@@ -115,7 +115,7 @@ void static Chapter_5_Challenge() {
     canvas.fillCanvas(Color::black);
 
     Sphere sphere;
-    scene.AddRayObject(sphere);
+    scene.AddShape(sphere);
     sphere.SetMatrix(transmatrix);
 
     Point camera(0, 0, -5);
@@ -174,7 +174,7 @@ void static Chapter_6_Challenge() {
                                        (wallSize * 0.5) - y * increment,
                                        wall.getZ());
             Point currentWallPixel(temp.getX(), temp.getY(), temp.getZ());
-            
+
             Vector direction = (currentWallPixel - camera).Normalize();
             Ray ray(camera, direction);
 

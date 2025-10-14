@@ -3,7 +3,7 @@
 
 #include "Ray.h"
 #include "Light.h"
-#include "RayObject.h"
+#include "Shape.h"
 #include "Intersection.h"
 #include "Computations.h"
 #include "Camera.h"
@@ -14,7 +14,7 @@ class Scene
 private :
 	static Scene* current; // Pointeur statique vers l'objet Scene
 	std::vector<Light*> m_lights;
-	std::vector<RayObject*> m_rayObjects;
+	std::vector<Shape*> m_shapes;
 
 	void afficher(std::ostream& flux) const;
 
@@ -30,7 +30,7 @@ public:
 	//Accessors
 	static Scene* GetCurrentScene(); // Renvoie l'instance actuelle
 	std::vector<Light*> GetLights();
-	std::vector<RayObject*> GetRayObjects();
+	std::vector<Shape*> GetShapes();
 
 
 	// Member functions
@@ -38,12 +38,12 @@ public:
 	void DefaultScene();
 	static void ResetCurrentScene(); // D�truit l'ancienne instance
 	void ClearLights();
-	void ClearRayObjects();
+	void ClearShapes();
 	void Clear();
 	void RemoveLight(Light const& light);
-	void RemoveRayObject(RayObject const& rayObject);
+	void RemoveShape(Shape const& shape);
 	void AddLight(Light& light);
-	void AddRayObject(RayObject& rayObject);
+	void AddShape(Shape& shape);
 	std::vector<Intersection> Intersections(Ray const& ray);
 	Intersection Hit(std::vector<Intersection> const& intersections);
 	Ray RayForPixel(Camera const& camera, int x, int y);

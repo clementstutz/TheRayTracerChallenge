@@ -6,10 +6,10 @@
 #include "Utils.h"
 
 TEST(CubeTests, constructor_default) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Cube cube;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cube.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cube.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(cube.GetMatrix(), Mat4());
@@ -17,20 +17,20 @@ TEST(CubeTests, constructor_default) {
 }
 
 TEST(CubeTests, constructor_copy) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Cube cube_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
 
     Cube cube_2(cube_1);
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cube_2.GetId() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cube_2.GetPosition(), cube_1.GetPosition());
     EXPECT_EQ(cube_2.GetMatrix(), cube_1.GetMatrix());
     EXPECT_EQ(cube_2.GetInvertMatrix(), cube_1.GetInvertMatrix());
 
     Cube cube_3 = cube_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 3);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 3);
     EXPECT_EQ(cube_3.GetId() - nbInstanceAlreadyExisting, 3);
     EXPECT_EQ(cube_3.GetPosition(), cube_1.GetPosition());
     EXPECT_EQ(cube_3.GetMatrix(), cube_1.GetMatrix());
@@ -38,18 +38,18 @@ TEST(CubeTests, constructor_copy) {
 }
 
 TEST(CubeTests, constructor_move) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
     std::cout << nbInstanceAlreadyExisting << std::endl;
 
     Cube cube_1(std::move(Cube()));
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cube_1.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cube_1.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(cube_1.GetMatrix(), Mat4());
     EXPECT_EQ(cube_1.GetInvertMatrix(), Mat4());
 
     Cube cube_2{ Cube() };
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cube_2.GetId() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cube_2.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(cube_2.GetMatrix(), Mat4());
@@ -57,14 +57,14 @@ TEST(CubeTests, constructor_move) {
 }
 
 TEST(CubeTests, affectation_copy) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Cube cube_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
 
     Cube cube_2;
     cube_2 = cube_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
 
     EXPECT_EQ(cube_2.GetId() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cube_2.GetPosition(), cube_1.GetPosition());
@@ -73,14 +73,14 @@ TEST(CubeTests, affectation_copy) {
 }
 
 TEST(CubeTests, affectation_move) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Cube cube;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cube.GetId() - nbInstanceAlreadyExisting, 1);
 
     cube = Cube();
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(cube.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(cube.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(cube.GetMatrix(), Mat4());

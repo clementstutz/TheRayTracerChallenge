@@ -3,13 +3,13 @@
 #include "Computations.h"
 #include "Utils.h"
 #include "Material.h"
-#include "RayObject.h"
+#include "Shape.h"
 #include "Intersection.h"
 
 // Constructors
 Computations::Computations() :
     m_t(0.0),
-    m_rayObjectPtr(nullptr),
+    m_shapePtr(nullptr),
     m_point(Point()),
     m_eye(Vector()),
     m_normal(Vector()),
@@ -24,13 +24,13 @@ Computations::Computations() :
 // Accessors
 const double Computations::GetLength() const { return m_t; }
 
-const RayObject* Computations::GetRayObjectPtr() const { return m_rayObjectPtr; }
+const Shape* Computations::GetShapePtr() const { return m_shapePtr; }
 
-const RayObject& Computations::GetRayObject() const {
-    if (!m_rayObjectPtr) {
-        throw std::runtime_error("m_rayObject is null. Invalid access.");
+const Shape& Computations::GetShape() const {
+    if (!m_shapePtr) {
+        throw std::runtime_error("m_shape is null. Invalid access.");
     }
-    return *m_rayObjectPtr;
+    return *m_shapePtr;
 }
 
 const Point Computations::GetPoint() const { return m_point; }
@@ -59,7 +59,7 @@ Computations Computations::Prepare(Intersection const& hit, Ray const& ray, std:
     if (hit.IsEmpty()) { return c; }
 
     c.m_t = hit.getLength();
-    c.m_rayObjectPtr = hit.getObjPtr();
+    c.m_shapePtr = hit.getObjPtr();
     c.m_point = ray.position(hit.getLength());
     c.m_eye = -ray.getDirection().Normalized();
     c.m_normal = hit.getObj().GetNormal(c.m_point, hit).Normalized();
@@ -73,7 +73,7 @@ Computations Computations::Prepare(Intersection const& hit, Ray const& ray, std:
 
     // Transparency Intersections algorithm
     if (hits != nullptr) {
-        std::vector<const RayObject*> container;
+        std::vector<const Shape*> container;
         for (Intersection const& intersection : *hits) {
             // D�terminer m_n1
             if (intersection == hit) {
@@ -81,8 +81,8 @@ Computations Computations::Prepare(Intersection const& hit, Ray const& ray, std:
             }
 
             // Mettre � jour container
-            const RayObject* obj = intersection.getObjPtr();
-            auto it = std::find_if(container.begin(), container.end(), [&obj](const RayObject* ptr) {return ptr == obj;});  // ou : auto it = std::find(container.begin(), container.end(), obj);
+            const Shape* obj = intersection.getObjPtr();
+            auto it = std::find_if(container.begin(), container.end(), [&obj](const Shape* ptr) {return ptr == obj;});  // ou : auto it = std::find(container.begin(), container.end(), obj);
             if (it != container.end()) {
                 container.erase(it);
             }

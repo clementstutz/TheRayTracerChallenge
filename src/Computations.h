@@ -4,13 +4,13 @@
 #include "Ray.h"
 #include "Intersection.h"
 
-class RayObject;
+class Shape;
 
 class Computations
 {
 private:
 	double m_t;
-	const RayObject* m_rayObjectPtr;
+	const Shape* m_shapePtr;
 	Point m_point;
 	Vector m_eye;
 	Vector m_normal;
@@ -32,8 +32,8 @@ public:
 
 	// Accessors
 	const double GetLength() const;
-	const RayObject* GetRayObjectPtr() const;
-	const RayObject& GetRayObject() const;
+	const Shape* GetShapePtr() const;
+	const Shape& GetShape() const;
 	const Point GetPoint() const;
 	const Vector GetEye() const;
 	const Vector GetNormal() const;
@@ -48,4 +48,3 @@ public:
 	// Member functions
 	static Computations Prepare(Intersection const& hit, Ray const& ray, std::vector<Intersection> const* hits = nullptr);
 };
-

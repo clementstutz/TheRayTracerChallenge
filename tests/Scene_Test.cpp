@@ -18,23 +18,23 @@ TEST(SceneTests, EmptyScene) {
     EXPECT_TRUE(Scene::GetCurrentScene() == &scene);
 
     std::vector<Light*> l;
-    std::vector<RayObject*> r;
+    std::vector<Shape*> r;
     EXPECT_EQ(scene.GetLights(), l);
-    EXPECT_EQ(scene.GetRayObjects(), r);
+    EXPECT_EQ(scene.GetShapes(), r);
 }
 
 TEST(SceneTests, constructor_default) {
     Scene scene;
     std::vector<Light*> l;
-    std::vector<RayObject*> r;
+    std::vector<Shape*> r;
     EXPECT_EQ(scene.GetLights(), l);
-    EXPECT_EQ(scene.GetRayObjects(), r);
+    EXPECT_EQ(scene.GetShapes(), r);
 }
 
 TEST(SceneTests, accessors) {
     Scene scene;
     Sphere sphere;
-    std::vector<RayObject*> ref1 = scene.GetRayObjects();
+    std::vector<Shape*> ref1 = scene.GetShapes();
     EXPECT_EQ(*ref1[0], sphere);
 
     Light light(Point(0, 0, -5), Color(1, 1, 1));
@@ -51,13 +51,13 @@ TEST(SceneTests, Intersections) {
     std::vector<Intersection> intersections = scene.Intersections(ray);
 
     EXPECT_EQ(intersections.size(), 4);
-    EXPECT_EQ(intersections[0].getObj(), *scene.GetRayObjects()[0]);
+    EXPECT_EQ(intersections[0].getObj(), *scene.GetShapes()[0]);
     EXPECT_FLOAT_EQ(intersections[0].getLength(), 4.0);
-    EXPECT_EQ(intersections[1].getObj(), *scene.GetRayObjects()[1]);
+    EXPECT_EQ(intersections[1].getObj(), *scene.GetShapes()[1]);
     EXPECT_FLOAT_EQ(intersections[1].getLength(), 4.5);
-    EXPECT_EQ(intersections[2].getObj(), *scene.GetRayObjects()[1]);
+    EXPECT_EQ(intersections[2].getObj(), *scene.GetShapes()[1]);
     EXPECT_FLOAT_EQ(intersections[2].getLength(), 5.5);
-    EXPECT_EQ(intersections[3].getObj(), *scene.GetRayObjects()[0]);
+    EXPECT_EQ(intersections[3].getObj(), *scene.GetShapes()[0]);
     EXPECT_FLOAT_EQ(intersections[3].getLength(), 6.0);
 }
 
@@ -71,7 +71,7 @@ TEST(SceneTests, hit) {
 
     Intersection hit = scene.Hit(intersections);
 
-    EXPECT_EQ(hit.getObj(), *scene.GetRayObjects()[0]);
+    EXPECT_EQ(hit.getObj(), *scene.GetShapes()[0]);
     EXPECT_FLOAT_EQ(hit.getLength(), 4.0);
 }
 
@@ -127,13 +127,13 @@ TEST(SceneTests, RayHitColor) {
 TEST(SceneTests, RayIntersectionBehindColor) {  //NOTE : je n'ai pas compris ce test
     Scene scene;
     scene.DefaultScene();
-    scene.GetRayObjects()[1]->SetMaterial(Material(Color::white, 1));
+    scene.GetShapes()[1]->SetMaterial(Material(Color::white, 1));
 
     Ray ray(Point(0, 0, 0.75), Vector(0, 0, -1));
 
     Color finalColor = scene.ColorAt(ray); // Pourquoi ColorAt renvoie la couleur de sphere_2 ?
-    std::vector<RayObject*> rayObj = scene.GetRayObjects();
-    EXPECT_EQ(rayObj[1]->GetMaterial().GetColor(), finalColor);
+    std::vector<Shape*> shape = scene.GetShapes();
+    EXPECT_EQ(shape[1]->GetMaterial().GetColor(), finalColor);
 }
 
 TEST(SceneTests, RayThroughCenter) {

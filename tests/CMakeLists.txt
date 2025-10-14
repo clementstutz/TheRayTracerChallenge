@@ -14,7 +14,7 @@ add_executable(TheRayTracerChallenge_Tests
 	Light_Test.cpp
 	Material_Test.cpp
 	Ray_Test.cpp
-	RayObject_Test.cpp
+	Shape_Test.cpp
 	Scene_Test.cpp
 	Sphere_Test.cpp
 	Utils_Test.cpp

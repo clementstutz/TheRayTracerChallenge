@@ -1,7 +1,7 @@
 #include "Group.h"
 
 // Constructors
-Group::Group() : RayObject() {}
+Group::Group() : Shape() {}
 
 
 // Member functions
@@ -21,7 +21,7 @@ std::vector<Intersection> Group::Intersect(Ray const& ray)
 
         Ray transRay = GetMatrix().Inverse() * ray;
 
-        foreach(RayObject obj in GetChildren())
+        foreach(Shape obj in GetChildren())
         {
             hits.AddRange(obj.Intersect(transRay));
         }
@@ -33,4 +33,3 @@ std::vector<Intersection> Group::Intersect(Ray const& ray)
     return hits;
 	return std::vector<Intersection>();
 }
-

@@ -1,14 +1,14 @@
 #pragma once
 #include <vector>
-//#include "RayObject.h"
+//#include "Shape.h"
 
-// Déclaration anticipée de classes
-class RayObject;
+// Dï¿½claration anticipï¿½e de classes
+class Shape;
 
 class Intersection
 {
 protected:
-	const RayObject* m_rayObject;
+	const Shape* m_shape;
 	double m_length;
 
 	void afficher(std::ostream& flux) const;
@@ -16,7 +16,7 @@ protected:
 public:
 	// Constructors
 	Intersection();
-	Intersection(const RayObject& obj, double const& length);
+	Intersection(const Shape& obj, double const& length);
 	Intersection(Intersection const& other);
 	Intersection(Intersection&& other) noexcept;
 
@@ -26,13 +26,13 @@ public:
 
 
 	// Accessors
-	const RayObject* getObjPtr() const;
-	const RayObject& getObj() const;
+	const Shape* getObjPtr() const;
+	const Shape& getObj() const;
 	double getLength() const;
 
 
 	// Member functions
-	Intersection& operator=(const Intersection& other);	// NOTE : Nécessaire sinon erreurs suivantes : 
+	Intersection& operator=(const Intersection& other);	// NOTE : Nï¿½cessaire sinon erreurs suivantes :
 	Intersection& operator=(Intersection&& other) noexcept;
 	bool operator==(Intersection const& other) const;
 	friend std::ostream& operator<<(std::ostream& flux, Intersection const& intersection);

@@ -25,8 +25,8 @@ TEST(ComputationsTests, Precomputations) {
     Computations c = Computations::Prepare(hit, ray);
 
     EXPECT_EQ(4, c.GetLength());
-    EXPECT_EQ(hit.getObj(), c.GetRayObject());
-    EXPECT_EQ(&hit.getObj(), c.GetRayObjectPtr());
+    EXPECT_EQ(hit.getObj(), c.GetShape());
+    EXPECT_EQ(&hit.getObj(), c.GetShapePtr());
     EXPECT_EQ(Point(0, 0, -1), c.GetPoint());
     EXPECT_EQ(Vector(0, 0, -1), c.GetEye());
     EXPECT_EQ(Vector(0, 0, -1), c.GetNormal());
@@ -46,8 +46,8 @@ TEST(ComputationsTests, Precomputations) {
     c = Computations::Prepare(hit, ray);
 
     EXPECT_EQ(0.5, c.GetLength());
-    EXPECT_EQ(hit.getObj(), c.GetRayObject());
-    EXPECT_EQ(&hit.getObj(), c.GetRayObjectPtr());
+    EXPECT_EQ(hit.getObj(), c.GetShape());
+    EXPECT_EQ(&hit.getObj(), c.GetShapePtr());
     EXPECT_EQ(Point(0, 0, 0.5), c.GetPoint());
     EXPECT_EQ(Vector(0, 0, -1), c.GetEye());
     EXPECT_EQ(Vector(0, 0, -1), c.GetNormal());

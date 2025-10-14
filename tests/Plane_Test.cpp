@@ -6,10 +6,10 @@
 #include "Utils.h"
 
 TEST(PlaneTest, constructor_default) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Plane plane;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(plane.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(plane.GetMatrix(), Mat4());
     EXPECT_EQ(plane.GetInvertMatrix(), Mat4());
@@ -22,13 +22,13 @@ TEST(PlaneTest, constructor_default) {
 }
 
 TEST(PlaneTest, constructor_copy) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Plane plane_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
 
     Plane plane_2(plane_1);
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(plane_2.GetId() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(plane_2.GetMatrix(), plane_1.GetMatrix());
     EXPECT_EQ(plane_2.GetInvertMatrix(), plane_1.GetInvertMatrix());
@@ -39,7 +39,7 @@ TEST(PlaneTest, constructor_copy) {
     EXPECT_EQ(plane_2.GetNormal(Point(0, 0, 0), Intersection()), plane_1.GetNormal(Point(0, 0, 0), Intersection()));
 
     Plane plane_3 = plane_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 3);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 3);
     EXPECT_EQ(plane_3.GetId() - nbInstanceAlreadyExisting, 3);
     EXPECT_EQ(plane_3.GetMatrix(), plane_1.GetMatrix());
     EXPECT_EQ(plane_3.GetInvertMatrix(), plane_1.GetInvertMatrix());
@@ -51,11 +51,11 @@ TEST(PlaneTest, constructor_copy) {
 }
 
 TEST(PlaneTest, constructor_move) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
     std::cout << nbInstanceAlreadyExisting << std::endl;
 
     Plane plane_1(std::move(Plane()));
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(plane_1.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(plane_1.GetMatrix(), Mat4());
     EXPECT_EQ(plane_1.GetInvertMatrix(), Mat4());
@@ -66,7 +66,7 @@ TEST(PlaneTest, constructor_move) {
     EXPECT_EQ(plane_1.GetNormal(Point(0, 0, 0), Intersection()), Vector(0, 1, 0));
 
     Plane plane_2{ Plane() };
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(plane_2.GetId() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(plane_2.GetMatrix(), Mat4());
     EXPECT_EQ(plane_2.GetInvertMatrix(), Mat4());
@@ -78,14 +78,14 @@ TEST(PlaneTest, constructor_move) {
 }
 
 TEST(PlaneTest, affectation_copy) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Plane plane_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
 
     Plane plane_2;
     plane_2 = plane_1;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
 
     EXPECT_EQ(plane_2.GetId() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(plane_2.GetMatrix(), plane_1.GetMatrix());
@@ -98,14 +98,14 @@ TEST(PlaneTest, affectation_copy) {
 }
 
 TEST(PlaneTest, affectation_move) {
-    int nbInstanceAlreadyExisting = RayObject::getNbInstances();
+    int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Plane plane;
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(plane.GetId() - nbInstanceAlreadyExisting, 1);
 
     plane = Plane();
-    EXPECT_EQ(RayObject::getNbInstances() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
     EXPECT_EQ(plane.GetId() - nbInstanceAlreadyExisting, 1);
     EXPECT_EQ(plane.GetMatrix(), Mat4());
     EXPECT_EQ(plane.GetInvertMatrix(), Mat4());

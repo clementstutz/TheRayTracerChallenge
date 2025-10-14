@@ -4,17 +4,17 @@
 #include "Utils.h"
 
 // Constructors
-Cube::Cube() : RayObject() {}
+Cube::Cube() : Shape() {}
 
-Cube::Cube(Cube const& other) : RayObject(other) {}
+Cube::Cube(Cube const& other) : Shape(other) {}
 
-Cube::Cube(Cube&& other) noexcept : RayObject(std::move(other)) {}
+Cube::Cube(Cube&& other) noexcept : Shape(std::move(other)) {}
 
 
 // Member functions
 Cube& Cube::operator=(Cube const& other) {
     if (this != &other) {
-        RayObject::operator=(other); // Appelle l'op�rateur d'affectation par copie de la classe m�re
+        Shape::operator=(other); // Appelle l'op�rateur d'affectation par copie de la classe m�re
         // Copiez ici des membres sp�cifiques � Cube si n�cessaire
     }
     return *this;
@@ -22,7 +22,7 @@ Cube& Cube::operator=(Cube const& other) {
 
 Cube& Cube::operator=(Cube&& other) noexcept {
     if (this != &other) { // V�rification d'auto-affectation
-        RayObject::operator=(std::move(other)); // Appelle l'op�rateur d'affectation par d�placement de la classe m�re
+        Shape::operator=(std::move(other)); // Appelle l'op�rateur d'affectation par d�placement de la classe m�re
         // D�placez ici des membres sp�cifiques � Cube si n�cessaire
     }
     return *this;
