@@ -134,7 +134,7 @@ Ray Scene::RayForPixel(Camera const& camera, int x, int y) {
     double worldY = camera.GetHalfHeight() - yOffset;
 
     Point pixel = camera.GetTransformInvert() * Point(worldX, worldY, -1.0);
-    Point origin = Point(camera.GetTransformInvert()[0][3],camera.GetTransformInvert()[1][3],camera.GetTransformInvert()[2][3]);
+    Point origin(camera.GetTransformInvert()[0][3],camera.GetTransformInvert()[1][3],camera.GetTransformInvert()[2][3]);
     Vector direction = (pixel - origin).Normalize();
     return Ray(origin, direction);
 }
