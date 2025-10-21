@@ -1,5 +1,6 @@
 #include <cmath>
 #include <algorithm>  // Pour std::remove
+#include <chrono> // Pour std::chrono
 
 #include "Scene.h"
 #include "Computations.h"
@@ -132,8 +133,8 @@ Ray Scene::RayForPixel(Camera const& camera, int x, int y) {
     double worldX = camera.GetHalfWidth() - xOffset;
     double worldY = camera.GetHalfHeight() - yOffset;
 
-    Point pixel = camera.GetTransform().inverted() * Point(worldX, worldY, -1.0);
-    Point origin = camera.GetTransform().inverted() * Point(0, 0, 0);
+    Point pixel = camera.GetTransformInvert() * Point(worldX, worldY, -1.0);
+    Point origin = Point(camera.GetTransformInvert()[0][3],camera.GetTransformInvert()[1][3],camera.GetTransformInvert()[2][3]);
     Vector direction = (pixel - origin).Normalize();
     return Ray(origin, direction);
 }
@@ -256,15 +257,21 @@ Canvas Scene::Render(Camera const& camera, int remaining) {
     //Precalculate the bounds
     //PreCalculateBounds();
 
+    auto debut = std::chrono::high_resolution_clock::now();
+    auto fin = std::chrono::high_resolution_clock::now();
+    auto duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+
+    debut = std::chrono::high_resolution_clock::now();
     for (int y = 0; y < camera.GetVSize(); y++) { // 1: (int y = 0; y < camera.GetVSize(); y++) -or- 2: (int y = camera.GetVSize()-1; y >=0; y--)
         for (int x = 0; x < camera.GetHSize(); x++) {
             Ray temp = RayForPixel(camera, x, y);
             Color pixelColor = ColorAt(temp, remaining);
             canvas.setPixel(x, y, pixelColor);
         }
-        // affiche le pourcentage de progression de la g�n�ration de l'image
-        std::cout << "y progression = " << ((static_cast<double>(y) + 1.0) / static_cast<double>(camera.GetVSize()) * 100) << "%" << std::endl;
     }
-    std::cout << "Rendering done !" << std::endl;
+    fin = std::chrono::high_resolution_clock::now();
+    duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    std::cout << "Durée d'exécution Render internal : " << duree.count() << " ms" << std::endl;
+    //std::cout << "Rendering done !" << std::endl;
     return canvas;
 }

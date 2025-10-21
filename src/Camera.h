@@ -9,6 +9,7 @@ private:
     int m_vSize;
     double m_fov;
     Mat4 m_transform;
+    Mat4 m_transformInvert;
     double m_pixelSize;
     double m_halfWidth;
     double m_halfHeight;
@@ -29,6 +30,7 @@ public:
     const int GetVSize() const;
     const double GetFov() const;
     const Mat4 GetTransform() const;
+    const Mat4 GetTransformInvert() const;
     const double GetPixelSize() const;
     const double GetHalfWidth() const;
     const double GetHalfHeight() const;

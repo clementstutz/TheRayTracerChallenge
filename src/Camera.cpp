@@ -7,7 +7,8 @@ Camera::Camera(int hSize, int vSize, double fieldOfView) :
     m_hSize(hSize),
     m_vSize(vSize),
     m_fov(fieldOfView),
-    m_transform(Mat4()) {
+    m_transform(Mat4()),
+    m_transformInvert(Mat4()) {
     CalculatePixelSize();
 }
 
@@ -17,6 +18,7 @@ const int Camera::GetHSize() const { return m_hSize; }
 const int Camera::GetVSize() const{ return m_vSize; }
 const double Camera::GetFov() const{ return m_fov; }
 const Mat4 Camera::GetTransform() const { return m_transform; }
+const Mat4 Camera::GetTransformInvert() const { return m_transformInvert; }
 const double Camera::GetPixelSize() const{ return m_pixelSize; }
 const double Camera::GetHalfWidth() const{ return m_halfWidth; }
 const double Camera::GetHalfHeight() const { return m_halfHeight; }
@@ -60,5 +62,6 @@ Mat4 Camera::ViewTransform(Point from, Point to, Vector up) {
         0, 0, 0, 1);
     // Move to the from position.
     m_transform = orientation * Mat4::TranslateMatrix(-from.getX(), -from.getY(), -from.getZ()); // Erreur ? Ne colle pas avec Wikipedia..!
+    m_transformInvert = m_transform.inverted();
     return m_transform;
 }
