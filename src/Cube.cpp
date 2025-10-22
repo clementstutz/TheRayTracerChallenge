@@ -48,15 +48,11 @@ std::array<double, 2> Cube::CheckAxis(const double& origin, const double& direct
         t[1] = tMaxNumerator / direction;
     }
     else {
-        t[0] = tMinNumerator * std::numeric_limits<double>::infinity();
-        t[1] = tMaxNumerator * std::numeric_limits<double>::infinity();
+        t[0] = std::numeric_limits<double>::max();
+        t[1] = std::numeric_limits<double>::max();
     }
 
-    if (t[0] > t[1]) {
-        double temp = std::move(t[0]);
-        t[0] = std::move(t[1]);
-        t[1] = std::move(temp);
-    }
+    if (t[0] > t[1]) { std::swap(t[0], t[1]); }
 
     return t;
 }
