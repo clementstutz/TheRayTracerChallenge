@@ -20,6 +20,7 @@ protected:
 	Material m_material;
 	bool m_canReceiveShadows;   // WARNING : A d�placer dans materiaux, car sinon je ne peux pas d�finir un mtx Glassy() qui ne peux caster des ombres !
 	bool m_canCastShadows;      // WARNING : A d�placer dans materiaux
+	Shape* m_parent;
 
 	virtual void afficher(std::ostream& flux) const;
 
@@ -41,11 +42,13 @@ public:
 	Material GetMaterial() const;
 	bool CanReceiveShadows() const;
 	bool CanCastShadows() const;
+	Shape* GetParent() const;
 	void SetMatrix(Mat4 const&mat);
 	void SetPosition(Point const& p);
 	void SetMaterial(Material const& material);
 	void SetCanReceiveShadows(bool const& canReceiveShadows);
 	void SetCanCastShadows(bool const& canCastShadows);
+	void SetParent(Shape* parent);
 
 	// Member functions
 	Shape& operator=(Shape const& other);

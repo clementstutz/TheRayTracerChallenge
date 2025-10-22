@@ -12,7 +12,8 @@ Shape::Shape() :
 	m_invertMat(Mat4()),
 	m_material(Material()),
 	m_canReceiveShadows(true),
-	m_canCastShadows(true) {
+	m_canCastShadows(true),
+	m_parent(nullptr) {
 	if (Scene::GetCurrentScene() != nullptr) {
 		//this.SetParent(Scene::GetCurrentScene().root);
 		Scene::GetCurrentScene()->AddShape(*this);
@@ -25,7 +26,8 @@ Shape::Shape(Shape const& other) :
 	m_invertMat(other.m_invertMat),
 	m_material(other.m_material),
 	m_canReceiveShadows(other.m_canReceiveShadows),
-	m_canCastShadows(other.m_canCastShadows) {
+	m_canCastShadows(other.m_canCastShadows),
+	m_parent(other.m_parent) {
 	if (Scene::GetCurrentScene() != nullptr) {
 		//this.SetParent(Scene::GetCurrentScene().root);
 		Scene::GetCurrentScene()->AddShape(*this);
@@ -38,7 +40,8 @@ Shape::Shape(Shape&& other) noexcept :
 	m_invertMat(std::move(other.m_invertMat)),
 	m_material(std::move(other.m_material)),
 	m_canReceiveShadows(std::move(other.m_canReceiveShadows)),
-	m_canCastShadows(std::move(other.m_canCastShadows)) {
+	m_canCastShadows(std::move(other.m_canCastShadows)),
+	m_parent(std::move(other.m_parent)) {
 	// Reset source object pour �viter des doublons
 	other.m_id = 0; // R�initialise l'ID de l'objet source
 	other.m_matrix = Mat4();
@@ -46,6 +49,7 @@ Shape::Shape(Shape&& other) noexcept :
 	other.m_material = Material();
 	other.m_canReceiveShadows = false;
 	other.m_canCastShadows = false;
+	other.m_parent = nullptr;
 	if (Scene::GetCurrentScene() != nullptr) {
 		//this.SetParent(Scene::GetCurrentScene().root);
 		Scene::GetCurrentScene()->AddShape(*this);
@@ -81,6 +85,8 @@ bool Shape::CanReceiveShadows() const { return m_canReceiveShadows; }
 
 bool Shape::CanCastShadows() const { return m_canCastShadows; }
 
+Shape* Shape::GetParent() const { return m_parent; }
+
 void Shape::SetMatrix(Mat4 const& mat) {m_matrix = mat;}
 
 void Shape::SetPosition(Point const& p) {
@@ -95,6 +101,7 @@ void Shape::SetCanReceiveShadows(bool const& canReceiveShadows) { m_canReceiveSh
 
 void Shape::SetCanCastShadows(bool const& canCastShadows) { m_canCastShadows = canCastShadows; }
 
+void Shape::SetParent(Shape* groupPtr) { m_parent = groupPtr; }
 
 // Member functions
 Shape& Shape::operator=(Shape const& other) {
@@ -104,6 +111,7 @@ Shape& Shape::operator=(Shape const& other) {
 		m_material = other.m_material;
 		m_canReceiveShadows = other.m_canReceiveShadows;
 		m_canCastShadows = other.m_canCastShadows;
+		m_parent = other.m_parent;
 	}
 	return *this;
 }
@@ -115,12 +123,14 @@ Shape& Shape::operator=(Shape&& other) noexcept {
 		m_material = std::move(other.m_material);
 		m_canReceiveShadows = std::move(other.m_canReceiveShadows);
 		m_canCastShadows = std::move(other.m_canCastShadows);
+		m_parent = std::move(other.m_parent);
 
 		// Reset source object
 		other.m_matrix = Mat4();
 		other.m_invertMat = Mat4();
 		other.m_canReceiveShadows = false;
 		other.m_canCastShadows = false;
+		other.m_parent = nullptr;
 	}
 	return *this;
 }
@@ -129,7 +139,8 @@ bool Shape::operator==(Shape const& other) const {
 	return (m_id == other.m_id) &&
 		   (m_matrix == other.m_matrix) &&
 		   (m_canReceiveShadows == other.m_canReceiveShadows) &&
-		   (m_canCastShadows == other.m_canCastShadows);
+		   (m_canCastShadows == other.m_canCastShadows) &&
+		   (m_parent == other.m_parent);
 }
 
 std::ostream& operator<<(std::ostream& flux, Shape const& shape) {
@@ -146,22 +157,24 @@ Ray Shape::RayToObjectSpace(Ray const& ray) const {
 }
 
 Point Shape::WorldToObject(Point const &worldPoint) const {
-	/*if (this->GetParent() != null)
+	// La copie de worldPoint dans temp pour palier le fait que worldPoint et une ref constant n'est surement pas optimal, mais pour le moment ça marche.
+	// TODO : optimiser ça.
+	Point temp = worldPoint;
+	if (this->GetParent() != nullptr)
 	{
-		worldPoint = this->GetParent().WorldToObject(worldPoint);
-	}*/
-	return GetInvertMatrix() * worldPoint;
+		temp = this->GetParent()->WorldToObject(temp);
+	}
+	return GetInvertMatrix() * temp;
 }
 
 Vector Shape::NormalToWorld(Vector const&localNormal) const  {
-	Vector temp = GetInvertMatrix().transposed() * localNormal;
-	Vector worldNormal;
-	worldNormal = temp;	// WARNING : I must do that cause otherwise w is not 0.
+	Vector worldNormal = GetInvertMatrix().transposed() * localNormal;
+	worldNormal.set(worldNormal.getX(), worldNormal.getY(), worldNormal.getZ(), 0.0);	// WARNING : I must do that cause otherwise w is not 0.
 	worldNormal.Normalize();
 
-	/*if (this.GetParent() != null) {
-		worldNormal = this->GetParent().NormalToWorld(worldNormal);
-	}*/
+	if (this->GetParent() != nullptr) {
+		worldNormal = this->GetParent()->NormalToWorld(worldNormal);
+	}
 	return worldNormal;
 }
 

@@ -13,62 +13,74 @@ TEST(Shape_for_TestTests, constructor_default) {
     EXPECT_EQ(shape.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(shape.GetMatrix(), Mat4());
     EXPECT_EQ(shape.GetInvertMatrix(), Mat4());
+    EXPECT_EQ(shape.GetMaterial(), Material());
+    EXPECT_EQ(shape.GetParent(), nullptr);
 }
 
 TEST(Shape_for_TestTests, constructor_copy) {
     int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
-    Shape_for_Test sphere_1;
+    Shape_for_Test shape_1;
     EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
 
-    Shape_for_Test sphere_2(sphere_1);
+    Shape_for_Test shape_2(shape_1);
     EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
-    EXPECT_EQ(sphere_2.GetId() - nbInstanceAlreadyExisting, 2);
-    EXPECT_EQ(sphere_2.GetPosition(), sphere_1.GetPosition());
-    EXPECT_EQ(sphere_2.GetMatrix(), sphere_1.GetMatrix());
-    EXPECT_EQ(sphere_2.GetInvertMatrix(), sphere_1.GetInvertMatrix());
+    EXPECT_EQ(shape_2.GetId() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(shape_2.GetPosition(), shape_1.GetPosition());
+    EXPECT_EQ(shape_2.GetMatrix(), shape_1.GetMatrix());
+    EXPECT_EQ(shape_2.GetInvertMatrix(), shape_1.GetInvertMatrix());
+    EXPECT_EQ(shape_2.GetMaterial(), shape_1.GetMaterial());
+    EXPECT_EQ(shape_2.GetParent(), shape_1.GetParent());
 
-    Shape_for_Test sphere_3 = sphere_1;
+    Shape_for_Test shape_3 = shape_1;
     EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 3);
-    EXPECT_EQ(sphere_3.GetId() - nbInstanceAlreadyExisting, 3);
-    EXPECT_EQ(sphere_3.GetPosition(), sphere_1.GetPosition());
-    EXPECT_EQ(sphere_3.GetMatrix(), sphere_1.GetMatrix());
-    EXPECT_EQ(sphere_3.GetInvertMatrix(), sphere_1.GetInvertMatrix());
+    EXPECT_EQ(shape_3.GetId() - nbInstanceAlreadyExisting, 3);
+    EXPECT_EQ(shape_3.GetPosition(), shape_1.GetPosition());
+    EXPECT_EQ(shape_3.GetMatrix(), shape_1.GetMatrix());
+    EXPECT_EQ(shape_3.GetInvertMatrix(), shape_1.GetInvertMatrix());
+    EXPECT_EQ(shape_3.GetMaterial(), shape_1.GetMaterial());
+    EXPECT_EQ(shape_3.GetParent(), shape_1.GetParent());
 }
 
 TEST(Shape_for_TestTests, constructor_move) {
     int nbInstanceAlreadyExisting = Shape::getNbInstances();
     std::cout << nbInstanceAlreadyExisting << std::endl;
 
-    Shape_for_Test sphere_1(std::move(Shape_for_Test()));
+    Shape_for_Test shape_1(std::move(Shape_for_Test()));
     EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
-    EXPECT_EQ(sphere_1.GetId() - nbInstanceAlreadyExisting, 1);
-    EXPECT_EQ(sphere_1.GetPosition(), Point(0, 0, 0));
-    EXPECT_EQ(sphere_1.GetMatrix(), Mat4());
-    EXPECT_EQ(sphere_1.GetInvertMatrix(), Mat4());
+    EXPECT_EQ(shape_1.GetId() - nbInstanceAlreadyExisting, 1);
+    EXPECT_EQ(shape_1.GetPosition(), Point(0, 0, 0));
+    EXPECT_EQ(shape_1.GetMatrix(), Mat4());
+    EXPECT_EQ(shape_1.GetInvertMatrix(), Mat4());
+    EXPECT_EQ(shape_1.GetMaterial(), Material());
+    EXPECT_EQ(shape_1.GetParent(), nullptr);
 
-    Shape_for_Test sphere_2{ Shape_for_Test() };
+    Shape_for_Test shape_2{ Shape_for_Test() };
     EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
-    EXPECT_EQ(sphere_2.GetId() - nbInstanceAlreadyExisting, 2);
-    EXPECT_EQ(sphere_2.GetPosition(), Point(0, 0, 0));
-    EXPECT_EQ(sphere_2.GetMatrix(), Mat4());
-    EXPECT_EQ(sphere_2.GetInvertMatrix(), Mat4());
+    EXPECT_EQ(shape_2.GetId() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(shape_2.GetPosition(), Point(0, 0, 0));
+    EXPECT_EQ(shape_2.GetMatrix(), Mat4());
+    EXPECT_EQ(shape_2.GetInvertMatrix(), Mat4());
+    EXPECT_EQ(shape_2.GetMaterial(), Material());
+    EXPECT_EQ(shape_2.GetParent(), nullptr);
 }
 
 TEST(Shape_for_TestTests, affectation_copy) {
     int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
-    Shape_for_Test sphere_1;
+    Shape_for_Test shape_1;
     EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 1);
 
-    Shape_for_Test sphere_2;
-    sphere_2 = sphere_1;
+    Shape_for_Test shape_2;
+    shape_2 = shape_1;
     EXPECT_EQ(Shape::getNbInstances() - nbInstanceAlreadyExisting, 2);
 
-    EXPECT_EQ(sphere_2.GetId() - nbInstanceAlreadyExisting, 2);
-    EXPECT_EQ(sphere_2.GetPosition(), sphere_1.GetPosition());
-    EXPECT_EQ(sphere_2.GetMatrix(), sphere_1.GetMatrix());
-    EXPECT_EQ(sphere_2.GetInvertMatrix(), sphere_1.GetInvertMatrix());
+    EXPECT_EQ(shape_2.GetId() - nbInstanceAlreadyExisting, 2);
+    EXPECT_EQ(shape_2.GetPosition(), shape_1.GetPosition());
+    EXPECT_EQ(shape_2.GetMatrix(), shape_1.GetMatrix());
+    EXPECT_EQ(shape_2.GetInvertMatrix(), shape_1.GetInvertMatrix());
+    EXPECT_EQ(shape_2.GetMaterial(), shape_1.GetMaterial());
+    EXPECT_EQ(shape_2.GetParent(), shape_1.GetParent());
 }
 
 TEST(Shape_for_TestTests, affectation_move) {
@@ -84,6 +96,8 @@ TEST(Shape_for_TestTests, affectation_move) {
     EXPECT_EQ(shape.GetPosition(), Point(0, 0, 0));
     EXPECT_EQ(shape.GetMatrix(), Mat4());
     EXPECT_EQ(shape.GetInvertMatrix(), Mat4());
+    EXPECT_EQ(shape.GetMaterial(), Material());
+    EXPECT_EQ(shape.GetParent(), nullptr);
 }
 
 TEST(Shape_for_TestTests, transformations) {
