@@ -5,7 +5,7 @@
 #include "Sphere.h"
 #include "Utils.h"
 
-TEST(GroupeTests, constructor_default) {
+TEST(GroupTests, constructor_default) {
     int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Group group;
@@ -19,7 +19,7 @@ TEST(GroupeTests, constructor_default) {
     EXPECT_EQ(group.GetChildrens(), std::vector<Shape*>());
 }
 
-TEST(GroupeTests, affectation_copy) {
+TEST(GroupTests, affectation_copy) {
     int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Group group_1;
@@ -40,7 +40,7 @@ TEST(GroupeTests, affectation_copy) {
     EXPECT_EQ(group_2.GetChildrens(), group_1.GetChildrens());
 }
 
-TEST(GroupeTests, affectation_move) {
+TEST(GroupTests, affectation_move) {
     int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Group group;
@@ -60,7 +60,7 @@ TEST(GroupeTests, affectation_move) {
     EXPECT_EQ(group.GetChildrens(), std::vector<Shape*>{});
 }
 
-TEST(GroupeTests, AddChildren) {
+TEST(GroupTests, AddChildren) {
     int nbInstanceAlreadyExisting = Shape::getNbInstances();
 
     Group group;
@@ -73,7 +73,7 @@ TEST(GroupeTests, AddChildren) {
     EXPECT_EQ(s.GetParent(), &group);
 }
 
-TEST(GroupeTests, intersect) {
+TEST(GroupTests, intersect) {
     Ray ray(Point(0, 0, -5), Vector(0, 0, 1));
 
     Group group;
@@ -100,7 +100,7 @@ TEST(GroupeTests, intersect) {
     EXPECT_FLOAT_EQ(6.0, intersections[3].getLength());
 }
 
-TEST(GroupeTests, transformations) {
+TEST(GroupTests, transformations) {
     Group group;
     group.SetMatrix(Mat4::ScaleMatrix(2, 2, 2));
     Mat4 ref(2, 0, 0, 0,
@@ -130,7 +130,7 @@ TEST(GroupeTests, transformations) {
     EXPECT_EQ(group.GetMatrix(), ref);
 }
 
-TEST(GroupeTests, Converting_a_point_from_world_to_object_space) {
+TEST(GroupTests, Converting_a_point_from_world_to_object_space) {
     Group group_1;
     group_1.SetMatrix(Mat4::RotateYMatrix(Utils::GetPI() / 2.0));
 
@@ -147,7 +147,7 @@ TEST(GroupeTests, Converting_a_point_from_world_to_object_space) {
     EXPECT_EQ(objectPoint, Point(0, 0, -1));
 }
 
-TEST(GroupeTests, Converting_a_normal_from_object_to_world_space) {
+TEST(GroupTests, Converting_a_normal_from_object_to_world_space) {
     Group group_1;
     group_1.SetMatrix(Mat4::RotateYMatrix(Utils::GetPI() / 2.0));
 
@@ -165,7 +165,7 @@ TEST(GroupeTests, Converting_a_normal_from_object_to_world_space) {
     EXPECT_EQ(normal, Vector(0.2857, 0.4286, -0.8571));
 }
 
-TEST(GroupeTests, get_normal) {
+TEST(GroupTests, get_normal) {
     Group group_1;
     group_1.SetMatrix(Mat4::RotateYMatrix(Utils::GetPI() / 2.0));
 
