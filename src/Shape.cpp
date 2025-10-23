@@ -101,7 +101,8 @@ void Shape::SetCanReceiveShadows(bool const& canReceiveShadows) { m_canReceiveSh
 
 void Shape::SetCanCastShadows(bool const& canCastShadows) { m_canCastShadows = canCastShadows; }
 
-void Shape::SetParent(Shape* groupPtr) { m_parent = groupPtr; }
+void Shape::SetParent(Shape* parent) { m_parent = parent; }
+
 
 // Member functions
 Shape& Shape::operator=(Shape const& other) {
@@ -128,6 +129,7 @@ Shape& Shape::operator=(Shape&& other) noexcept {
 		// Reset source object
 		other.m_matrix = Mat4();
 		other.m_invertMat = Mat4();
+		other.m_material = Material();
 		other.m_canReceiveShadows = false;
 		other.m_canCastShadows = false;
 		other.m_parent = nullptr;
@@ -138,6 +140,7 @@ Shape& Shape::operator=(Shape&& other) noexcept {
 bool Shape::operator==(Shape const& other) const {
 	return (m_id == other.m_id) &&
 		   (m_matrix == other.m_matrix) &&
+		   (m_material == other.m_material) &&
 		   (m_canReceiveShadows == other.m_canReceiveShadows) &&
 		   (m_canCastShadows == other.m_canCastShadows) &&
 		   (m_parent == other.m_parent);
