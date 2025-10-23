@@ -30,6 +30,7 @@ add_executable(TheRayTracerChallenge_Tests
 	StripePattern_Test.cpp
 	Cone_Test.cpp
 	Cylinder_Test.cpp
+	Group_Test.cpp
 )
 
 # Lier les bibliothèques nécessaires

@@ -31,6 +31,7 @@ add_library(TheRayTracerChallenge
 	StripePattern.cpp
 	Cone.cpp
 	Cylinder.cpp
+	Group.cpp
 )
 
 # Inclure les fichiers d'en-tête (pour permettre aux autres projets de les voir)
