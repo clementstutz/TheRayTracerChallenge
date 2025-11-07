@@ -13,6 +13,8 @@ protected :
 public :
 	// Constructors
 	Group();
+	Group(Group const& other);
+	Group(Group&& other) noexcept;
 
 	// Destructors
 	~Group() = default;

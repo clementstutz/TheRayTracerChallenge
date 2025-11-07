@@ -3,6 +3,16 @@
 // Constructors
 Group::Group() : Shape() {}
 
+Group::Group(Group const& other) :
+    Shape(other),
+	m_children(other.m_children) {}
+
+Group::Group(Group&& other) noexcept :
+    Shape(std::move(other)),
+    m_children(std::move(other.m_children)) {
+    other.m_children = std::vector<Shape*>{nullptr};
+    }
+
 
 // Member functions
 Group& Group::operator=(Group const& other)
