@@ -25,6 +25,10 @@ public:
 	Cylinder& operator=(Cylinder const& other);
 	Cylinder& operator=(Cylinder&& other) noexcept;
 	friend std::ostream& operator<<(std::ostream& flux, Cylinder const& Cylinder);
+	void SetMin(double min);
+	void SetMax(double max);
+	const double GetMin() const;
+	const double GetMax() const;
 	std::vector<Intersection> Intersect(Ray const& ray) override;
 	void IntersectCaps(const Ray& transRay, std::vector<Intersection>& hits);
 	bool CheckCap(const Ray& transRay, const double& t);

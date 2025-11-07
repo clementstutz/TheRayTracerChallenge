@@ -64,6 +64,14 @@ void Cylinder::afficher(std::ostream& flux) const {
     flux << "Cylinder (id: " << m_id << ", Position: " << GetPosition() << ", min: " << m_minimum << ", max: " << m_maximum << ", isClosed: " << m_isClosed << ")";
 }
 
+void Cylinder::SetMin(double min) { m_minimum = min; }
+
+void Cylinder::SetMax(double max) { m_maximum = max; }
+
+const double Cylinder::GetMin() const { return m_minimum; }
+
+const double Cylinder::GetMax() const { return m_maximum; }
+
 std::vector<Intersection> Cylinder::Intersect(Ray const& ray) {
     Ray transRay = RayToObjectSpace(ray);
 
