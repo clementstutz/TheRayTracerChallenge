@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono> // Pour std::chrono
+#include <cmath>
 
 #include "Point.h"
 #include "Vector.h"
@@ -23,6 +24,8 @@
 #include "RadialGradientPattern.h"
 #include "BlendPattern.h"
 #include "Cube.h"
+#include "Cylinder.h"
+#include "Group.h"
 
 using namespace std;
 
@@ -734,9 +737,18 @@ void static Chapter_12_Challenge_CubeRoom() {
     sphere2.SetMaterial(sphere_2_m);
     sphere2.SetMatrix(Mat4::TranslateMatrix(-0.7, 1.5, 0) * Mat4::ScaleMatrix(0.4, 0.4, 0.4));
 
+    auto debut = std::chrono::high_resolution_clock::now();
+    auto fin = std::chrono::high_resolution_clock::now();
+    auto duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+
+    debut = std::chrono::high_resolution_clock::now();
     Canvas canvas = scene.Render(camera, recursion);
-    Save::saveCanvas(canvas, "Chapter_12_CubeRoom_" + std::to_string(recursion));
-    std::cout << "Image created." << std::endl;
+    fin = std::chrono::high_resolution_clock::now();
+    duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    std::cout << "Durée d'exécution Render : " << duree.count() << " ms" << std::endl;
+
+    //Save::saveCanvas(canvas, "Chapter_12_CubeRoom_" + std::to_string(recursion));
+    //std::cout << "Image created." << std::endl;
 }
 
 void static Chapter_12_Challenge_CubeRoom_better() {
@@ -829,6 +841,112 @@ void static Chapter_12_Challenge_CubeRoom_better() {
     Save::saveCanvas(canvas, "Chapter_12_CubeRoom_better_" + std::to_string(recursion));
     std::cout << "Image created." << std::endl;
 }
+
+static std::shared_ptr<Sphere> HexagonCorner(Scene& scene) {
+    std::shared_ptr<Sphere> corner = std::make_shared<Sphere>();
+    corner->SetMatrix(Mat4::TranslateMatrix(0, 0, -1) * Mat4::ScaleMatrix(0.25, 0.25, 0.25));
+    std::cout << "3. scene.GetShapes() : " << std::endl;
+    for(Shape* shape : scene.GetShapes()) {
+        std::cout << "                       " << shape << std::endl;
+    }
+    return corner;
+}
+
+static std::shared_ptr<Cylinder> HexagonEdge(Scene& scene) {
+    std::shared_ptr<Cylinder> edge = std::make_shared<Cylinder>(0, 1);
+    edge->SetMatrix(Mat4::TranslateMatrix(0, 0, -1) *
+                    Mat4::RotateYMatrix(Utils::GetPI() / -6) *
+                    Mat4::RotateZMatrix(Utils::GetPI() / -2) *
+                    Mat4::ScaleMatrix(0.25, 1, 0.25));
+    std::cout << "5. scene.GetShapes() : " << std::endl;
+    for(Shape* shape : scene.GetShapes()) {
+        std::cout << "                       " << shape << std::endl;
+    }
+    return edge;
+}
+
+static std::shared_ptr<Group> HexagonSide(Scene& scene) {
+    std::shared_ptr<Group> side = std::make_shared<Group>();
+    std::shared_ptr<Sphere> hc = HexagonCorner(scene);
+    std::cout << "4. scene.GetShapes() : " << std::endl;
+    for(Shape* shape : scene.GetShapes()) {
+        std::cout << "                       " << shape << std::endl;
+    }
+    std::shared_ptr<Cylinder> he = HexagonEdge(scene);
+    std::cout << "6. scene.GetShapes() : " << std::endl;
+    for(Shape* shape : scene.GetShapes()) {
+        std::cout << "                       " << shape << std::endl;
+    }
+
+    side->AddChildren(*hc);
+    side->AddChildren(*he);
+
+    return side;
+}
+
+static std::shared_ptr<Group> Hexagon(Scene& scene) {
+    std::shared_ptr<Group> hexagon = std::make_shared<Group>();;
+    std::cout << "2. scene.GetShapes() : " << std::endl;
+    for(Shape* shape : scene.GetShapes()) {
+        std::cout << "                       " << shape << std::endl;
+    }
+    for(int i = 0; i < 6; i++)
+    {
+        std::shared_ptr<Group> side = HexagonSide(scene);
+        side->SetMatrix(Mat4::RotateYMatrix(i * Utils::GetPI() / 3));
+        hexagon->AddChildren(*side);
+    }
+    std::cout << "7. scene.GetShapes() : " << std::endl;
+    for(Shape* shape : scene.GetShapes()) {
+        std::cout << "                       " << shape << std::endl;
+    }
+    return hexagon;
+}
+
+void static Chapter_14_Hexagon() {
+    Camera camera(500, 300, Utils::GetPI() / 3.0);
+    camera.ViewTransform(Point(0, 2, -2),
+        Point(0, 0, 0),
+        Vector(0, 1, 0));
+
+    Scene scene;
+
+    Light light(Point(0, 50, -25), Color::white);
+
+
+    std::cout << "1. scene.GetShapes() : " << std::endl;
+    for(Shape* shape : scene.GetShapes()) {
+        std::cout << "                       " << shape << std::endl;
+    }
+
+    // std::shared_ptr<Group> hexagon = Hexagon(scene);
+    std::shared_ptr<Group> hexagon = std::make_shared<Group>();;
+    std::cout << "2. scene.GetShapes() : " << std::endl;
+    for(Shape* shape : scene.GetShapes()) {
+        std::cout << "                       " << shape << std::endl;
+    }
+    for(int i = 0; i < 6; i++)
+    {
+        std::shared_ptr<Group> side = HexagonSide(scene);
+        side->SetMatrix(Mat4::RotateYMatrix(i * Utils::GetPI() / 3));
+        hexagon->AddChildren(*side);
+    }
+    std::cout << "7. scene.GetShapes() : " << std::endl;
+    for(Shape* shape : scene.GetShapes()) {
+        std::cout << "                       " << shape << std::endl;
+    }
+
+    std::cout << "8. scene.GetShapes() : " << std::endl;
+    for(Shape* shape : scene.GetShapes()) {
+        std::cout << "                       " << shape << std::endl;
+    }
+
+
+    Canvas canvas = scene.Render(camera, 1);
+    Save::saveCanvas(canvas, "Chapter_14_Hexagon");
+    std::cout << "Image created." << std::endl;
+}
+
 
 int main() {
     //runSimulation();
@@ -923,4 +1041,10 @@ int main() {
     fin = std::chrono::high_resolution_clock::now();
     duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
     std::cout << "Dur�e d'ex�cution : " << duree.count() << " ms" << std::endl;*/
+
+    //debut = std::chrono::high_resolution_clock::now();
+    Chapter_14_Hexagon();
+    //fin = std::chrono::high_resolution_clock::now();
+    //duree = std::chrono::duration_cast<std::chrono::milliseconds>(fin - debut);
+    //std::cout << "Dur�e d'ex�cution : " << duree.count() << " ms" << std::endl;
 }
